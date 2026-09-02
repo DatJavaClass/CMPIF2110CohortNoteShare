@@ -1,3 +1,5 @@
+<p align="center"><img width="561" height="701" alt="CodeMan" src="https://github.com/user-attachments/assets/8ba6a5c4-5030-4d9c-b40d-1b29bd4c1042" /></p>
+
 # CMPIF2110: Cliff Notes
 
 These are my personal auto-generated cliff notes, produced in part with my **CMPIF2110 Intelligent Transcriber**. I'm sharing them with the rest of the cohort. I'll do my best to keep this repo updated as they are mostly for my own use.
