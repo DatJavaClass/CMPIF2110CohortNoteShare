@@ -16,12 +16,11 @@ relational model on top.*
 Almost every website and mobile app has some sort of database, to store
 information and make it useful later. The professor and the textbook, Kroenke
 and Auer's Database Processing (16th edition, Chapter 1, the source of every
-figure and chapter number below), both open with the same picture. Figure 1-2
-shows three rows of the same pattern: a PC with a Web browser client, over the
-Internet, to a Web server, to a database. A smartphone with an app client, over
-the cell phone data network, to an app data server, to a database. A smart
-speaker with a virtual assistant client, over the Internet, to an app data
-server, to a database.
+figure and chapter number below), both open with the same point, in Figure
+1-2: whether the client is a PC with a Web browser, a smartphone with an app,
+or a smart speaker with a virtual assistant, the request travels over the
+Internet or the cell phone data network to a Web server or app data server,
+and the server ends at a database.
 
 The pattern has a name. In **client-server architecture**, client applications
 on user devices obtain services from server computers, and the servers hold
@@ -51,15 +50,14 @@ became the most common type once introduced and remains so.
 Relational: multiple tables, all related to each other, with values that link
 data between many objects. The course uses MySQL. Non-relational: no such
 relationships. Example: MongoDB, which stores mostly JSON. **JSON** stands for
-JavaScript Object Notation. The professor's transcript says "JavaScript Object
-Mutation," a slip, and the textbook has Notation.
+JavaScript Object Notation.
 
 **Big Data** means enormous datasets. The textbook says Big Data comes from
 search tools, Web 2.0 social networks, and scientific data collection and is
 often stored in new non-relational databases, which is why the non-relational
 database is making a resurgence. The professor says big data is typically
 stored in flat files on a file system or in simple storage on a cloud
-solution. Both are in the course material.
+solution.
 
 A relational database stores data in **tables**. A table has **rows** and
 **columns** like a spreadsheet. Rows are also called **records**, and the
@@ -82,13 +80,10 @@ is always a table and an initial-cap name is always a column.
 The professor's rule of thumb: in relational databases the key is to store the
 least amount of data possible, so you use multiple tables.
 
-Two definitions close the section. **Data**: recorded facts and figures in the
-Coursera reading, recorded facts and numbers in the chapter text, same idea.
+Two definitions close the section. **Data**: recorded facts and figures.
 **Information** has three definitions: knowledge derived from data, data
 presented in a meaningful context, or data processed by summing, ordering,
-averaging, grouping, comparing, or other similar operations. The Coursera
-reading's third definition says "summing, ordering, averaging, computing, or
-other similar operations." Either wording is the same idea. Databases record
+averaging, grouping, comparing, or other similar operations. Databases record
 data in a way that lets information be produced from it. The STUDENT, CLASS,
 and GRADE data could yield each student's GPA.
 
@@ -103,10 +98,9 @@ data. The textbook builds that in four figures.
 
 Figures 1-3 to 1-6 build three tables: STUDENT (StudentNumber, LastName,
 FirstName, EmailAddress), CLASS (ClassNumber, ClassName, Term, Section), and
-GRADE. In Figure 1-4, GRADE has one column, Grade, six values and a blank row,
-and the callout asks who the grades belong to. In Figure 1-5, GRADE has three
-columns, StudentNumber, ClassNumber, Grade, and each grade is linked back to a
-student and a class.
+GRADE. With Grade as its only column (Figure 1-4), GRADE cannot say whose
+grades they are. With StudentNumber, ClassNumber, and Grade (Figure 1-5), each
+grade is linked back to a student and a class.
 
 **Primary key**: uniquely identifies each row of a table. The values of
 primary keys are used to create the relationships between tables. **Surrogate
@@ -120,24 +114,20 @@ two tables.
 
 In the textbook figures, GRADE's primary key is the composite (StudentNumber,
 ClassNumber), and each of those two columns is also a foreign key back to
-STUDENT or CLASS. One slip to know: the professor says the book's composite
-key example used "a student number and a grade." The composite key is
-(StudentNumber, ClassNumber), which is what his own demo then shows.
+STUDENT or CLASS.
 
-Same shape, different tables (adjacent example): TEAM (TeamNumber, TeamName,
-City). PLAYER (PlayerNumber, LastName, FirstName). CONTRACT (TeamNumber,
-PlayerNumber, Salary). A CONTRACT table holding only salaries is a column of
-money that belongs to nobody. Add TeamNumber and PlayerNumber as foreign keys
-and every salary points at one team and one player. One contract per team and
-player pair, so the composite key is (TeamNumber, PlayerNumber). One team to
-many contracts, one player to many contracts.
+Example: TEAM (TeamNumber, TeamName, City). PLAYER (PlayerNumber, LastName,
+FirstName). CONTRACT (TeamNumber, PlayerNumber, Salary). A CONTRACT table
+holding only salaries is a column of money that belongs to nobody. Add
+TeamNumber and PlayerNumber as foreign keys and every salary points at one team
+and one player. One contract per team and player pair, so the composite key is
+(TeamNumber, PlayerNumber). One team to many contracts, one player to many
+contracts.
 
-Figure 1-6 is the Microsoft Access 2019 relationships view: key symbols mark
-primary keys, lines run from foreign keys to the matching primary keys, and
-the number 1 and the infinity symbol on a line mean one row on the "1" side
-can link to many rows on the infinity side. GRADE sits between STUDENT and
-CLASS with a line to each. Source slip: the reading's text says one student
-may be linked to "many graded," read as "many grades."
+Figure 1-6 is the same design in the Microsoft Access 2019 relationships
+view. Its lesson: GRADE's two foreign keys relate it to STUDENT and to CLASS,
+and each relationship is one-to-many, so one student may be linked to many
+grades.
 
 The professor's MySQL Workbench demo makes the surrogate key concrete.
 STUDENT's primary key is an auto-incrementing number, so it is a surrogate
@@ -175,8 +165,7 @@ or R receives less mess.
 
 **Integration.** Relational databases connect with Python, R, Excel, and BI
 platforms. BI stands for business intelligence. Python libraries named:
-Pandas, SQLAlchemy, psycopg2 (the transcript says "pscopg2"). R connects
-directly as well.
+Pandas, SQLAlchemy, psycopg2. R connects directly as well.
 
 **Governance and security.** **Data governance**: the framework that manages
 data availability, usability, integration, and security across an
@@ -215,8 +204,8 @@ information system touching every department of a manufacturing company. SAP
 is the leading ERP vendor.
 
 The multiuser rows carry a risk: one user's work interferes with another's.
-**Concurrency control** mechanisms prevent this (Chapter 9). Two ticket agents
-sell the same seat to two buyers at the same moment (adjacent example). And the
+**Concurrency control** mechanisms prevent this (Chapter 9). For instance, two
+ticket agents sell the same seat to two buyers at the same moment. And the
 largest databases at an e-commerce site are not the order-processing ones. They
 are the ones tracking customer browser behavior: pages sent, clicks, cart adds,
 abandoned carts.
@@ -236,11 +225,11 @@ relationships. Only the amount of data differs.
 ## 6. The four components, and the fifth
 
 A database system consists of four components: users, database application,
-database management system (DBMS), database. Figure 1-8 draws them in that
-order with two-way arrows, and the DBMS box carries three words: Create,
-Process, Administer. Figure 1-9 inserts SQL between the application and the
-DBMS, because applications send SQL statements to the DBMS, and the chapter
-summary calls SQL a fifth component.
+database management system (DBMS), database. Figure 1-8 lists them in that
+order, and the DBMS's three jobs are to create, process, and administer the
+database. Figure 1-9 adds SQL between the application and the DBMS, because
+applications send SQL statements to the DBMS, and the chapter summary calls
+SQL a fifth component.
 
 **Structured Query Language (SQL)**: an internationally recognized standard
 language understood by all commercial relational DBMS products. The professor's
@@ -273,14 +262,14 @@ application logic, control the application itself.
 
 A form hides the structure of the underlying tables. It is built for the
 users' needs, not the table structure. The application generates the SQL
-insert, update, or delete behind it. Figure 1-11's form shows one class at the
-top and an enrollment grid below whose last row is blank for a new entry.
+insert, update, or delete behind it. Figure 1-11 is the book's example, a form
+that reads one class and enters its enrollments.
 
 A **query statement** is an SQL statement that asks the DBMS to obtain
 specific data from a database. The application builds the query, sends it to
 the DBMS, and formats the result. Reports are similar: query the DBMS, then
 format the results, structured to the users' needs, sorted and grouped.
-The shape of a basic query (adjacent example):
+The shape of a basic query:
 
 ```sql
 SELECT  TeamName, City
@@ -289,8 +278,7 @@ WHERE   City = 'Pittsburgh'
 ```
 
 SELECT names the columns, FROM names the table, WHERE filters the rows
-(added). Figure 1-12 shows the book's version returning three columns and two
-rows.
+(added).
 
 Application logic. The book's scenario is an order for more units than are in
 stock. Refuse and notify, or ship what exists and backorder the rest, or
@@ -332,15 +320,15 @@ Enforce rules is where the keys from Section 3 get teeth. A **referential
 integrity constraint** is a declared rule that a value in a foreign key column
 must already exist in the referenced table's primary key column. The DBMS
 disallows an insert or update that breaks it. In Section 3's CONTRACT table, a
-row for TeamNumber 9 is rejected if no team 9 exists (adjacent example).
+row for TeamNumber 9 is rejected if no team 9 exists.
 
-The last three functions are administration, and the book's prose there adds a
-security system that has no line of its own in the nine. Concurrency control:
-one user's work must not inappropriately interfere with another's (Chapter 9).
-A security system: only authorized users perform authorized actions, and users
-can be blocked from seeing certain data or limited to certain changes. Backup
-and recovery: the database is a centralized, valuable asset, protected against
-errors, hardware and software failures, and catastrophes.
+The last three functions are administration, and the book also describes a
+security system alongside them. Concurrency control: one user's work must not
+inappropriately interfere with another's (Chapter 9). A security system: only
+authorized users perform authorized actions, and users can be blocked from
+seeing certain data or limited to certain changes. Backup and recovery: the
+database is a centralized, valuable asset, protected against errors, hardware
+and software failures, and catastrophes.
 
 ---
 
@@ -367,15 +355,15 @@ backup/recovery data are discussed in Chapters 9, 10, 10A, 10B, 10C.
 constraints. **Stored procedures** are used for database administration tasks
 and are sometimes part of applications.
 
-One action, end to end (adjacent example): a librarian marks a book returned
-on a form. The application built the form, turns the click into an UPDATE on
-the LOAN table that sets ReturnDate on the matching LoanNumber row, and sends
-that SQL to the DBMS. The DBMS checks the change against its declared rules
-before writing it. Had the UPDATE set BookNumber to a value no BOOK row
-carries, the referential integrity constraint would have rejected it.
-Metadata told the DBMS that LOAN is a table, ReturnDate one of its columns,
-and what type it holds. The application reads the row back and redraws the
-form. Four components, one round trip.
+One action, end to end: a librarian marks a book returned on a form. The
+application built the form, turns the click into an UPDATE on the LOAN table
+that sets ReturnDate on the matching LoanNumber row, and sends that SQL to the
+DBMS. The DBMS checks the change against its declared rules before writing it.
+Had the UPDATE set BookNumber to a value no BOOK row carries, the referential
+integrity constraint would have rejected it. Metadata told the DBMS that LOAN
+is a table, ReturnDate one of its columns, and what type it holds. The
+application reads the row back and redraws the form. Four components, one
+round trip.
 
 ---
 
@@ -391,8 +379,7 @@ The **Access Database Engine (ADE)** is the DBMS engine inside Access, an
 Office-specific version of Microsoft's **Joint Engine Technology (JET or
 Jet)**. Jet was the engine until Office 2007, when Access switched to ADE. ADE
 was originally named the **Office Access Connectivity Engine (ACE)**, the same
-technology. Source slip: the chapter summary calls it "Access Data Engine,"
-the Key Terms list says "Access Database Engine."
+technology.
 
 Access is a low-end product for individuals and small workgroups, and
 Microsoft hides the technology from the user. Good for beginners, not for
@@ -411,9 +398,7 @@ network (VB.NET, C++, Java), e-commerce and other applications on a Web server
 IIS and Apache, languages PHP, Java, C#.NET, VB.NET, Chapter 11), Web portal
 reporting applications (IBM Cognos Business Intelligence, MicroStrategy 10,
 Chapter 12), XML Web services (Java or .NET, Chapter 12), and mobile apps (not
-covered in the book). Source slip: the chapter summary says Figure 1-18 shows
-"four categories," omitting mobile apps. The body figure is 1-19 and lists
-five.
+covered in the book).
 
 Popularity, as of April 2020 (DB-Engines ranking): the three most popular
 enterprise-class relational DBMS products, in order, are Oracle Database,
@@ -437,11 +422,9 @@ Enterprise Edition 8.0 is purchased for the full support package. MySQL uses
 all lowercase object names. Online Chapter 10C.
 
 The book then poses one query to the STUDENT table of its Student_Class_Grade
-database. Figures 1-20 to 1-22 run the same query in the three client tools,
-with matching results sorted differently in each. The left pane is Connections
-in SQL Server and Oracle, Schemas in MySQL. The professor's notes write "My SQL
-8.0" with a space, read as MySQL 8.0. The dbo in dbo.Student is SQL Server's
-default schema (added).
+database. Figures 1-20 to 1-22 run the same query in the three client tools.
+The lesson: the same SQL runs unchanged in all three, and only the result
+order differs. The dbo in dbo.Student is SQL Server's default schema (added).
 
 A DBMS is an application like any other. It runs on top of an operating system
 that handles file reads and writes, printing, and the other basic operations.
@@ -482,9 +465,7 @@ databases. The extract route is especially common in **business intelligence
 operational database (a CRM or ERP database) is copied into a **data
 warehouse** or **data mart**, databases that store data organized specifically
 for research and reporting (Chapter 12). Named analytical tools: SAS
-Enterprise Miner, IBM SPSS Modeler, TIBCO Spotfire. Figure note: the professor
-labels the extraction arrow "Database design," the textbook labels it Database
-Extraction.
+Enterprise Miner, IBM SPSS Modeler, TIBCO Spotfire.
 
 Even importing a single table raises the design question. Figure 1-25 asks
 whether a flat employee list with a department number and department name on
@@ -492,10 +473,9 @@ every row should be one table or two. A spreadsheet of shipments carries a
 carrier code and carrier name on every row. Option (a), one SHIPMENT table
 with the carrier name repeated. Option (b), CARRIER (CarrierCode,
 CarrierName) plus SHIPMENT (ShipmentNumber, WeightKg, CarrierCode), linked by
-CarrierCode (adjacent example). Repeated descriptive text is the tell. The
-decision is not arbitrary: **normalization**, or **normal forms**, is the set
-of principles database professionals use to guide and assess designs
-(Chapter 3).
+CarrierCode. Repeated descriptive text is the tell. The decision is not
+arbitrary: **normalization**, or **normal forms**, is the set of principles
+database professionals use to guide and assess designs (Chapter 3).
 
 **New systems development** (Figure 1-26) starts from requirements: desired
 forms and reports, user requirement statements, use cases, and other systems
@@ -508,20 +488,19 @@ blueprint used as a design aid on the way to a database design.
 **Entity-relationship (ER) data modeling** is the most popular technique
 (Chapter 5), and Chapter 6 teaches the transformation.
 
-The two steps on one requirement (adjacent example): a user statement reads
-"every loan must record who borrowed which book and when it is due." Step one,
-the data model: entities PATRON, BOOK, and LOAN, with each LOAN tied to one
-patron and one book. Step two, the transformation: LOAN becomes a table with
-LoanNumber as its primary key, PatronNumber and BookNumber as foreign keys,
-and DueDate as a column.
+The two steps on one requirement: a user statement reads "every loan must
+record who borrowed which book and when it is due." Step one, the data model:
+entities PATRON, BOOK, and LOAN, with each LOAN tied to one patron and one
+book. Step two, the transformation: LOAN becomes a table with LoanNumber as
+its primary key, PatronNumber and BookNumber as foreign keys, and DueDate as a
+column.
 
 **Database redesign** (Figure 1-27) has two common types. **Database
 migration** adapts an existing database to new or changing requirements:
 tables created, modified, or removed, relationships altered, constraints
-changed. The figure's arrow is labeled Migration. Integration merges two or
-more databases into one design, common when adapting or removing legacy
-systems and in enterprise application integration. That arrow is labeled
-Database Integration.
+changed. Database integration merges two or more databases into one design,
+common when adapting or removing legacy systems and in enterprise application
+integration.
 
 ---
 
@@ -535,12 +514,10 @@ designs, constructs, and manages the database itself. Users are primarily
 concerned with constructing SQL to store and retrieve data. DBAs are primarily
 concerned with managing the database.
 
-Figure 1-28 draws where each role works. Users reach the database through
-applications: a Web server with PHP or Java, client applications in C# or
-VB.NET, or a Web portal with reporting applications. Those send SQL to the
-DBMS, shown as Access Database Engine (ADE), SQL Server, MySQL, or Oracle
-Database. Knowledge workers and programmers own the application side, the DBA
-owns the DBMS and database side.
+Figure 1-28 maps the two roles onto the database system. Users reach the
+database through applications, which send SQL to the DBMS. Knowledge workers
+and programmers own the application side, the DBA owns the DBMS and database
+side.
 
 Figure 1-29 rates each topic for each role, 1 very important, 2 important, 3
 less important.
@@ -560,17 +537,14 @@ Product specifics (SQL Server,       10, 10A to 10D    3    1
 Database application technology      11, 12, 13        1    3
 ```
 
-As printed, the DBA column rates Basic SQL and application technology 1 and
-the DDL, redesign, administration, and product chapters 3. That reads
-backwards for a DBA, but it is what the figure shows. Answer quizzes from the
-figure. The authors say opinions vary and to ask your instructor.
+The authors say opinions vary and to ask your instructor.
 
 ---
 
 ## 13. Where it came from
 
 The history, first as one table, then era by era (added).
-Figure 1-30 is the era table. Years exactly as printed.
+Figure 1-30 is the era table.
 
 ```
 Era                      Years         Products
@@ -599,10 +573,8 @@ technology. By 1973 several commercial DBMS products had emerged, and they
 were in use by the mid-1970s.
 
 The first edition of this text, copyrighted 1977, featured ADABAS, System2000,
-Total, IDMS, and IMS. The section says ADABAS, IDMS, and IMS are still in use
-with no substantial market share, the next page says "no IDMS database is in
-use today," and the chapter summary says only ADABAS and IMS survive.
-Quiz-safe reading: ADABAS and IMS survive, IDMS is the contested one.
+Total, IDMS, and IMS. ADABAS and IMS are still in use with no substantial
+market share.
 
 Two early ways to structure relationships. **Data Language/I (DL/I)** used
 hierarchies or trees. IMS, licensed by IBM, is based on it and is still in
@@ -630,12 +602,10 @@ system, plus an elegant internal design and hard-driving sales.
 **The PC era.** dBase was the most successful early PC product, R:base was the
 first to implement true relational algebra on the PC, and Paradox came later
 and was acquired by Borland. In 1991 Microsoft released Microsoft Access at
-$99. That is the book's date. Access 1.0 actually shipped in November 1992
-(added). Answer 1991 on a book-keyed quiz. No other PC DBMS vendor could
-survive that price. Access killed R:base and Paradox. Microsoft then bought the
-dBase work-alike FoxPro to eliminate dBase, and later discontinued Visual
-FoxPro too. Access is the only major survivor. Today's challenger:
-OpenOffice.org Base and LibreOffice Base.
+$99. No other PC DBMS vendor could survive that price. Access killed R:base and
+Paradox. Microsoft then bought the dBase work-alike FoxPro to eliminate dBase,
+and later discontinued Visual FoxPro too. Access is the only major survivor.
+Today's challenger: OpenOffice.org Base and LibreOffice Base.
 
 **Object-oriented DBMS.** Object-oriented programming (OOP) emerged in the
 mid-1980s, and by 1990 some vendors had an **object-oriented DBMS (OODBMS or
@@ -644,16 +614,14 @@ constructs to make an **object-relational DBMS** hybrid. OODBMS never caught
 on, for two reasons: using one required converting billions of bytes of
 relational data, and it offered no substantial advantage for most commercial
 processing. SQL is not object-oriented, but it works. The professor's slide
-condenses the reasons to "never caught on due to business requirements."
+gives the reason as business requirements.
 
 **OLTP, warehouses, and BI.** A purchase is a business transaction that must be
 recorded in the company's accounts, and by the late 1980s applications for
 **online transaction processing (OLTP)** were well understood. Analysis should
 not run on the production database, so a data warehouse is a separate place to
 store data for analysis. The first formal presentation of the term was a 1988
-article by IBM researchers B. A. Devlin and P. T. Murphy. Date trap: Figure
-1-30 prints the Data Warehouses era as 1998-present while the body dates the
-term to 1988 and the summary says late 1980s. Know both. **Online analytical
+article by IBM researchers B. A. Devlin and P. T. Murphy. **Online analytical
 processing (OLAP)** is the analysis work done on the data warehouse, an example
 of a business intelligence (BI) system, tools used to analyze and report on
 company data (Chapters 2 and 12).
@@ -663,26 +631,23 @@ businesses relate. Early sites were online brochures, then dynamic
 database-driven sites appeared. The problem: **Hypertext Transfer Protocol
 (HTTP)** is stateless. The server processes a request and forgets the user.
 Shopping carts are multistage, so capabilities were built on top to overcome
-it. The body text says "Hypertext Transport Protocol," the Key Terms list says
-"Transfer," and Transfer is the standard expansion.
+it.
 
 A **Web database application** is an application with a Web user interface
-that depends on a database. The professor's slide says it "allows shopping
-using an API," where shopping is the example, not the definition. The book's
-running company is Wedgewood Pacific (WP), a maker of consumer drones
-(technically unmanned aerial vehicles, UAVs), shown in Figure 1-31. An
-**application programming interface (API)** is what applications and Web pages
-use, in a language such as PHP or JavaScript, to connect to a DBMS, send SQL,
-and receive results (Chapter 11).
+that depends on a database. The professor's slide describes it as allowing
+shopping using an API. The book's running company is Wedgewood Pacific (WP), a
+maker of consumer drones (technically unmanned aerial vehicles, UAVs), shown in
+Figure 1-31. An **application programming interface (API)** is what
+applications and Web pages use, in a language such as PHP or JavaScript, to
+connect to a DBMS, send SQL, and receive results (Chapter 11).
 
 **Open source.** MySQL was released in 1995 by the Swedish company MySQL AB.
-Sun Microsystems bought MySQL AB in February 2008. The book says Oracle
-completed its acquisition of Sun Microsystems in January 2013. The deal
-actually closed in January 2010 (added). Answer 2013 on a book-keyed quiz.
-Oracle now owns Oracle Database and Oracle MySQL, and MySQL is popular with Web
-developers on Linux servers. Users unhappy with the acquisition forked the last
-open source MySQL code into **MariaDB**, largely compatible with MySQL. Both
-are named for developer Monty Widenius's daughters, My and Maria.
+Sun Microsystems bought MySQL AB in February 2008. Oracle completed its
+acquisition of Sun Microsystems in January 2013. Oracle now owns Oracle
+Database and Oracle MySQL, and MySQL is popular with Web developers on Linux
+servers. Users unhappy with the acquisition forked the last open source MySQL
+code into **MariaDB**, largely compatible with MySQL. Both are named for
+developer Monty Widenius's daughters, My and Maria.
 
 **XML.** In the late 1990s **eXtensible Markup Language (XML)** was defined to
 overcome the problems that occur when HTML is used to exchange business
@@ -705,40 +670,19 @@ recently, JSON. MongoDB is the most popular non-relational DBMS and ranks
 fifth overall as of April 2020. More document DBMSs use JSON than XML.
 
 The book's non-relational DBMS is ArangoDB, from the German company triAGENS
-(the book prints "GmgH," read as GmbH). Its **ArangoDB query language (AQL)**
-is its SQL equivalent, and its output is JSON with generated columns _key,
-_id, and _rev (Figure 1-32). The professor's text says "Arango BD" in one
-spot, read as ArangoDB. Relational vendors have adjusted: SQL Server 2019
-supports graph databases and MySQL supports document data.
+GmbH. Its **ArangoDB query language (AQL)** is its SQL equivalent, and its
+output is JSON with generated columns _key, _id, and _rev (Figure 1-32).
+Relational vendors have adjusted: SQL Server 2019 supports graph databases and
+MySQL supports document data.
 
 **Cloud computing** means using hardware owned and operated by another company
 instead of in-house servers. The authors' test: if you know where your
 company's servers are, you are not using cloud computing. If they are at
 somebody else's **data center**, a facility that houses many servers and their
 infrastructure, you are. Vendors: Microsoft Azure (Azure SQL, Cosmos DB
-non-relational), Amazon Web Services (AWS), Google Cloud. Figure 1-33 shows an
-Azure Cosmos DB account named dbpe16 and an Azure SQL database named WP
-(Chapters 12 and 13).
-
-Date traps, collected (added). Four places where the book disagrees with
-itself or with the record, and what to answer.
-
-```
-Trap             Sources say                              Quiz answer
-Oracle buys Sun  Book: January 2013.                      2013 on a book-keyed
-                 Actual: January 2010                     quiz
-Access release   Book: 1991.                              1991 on a book-keyed
-                 Actual: November 1992                    quiz
-Data warehouses  Figure 1-30: 1998-present. Body: 1988.   Match the quoted
-                 Summary: late 1980s                      source, know both
-IDMS survival    Section: still in use. Next page: no     ADABAS and IMS
-                 IDMS in use today. Summary: only ADABAS  survive, IDMS is the
-                 and IMS survive                          contested one
-```
-
-Housekeeping: the summary's figure numbers are stale. It cites Figure 1-18 for
-application categories (body: 1-19) and Figures 1-25, 1-26, 1-27 for domains,
-priorities, and history (body: 1-28, 1-29, 1-30). Use the body numbers.
+non-relational), Amazon Web Services (AWS), Google Cloud. Figure 1-33 is the
+book's Azure example, with both a relational and a non-relational database
+hosted on Azure (Chapters 12 and 13).
 
 ---
 
