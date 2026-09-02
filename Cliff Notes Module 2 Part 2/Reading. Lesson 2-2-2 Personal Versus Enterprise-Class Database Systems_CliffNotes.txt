@@ -1,0 +1,277 @@
+Reading, Lesson 2-2-2: Personal Versus Enterprise-Class Database Systems: Study Guide
+Course: Managing, Querying, and Preserving Data (CMPINF-2110)
+Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera reading), textbook pages 18-24
+
+================================================================
+1. THE TWO CLASSES
+================================================================
+  - Database systems and DBMS products divide into two classes:
+    personal database systems and enterprise-class database
+    systems.
+  - KEY TERM: personal database system: a DBMS plus an application
+    generator, packaged under one cover. Microsoft Access is the
+    best-known example.
+  - KEY TERM: enterprise-class database system: applications are
+    separate from each other and separate from the DBMS. The
+    DBMS is a standalone server product (added).
+  - The page-18 lead-in (metadata, Figure 1-16 database contents,
+    security data, backup and recovery data) repeats the end of
+    Lesson 2-2-1. See that note.
+
+================================================================
+2. WHAT IS MICROSOFT ACCESS? (FIGURES 1-17 AND 1-18)
+================================================================
+  - Common misconception: Access is not just a DBMS. It is a
+    personal database system: a DBMS plus an application
+    generator.
+  - Access contains a DBMS engine that creates, processes, and
+    administers the database, plus form, report, and query
+    components that are the application generator. Those
+    components create SQL statements and pass them to the DBMS.
+  - Figure 1-17 flow: Users supply data entry forms, reports, and
+    queries to three applications (form processing, report
+    generator, query processing). The applications go through SQL
+    to the DBMS, then to the database. Both directions.
+  - Access is a low-end product for individuals and small
+    workgroups. Microsoft hides the underlying database
+    technology from the user. Users work through forms, request
+    reports, and run queries. Under the cover, the application
+    components call the hidden DBMS with SQL.
+  - KEY TERM: Access Database Engine (ADE): the current DBMS
+    engine inside Microsoft Access. A Microsoft Office-specific
+    version of Microsoft's Joint Engine Technology (JET or Jet)
+    database engine.
+  - History: versions of Jet, each with increasing capabilities,
+    served as the Access engine until Microsoft Office 2007,
+    when Access started using ADE.
+  - Footnote 6: ADE was originally named the Office Access
+    Connectivity Engine (ACE). ACE and ADE are the same
+    technology, a matter of semantics.
+  - Other personal database systems: OpenOffice.org Base (part of
+    the OpenOffice.org suite) and LibreOffice Base (part of the
+    related LibreOffice suite).
+  - Hiding the technology works for beginners on small databases.
+    It does not work for database professionals building the
+    larger, more complex applications of Figure 1-7. They must
+    understand what Access hides.
+  - Access ships in the Windows version of Microsoft Office, not
+    the macOS version, so it is often the first DBMS students
+    use. The book gives some Access 2019 examples. Appendix A,
+    "Getting Started with Microsoft Access 2019."
+  - Figure 1-18 shows Access 2019 running the chapter's sample
+    query: the database name on a tab, the query result in table
+    format, the STUDENT table object in the Tables section of
+    All Access Objects, and a query object in the Queries section
+    that stores the SQL query itself.
+  - Swapping the engine: with Access 2000 and later, the Access
+    engine (Jet or ADE) can be replaced with another DBMS,
+    typically Microsoft SQL Server. Access 2019 uses the Open
+    Database Connectivity (ODBC) standard for this. Chapter 11.
+    Reasons: a large database, or SQL Server's advanced features.
+  - KEY TERM: ODBC (Open Database Connectivity): a standard for
+    connecting an application to a DBMS other than its native
+    engine (added definition).
+
+================================================================
+3. ENTERPRISE-CLASS DATABASE APPLICATIONS (FIGURE 1-19)
+================================================================
+  - In an enterprise-class system the applications and the DBMS
+    are not under the same cover. Applications are separate from
+    each other and from the DBMS.
+  - Enterprise applications add functions beyond the five basics
+    of Figure 1-10. Figure 1-19 shows five categories feeding SQL
+    to the DBMS:
+      1. Applications running over a corporate network
+         (client/server). The application is a client that
+         connects to a database server. Often written in
+         VB.NET, C++, or Java.
+      2. E-commerce and other applications on a Web server.
+         Users connect via browsers: Microsoft Edge (or the
+         older Internet Explorer), Mozilla Firefox, Google
+         Chrome. Common Web servers: Microsoft's Internet
+         Information Server (IIS) and Apache. Common languages:
+         PHP, Java, and the Microsoft .NET languages such as
+         C#.NET and VB.NET. Chapter 11.
+      3. Web portal with reporting applications. Publish query
+         results on a corporate portal or other Web site. Often
+         built with third-party report generation and digital
+         dashboard products: IBM (Cognos Business Intelligence)
+         and MicroStrategy (MicroStrategy 10). Chapter 12.
+      4. XML Web services applications. Combine the XML markup
+         language with other standards for program-to-program
+         communication, so application code is distributed over
+         several computers. Written in Java or any .NET
+         language. Chapter 12.
+      5. Mobile apps, such as smartphone apps. Not discussed in
+         the book.
+  - All five read and write data by sending SQL to the DBMS. They
+    may create forms and reports, send results to other programs,
+    and implement application logic beyond simple form and report
+    processing. (Book cites out-of-stock and backorder handling.)
+
+================================================================
+4. THE ENTERPRISE-CLASS DBMS AND THE THREE PRODUCTS
+================================================================
+  - The DBMS manages the database: processes SQL and provides
+    features for creating, processing, and administering it.
+  - Popularity, as of April 2020 (DB-Engines ranking, footnote
+    7), the three most popular enterprise-class relational DBMS
+    products in order: Oracle Database, MySQL, Microsoft SQL
+    Server.
+  - Footnote 7 detail: of the top 10 DBMS products, seven are
+    relational and three are non-relational. PostgreSQL ranked
+    fourth with about half of SQL Server's score. IBM DB2 ranked
+    sixth with about one third of PostgreSQL's score. Microsoft
+    Access ranked 10th, not far behind DB2, despite not being
+    enterprise-class, probably because it ships with Office.
+  - The book's primary DBMS: Microsoft SQL Server 2019, with
+    support for Oracle Database and MySQL.
+  - SQL is essentially the same in all DBMS products, so it is
+    vendor and product independent, with some syntax differences
+    between products.
+  - The same sample query runs in all three products with
+    matching results, sorted in a different order in each.
+  - Textbook slip: the SQL Server paragraph says its results
+    match Figure 1-20 (the SQL Server figure itself). The Oracle
+    and MySQL paragraphs say Figure 1-12, which is what is meant.
+
+  Microsoft SQL Server 2019 (Figure 1-20)
+  - Client interface: Microsoft SQL Server Management Studio.
+    Query typed in a text editor window, Execute button, results
+    in a separate Results window.
+  - Developer Edition: free download, a great learning tool, but
+    single-user development environment only.
+  - Express Edition: free download, learning tool that can also
+    run smaller production databases.
+  - Online Chapter 10A, "Managing Databases with Microsoft SQL
+    Server 2019."
+
+  Oracle Database (Figure 1-21)
+  - Current Enterprise Edition: Oracle Database 19c. Oracle
+    Database 20c in preview. Enterprise Edition is complex and
+    needs purchased user licenses.
+  - Free version: Oracle Database 18c Express Edition, called
+    Oracle Database XE. Has all the features the book covers.
+    Good learning tool, usable for smaller production databases.
+  - Client interface: Oracle SQL Developer. Results appear in a
+    Query Result window.
+  - Naming conventions differ per DBMS.
+  - Online Chapter 10B, "Managing Databases with Oracle
+    Database."
+
+  MySQL 8.0 (Figure 1-22)
+  - Oracle's MySQL Community Server 8.0: free download, a
+    standard full-strength edition, usable in production. Full
+    product support requires purchasing MySQL Enterprise Edition
+    8.0 from Oracle.
+  - Client interface: MySQL Workbench. Results in a separate
+    Results window.
+  - MySQL uses all lowercase letters in object names.
+  - Widely used for Web database applications.
+  - Online Chapter 10C, "Managing Databases with MySQL 8.0."
+
+================================================================
+5. OPERATING SYSTEMS AND LEARNING BY DOING
+================================================================
+  - A DBMS does not run by itself. It needs an operating system
+    for basic operations (reading and writing files, printing).
+    Pick a DBMS the OS supports.
+  - Main OS products: Microsoft Windows (desktop and notebook),
+    Microsoft Windows Server (servers), Apple macOS (formerly
+    Macintosh), and various Linux versions.
+  - Microsoft DBMS products (Access and SQL Server) run on
+    Microsoft operating systems. SQL Server now also runs on
+    Linux.
+  - Oracle Database runs on Windows and Linux, not macOS.
+  - MySQL is the only one of the three that runs on all three
+    operating systems (Windows, macOS, Linux).
+  - Learning by doing: the book expects a DBMS at hand. Some
+    Chapter 1, 2, and 7 work can be done in Access 2019, but use
+    an enterprise-class product. Each of the three has a free
+    downloadable version, with online Chapters 10A, 10B, 10C for
+    install and use.
+  - DBMS work starts in Chapter 2 with SQL queries. Book examples
+    are built in SQL Server 2019.
+
+================================================================
+6. TAIL: DATABASE DESIGN (FIGURE 1-23)
+================================================================
+  - KEY TERM: database design (as a process): creating the proper
+    structure of tables, the proper relationships between tables,
+    appropriate data constraints, and other structural components.
+  - Important and difficult, so the world is full of poorly
+    designed databases. They perform badly, force overly complex
+    and contrived SQL, adapt poorly to changing requirements, or
+    fail in other ways. Most of the first half of the book covers
+    design.
+  - Three types of database design:
+      1. Database design from existing data
+      2. Database design for new systems development
+      3. Database redesign of an existing database
+  - The excerpt ends here. The next reading continues Database
+    Design.
+
+================================================================
+7. KEY TAKEAWAYS
+================================================================
+  - Personal system (Access): DBMS plus application generator
+    under one cover, technology hidden. Enterprise-class:
+    applications separate from each other and from the DBMS.
+  - Access engine: Jet until Office 2007, then ADE (formerly
+    called ACE). Swappable for SQL Server since Access 2000.
+    Access 2019 does it via ODBC.
+  - Five enterprise application categories: client/server, Web
+    server (e-commerce), reporting portal, XML Web services,
+    mobile apps.
+  - Top three relational DBMS in April 2020: Oracle Database,
+    MySQL, SQL Server. Book uses SQL Server 2019.
+  - Free editions: SQL Server Developer (dev only) and Express
+    (small production), Oracle Database XE (18c), MySQL
+    Community Server 8.0.
+  - OS support: MySQL on all three. Oracle not on macOS. SQL
+    Server on Windows and Linux.
+  - Three types of database design: from existing data, for new
+    systems development, redesign of an existing database.
+
+================================================================
+8. QUIZ-SAFE FACTS
+================================================================
+  - Microsoft Access = personal database system = DBMS + an
+    application generator (form, report, and query components).
+  - Access engine: Access Database Engine (ADE), an Office-
+    specific version of Jet (Joint Engine Technology). Jet was
+    used until Office 2007. ADE was originally named ACE (Office
+    Access Connectivity Engine).
+  - Other personal database systems: OpenOffice.org Base,
+    LibreOffice Base.
+  - Access is in Windows Office, not macOS Office.
+  - Access 2000 and later can replace Jet or ADE with another
+    DBMS (typically SQL Server). Access 2019 uses ODBC for this.
+    ODBC: Chapter 11.
+  - Client/server languages: VB.NET, C++, Java. Web server
+    languages: PHP, Java, C#.NET, VB.NET. Web servers: IIS,
+    Apache. Browsers named: Edge, Internet Explorer, Firefox,
+    Chrome.
+  - Reporting vendors: IBM Cognos Business Intelligence,
+    MicroStrategy 10. Reporting and data mining: Chapter 12.
+    XML Web services: Chapter 12. Mobile apps: not covered.
+  - April 2020 DB-Engines top three: Oracle Database, MySQL,
+    Microsoft SQL Server. PostgreSQL 4th, DB2 6th, Access 10th.
+    Top 10 split: 7 relational, 3 non-relational.
+  - Client tools: SQL Server Management Studio, Oracle SQL
+    Developer, MySQL Workbench.
+  - SQL Server 2019 Developer Edition: free, single-user
+    development only. Express Edition: free, smaller production.
+  - Oracle Database 19c current, 20c preview. Oracle Database XE
+    = 18c Express Edition.
+  - MySQL Community Server 8.0 free and production-ready. MySQL
+    Enterprise Edition 8.0 adds paid support. Object names all
+    lowercase.
+  - Online chapters: 10A SQL Server, 10B Oracle, 10C MySQL.
+  - SQL is vendor and product independent, with minor syntax
+    differences.
+  - MySQL is the only one of the three running on Windows,
+    macOS, and Linux. Oracle skips macOS. SQL Server runs on
+    Windows and Linux.
+  - Database design is important and difficult. Three types:
+    from existing data, for new systems development, redesign.
