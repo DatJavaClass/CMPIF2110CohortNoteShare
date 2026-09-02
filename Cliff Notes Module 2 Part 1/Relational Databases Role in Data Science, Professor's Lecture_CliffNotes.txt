@@ -1,10 +1,4 @@
-Relational Databases Role in Data Science: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Professor's lecture transcript "Relational Databases Role in Data Science"
-
-================================================================
 1. THE SIX ROLES AT A GLANCE
-================================================================
   - Data storage.
   - Data retrieval.
   - Data cleaning and pre-processing.
@@ -12,21 +6,17 @@ Source: Professor's lecture transcript "Relational Databases Role in Data Scienc
   - Data governance and security.
   - Exploratory data analysis (EDA).
 
-================================================================
 2. DATA STORAGE
-================================================================
   - Relational databases store structured data in organized
     tables with predefined schemas. That makes it easy to
     maintain data integrity, consistency, and accessibility for
     analysis.
-  - Professor's image: a table is a stored spreadsheet with
-    rules. Columns and rows.
+  - Analogy: a table is a stored spreadsheet with rules.
+    Columns and rows.
   - Sources of structured data: business transactions, customer
     information, sensor data, and so on.
-  - Adjacent example: a shipments table always has the same
-    columns, ShipmentID, Carrier, WeightKg, and every row must
-    fit them (adjacent example, the professor used a customer
-    orders table).
+  - Example: a shipments table always has the same columns,
+    ShipmentID, Carrier, WeightKg, and every row must fit them.
   - The structure enforces integrity and consistency, which is
     crucial for quality analysis. Data stays clean, complete,
     easy to analyze.
@@ -36,30 +26,23 @@ Source: Professor's lecture transcript "Relational Databases Role in Data Scienc
   - KEY TERM: schema: the predefined set of tables, columns, and
     types a relational database enforces (added definition).
 
-================================================================
 3. DATA RETRIEVAL
-================================================================
   - Using SQL, data scientists extract relevant data by writing
     queries that filter, sort, join, and aggregate information
     from one or more tables.
   - Data scientists pull relevant subsets of data for analysis
     done elsewhere.
-  - Professor's image: ordering from a menu. Tell the database
-    which rows and columns you want and how to filter or combine
-    them.
+  - Analogy: ordering from a menu. Tell the database which rows
+    and columns you want and how to filter or combine them.
   - Complex queries (joins, aggregations, filters) make it easy
-    to slice and dice data. Adjacent example: the five
-    best-selling products last quarter comes back from a single
-    query (adjacent example, the professor used top 10 customers
-    by purchase total last year).
+    to slice and dice data. Example: the five best-selling
+    products last quarter comes back from a single query.
   - KEY TERM: join: combining rows from two or more tables on a
     matching column (added definition).
   - KEY TERM: aggregate: summarize many rows into one value, such
     as a count, sum, or average (added definition).
 
-================================================================
 4. DATA CLEANING AND PRE-PROCESSING
-================================================================
   - Relational databases support cleaning operations in SQL
     before the data reaches analytical tools: removing
     duplicates, handling missing values, transforming columns.
@@ -67,36 +50,28 @@ Source: Professor's lecture transcript "Relational Databases Role in Data Scienc
     missing values, change formats.
   - SQL handles missing values, duplicates, filtering, grouping,
     and transforming before load into Python or R.
-  - Adjacent example: standardize state names so "new york" and
-    "NEW YORK" both become "New York," or drop rows whose date
-    field is not a valid date, and save the fix-up work later in
-    Python or R (adjacent example, the professor used city
-    names and invalid timestamps). The professor calls the
-    capitalized form "camel case."
+  - Example: standardize state names so "new york" and "NEW
+    YORK" both become "New York," or drop rows whose date field
+    is not a valid date, and save the fix-up work later in
+    Python or R.
 
-================================================================
 5. INTEGRATION WITH ANALYTICAL TOOLS
-================================================================
   - Relational databases connect seamlessly with Python, R,
     Excel, and BI platforms. BI = business intelligence.
   - Data scientists import and manipulate data directly inside
     their analysis environments.
   - Python connection libraries named: Pandas, SQLAlchemy,
-    psycopg2. Transcript says "pscopg2," read as psycopg2. R
-    connects directly as well.
+    psycopg2. R connects directly as well.
   - Databases often serve as the backend for a data pipeline.
-    Professor's image: a giant data socket. Pull only the exact
-    data needed for modeling or visualization instead of
-    downloading gigabytes unnecessarily. Transcript says
-    "gigabits," read as gigabytes.
+    Analogy: a giant data socket. Pull only the exact data
+    needed for modeling or visualization instead of downloading
+    gigabytes unnecessarily.
   - Practical point: with large files, filter in SQL before
     loading into data frames.
   - KEY TERM: data pipeline: the chain of steps that moves data
     from source to model or report (added definition).
 
-================================================================
 6. DATA GOVERNANCE AND SECURITY
-================================================================
   - KEY TERM: data governance: the framework that manages data
     availability, usability, integration, and security across an
     organization, ensuring data is consistent, trustworthy, and
@@ -105,34 +80,26 @@ Source: Professor's lecture transcript "Relational Databases Role in Data Scienc
     secure and compliant.
   - Governance ensures all modifications can be audited for
     compliance and accountability.
-  - Adjacent example: a clinic database lets only clinicians see
-    diagnosis fields while billing staff see charges (adjacent
-    example, the professor used an HR system restricting salary
-    and date of birth).
+  - Example: a clinic database lets only clinicians see
+    diagnosis fields while billing staff see charges.
   - Features: access controls, transaction logs, and schemas that
     support secure, traceable work with sensitive or large
     datasets. Audit logs show who accessed the data. Important
     for privacy and regulatory compliance.
 
-================================================================
 7. EXPLORATORY DATA ANALYSIS (EDA)
-================================================================
   - KEY TERM: EDA: initial exploration of data, such as
     understanding distributions, frequencies, and trends, done
     before deep statistical analysis.
   - EDA can run as SQL queries directly inside the relational
     database. Often the analysis starts inside the database.
-  - Adjacent example: count orders per week, or find the most
-    returned items, straight from SQL (adjacent example, the
-    professor used users signed up per month and top-selling
-    products).
+  - Example: count orders per week, or find the most returned
+    items, straight from SQL.
   - Counts, distributions, and summaries via SQL come before the
     deeper dive in Pandas, Matplotlib, and similar tools. Quick
     SQL summaries give a feel for the data before visualization.
 
-================================================================
 8. KEY TAKEAWAYS
-================================================================
   - Six roles: storage, retrieval, cleaning, tool integration,
     governance and security, EDA.
   - Predefined schemas are the reason relational data stays
@@ -144,9 +111,7 @@ Source: Professor's lecture transcript "Relational Databases Role in Data Scienc
     plus auditability.
   - Start EDA in the database with counts and distributions.
 
-================================================================
 9. QUIZ-SAFE FACTS
-================================================================
   - Relational databases store structured data in tables with
     predefined schemas.
   - SQL query verbs the lecture lists: filter, sort, join,

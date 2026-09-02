@@ -1,10 +1,4 @@
-Lesson 2-1 Reading, Kroenke Chapter 1, Introduction: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textbook chapter, book pages 2 to 42)
-
-================================================================
 1. CHAPTER OBJECTIVES (13, as listed)
-================================================================
   - Understand the importance of databases in Internet Web
     applications and smartphone apps.
   - Understand the nature and characteristics of databases.
@@ -26,9 +20,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
   - Understand the history and development of database
     processing.
 
-================================================================
 2. DATABASES IN THE INTERNET AND MOBILE APP WORLD
-================================================================
   - Timeline the chapter gives (dates are quiz bait):
       Apple II 1977, IBM PC 1981 (the PC becomes widely
         available).
@@ -47,8 +39,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
         the 1970s. iPhone 2007. First Android phone 2008.
       Chapter written in 2020. Internet of Things (IoT): smart
         speakers (Amazon Echo, Apple HomePod, Google Home,
-        Harman Kardon INVOKE, book prints Harmon), smart home
-        devices, appliances.
+        Harman Kardon INVOKE), smart home devices, appliances.
         Virtual assistants: Alexa, Siri, Google Assistant,
         Cortana. Footnote: 8.4 billion IoT devices in 2017,
         30 billion expected by 2020.
@@ -60,9 +51,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
       KEY TERM: database (initial): the structure used to hold
         or store data.
       Data is processed to provide information.
-  - Figure 1-1 walks a search of the Pearson Higher Education
-    site for the author name Kroenke: search text box, Search
-    button, catalog database searched, results page returned.
+  - Figure 1-1: a search of the Pearson Higher Education site
+    for the author name Kroenke runs a query against the site's
+    catalog database and returns the results as a Web page.
   - Point-of-sale (POS) systems record every purchase in a
     database, monitor inventory, and track card-holder buying
     for marketing.
@@ -79,9 +70,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     hold the databases. Supports most Web applications in use.
   - People are users, their computers and phones are devices.
 
-================================================================
 3. THE CHARACTERISTICS OF RELATIONAL DATABASES
-================================================================
   - The purpose of a database is to help people keep track of
     things.
   - Databases are created and controlled by software called
@@ -113,22 +102,18 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
       Payoff: an all-caps name is always a table, an
         initial-cap name is always a column.
 
-================================================================
 4. A DATABASE HAS DATA AND RELATIONSHIPS: KEYS
-================================================================
   - A relational database is not complete unless it also shows
     the relationships among the rows. A table of values with no
     link to what they describe is useless, like a list of exam
-    scores with no student attached to any of them (adjacent
-    example, the book uses a sports-scores joke).
+    scores with no student attached to any of them.
   - So a database contains both data AND the relationships among
     the data.
   - Book figures 1-3 to 1-6 build a three-table database:
     STUDENT, CLASS, and GRADE. The GRADE table's primary key is
     the composite (StudentNumber, ClassNumber), and each of those
     two columns is also a foreign key back to STUDENT or CLASS.
-  - Adjacent example, same pattern, different data (adjacent
-    example):
+  - Example:
       EMPLOYEE (EmployeeNumber, LastName, FirstName,
         EmailAddress). Primary key EmployeeNumber, auto-assigned
         by the DBMS, so it is also a surrogate key.
@@ -153,14 +138,11 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     between two tables. Adding a foreign key creates a
     relationship between the two tables.
   - Figure 1-6 (Microsoft Access 2019 relationships view): key
-    symbols mark primary keys, lines run from foreign keys to
-    the matching primary keys, and the symbols on the line (the
-    number 1 and the infinity symbol) mean one row on the "1"
-    side can link to many rows on the infinity side.
+    symbols mark primary keys, and the number 1 and the infinity
+    symbol mark a one-to-many link, one row on the "1" side to
+    many rows on the infinity side.
 
-================================================================
 5. DATABASES CREATE INFORMATION
-================================================================
   - Decisions need information. Data was defined as recorded
     facts and numbers. Information has three definitions (from
     Kroenke's Using MIS and Experiencing MIS):
@@ -176,9 +158,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     facilitates producing information. Relational model in depth
     in Part 2 of the book.
 
-================================================================
 6. DATABASE EXAMPLES (FIGURE 1-7)
-================================================================
   Application            Users            Number    Typical size
   Sales contact manager  Salesperson      1         2,000 rows
   Patient appointment    Medical office   15 to 50  100,000 rows
@@ -234,13 +214,10 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     $1 million a year and one $100 million, have similar
     databases (same kinds of data, about the same number of
     tables, same relationship complexity). Only the amount of
-    data differs. Adjacent version: a one-shop bakery and a
-    thirty-store chain need the same table design (adjacent
-    example).
+    data differs. Likewise a one-shop bakery and a thirty-store
+    chain need the same table design.
 
-================================================================
 7. THE COMPONENTS OF A DATABASE SYSTEM
-================================================================
   - Figure 1-8, four components: users, database application,
     DBMS, database.
   - Figure 1-9 inserts SQL between the application and the DBMS.
@@ -268,9 +245,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     of things. Uses forms to read, enter, and query data, and
     produces reports.
 
-================================================================
 8. DATABASE APPLICATIONS AND SQL (FIGURE 1-10)
-================================================================
   - Five basic functions of application programs:
       Create and process forms.
       Process user queries.
@@ -282,30 +257,25 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     application generates the SQL insert, update, or delete
     behind it.
   - Queries: the application builds an SQL query, sends it to
-    the DBMS, formats the result. Adjacent example of the
-    chapter's sample query (adjacent example):
+    the DBMS, formats the result. Example:
 
       SELECT  LastName, FirstName, EmailAddress
       FROM    EMPLOYEE
       WHERE   EmployeeNumber > 10
 
     Returns those three columns for every employee numbered 11
-    and up. The book's version selects from STUDENT with the
-    same WHERE pattern and returns two of four students.
+    and up.
   - Reports: query the DBMS, then format the results, structured
     to the users' needs (sorted, grouped).
   - Application logic: a customer orders 5 units, the stock
-    query finds 3 (adjacent example). Refuse and notify, or ship
-    3 and backorder 2, or something else. The application, not
-    the DBMS, decides.
+    query finds 3. Refuse and notify, or ship 3 and backorder 2,
+    or something else. The application, not the DBMS, decides.
   - Control: (1) present only logical choices to the user, for
     example a menu of valid options, and (2) control data
     activity with the DBMS, such as telling it to make a set of
     changes as a unit, all or none (Chapter 9).
 
-================================================================
 9. THE DBMS (FIGURE 1-14)
-================================================================
   - Creates, processes, and administers the database. Almost
     always licensed. Five products hold the lion's share of the
     market: Microsoft Access, Oracle Database and MySQL (both
@@ -322,17 +292,16 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
       Perform backup and recovery.
   - KEY TERM: index: a supporting structure, akin to the index
     at the back of a book, that speeds sorting and searching.
-    Adjacent example: a 50,000-row CUSTOMER table searched
-    often by City gets an index on City so the DBMS does not
-    scan the whole table (adjacent example).
+    Example: a 50,000-row CUSTOMER table searched often by City
+    gets an index on City so the DBMS does not scan the whole
+    table.
   - Maintain structures: changing the format of a table or
     supporting structure over time.
   - KEY TERM: referential integrity constraints: rules the DBMS
     enforces so that a value in a foreign key column must
     already exist in the referenced table's primary key column.
-    In the adjacent example, an ASSIGNMENT row for
-    EmployeeNumber 42 is rejected if no employee 42 exists
-    (adjacent example).
+    Example: an ASSIGNMENT row for EmployeeNumber 42 is rejected
+    if no employee 42 exists.
   - Administration: concurrency control (one user's work must
     not inappropriately interfere with another's, Chapter 9), a
     security system (only authorized users perform authorized
@@ -341,9 +310,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     (protects a valuable centralized asset against errors,
     hardware and software failures, catastrophes).
 
-================================================================
 10. THE DATABASE: SELF-DESCRIBING, INTEGRATED, METADATA
-================================================================
   - KEY TERM: database (full definition): a self-describing
     collection of integrated tables.
   - KEY TERM: integrated table: a table that stores both data and
@@ -378,9 +345,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
       Security data (users, groups, permissions).
       Backup/recovery data. Chapters 9, 10, 10A, 10B, 10C.
 
-================================================================
 11. PERSONAL VS ENTERPRISE-CLASS DATABASE SYSTEMS
-================================================================
   - Two classes: personal database systems and enterprise-class
     database systems.
   - Microsoft Access is NOT just a DBMS. It is a personal
@@ -423,9 +388,6 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
         program-to-program communication, code spread over
         several computers, written in Java or .NET. Chapter 12.
       Mobile apps (not covered in the book).
-    Source slip: the chapter summary says Figure 1-18 shows
-    "four categories" of applications. The figure is 1-19 and
-    the body lists five, mobile apps being the fifth.
   - All of them read and write data by sending SQL to the DBMS.
   - DBMS popularity as of April 2020 (DB-Engines ranking):
     Oracle Database, MySQL, Microsoft SQL Server, in that order.
@@ -458,9 +420,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
   - The book recommends installing a free enterprise-class DBMS
     now. Examples in the book are built with SQL Server 2019.
 
-================================================================
 12. DATABASE DESIGN (FIGURE 1-23)
-================================================================
   - KEY TERM: database design (as a process): creation of the
     proper structure of tables, proper relationships between
     tables, appropriate data constraints, and other structural
@@ -496,9 +456,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     SAS Enterprise Miner, IBM SPSS Modeler, or TIBCO Spotfire.
   - Even one imported table raises design questions. Figure 1-25
     asks whether an employee list with a department column
-    should be one table or two. Adjacent example: a product
-    spreadsheet with a SupplierName column, one PRODUCT table
-    or PRODUCT plus SUPPLIER (adjacent example). Not arbitrary:
+    should be one table or two. Likewise a product spreadsheet
+    with a SupplierName column could be one PRODUCT table or
+    PRODUCT plus SUPPLIER. Not arbitrary:
     KEY TERM: normalization (normal forms): the set of
     principles database professionals use to guide and assess
     database designs (Chapter 3).
@@ -523,9 +483,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     Redesign is complicated and may be skipped in a first
     course. Chapter 8, after SQL in Chapter 7.
 
-================================================================
 13. WHAT YOU NEED TO LEARN (FIGURES 1-28 AND 1-29)
-================================================================
   - Two roles: user or database administrator.
       KEY TERM: knowledge worker: a user who prepares reports,
         mines data, and does other data analysis.
@@ -556,14 +514,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
       SQL Server, Oracle, MySQL, ArangoDB specifics
         (Ch 10, 10A to 10D): 3 / 1
       Database application technology (Ch 11 to 13): 1 / 3
-    Read the columns as the book prints them. The DBA column
-    rates SQL DDL, redesign, and administration "3" while the
-    programmer column rates them "1". Opinions vary, the book
-    says ask your instructor.
+    Opinions vary, the book says ask your instructor.
 
-================================================================
 14. A BRIEF HISTORY OF DATABASE PROCESSING (FIGURE 1-30)
-================================================================
   Era                    Years         Products
   Predatabase            Before 1970   File managers
   Early database         1970-1980     ADABAS, System2000, Total,
@@ -606,10 +559,8 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     1973 several commercial DBMS products existed, in use by the
     mid-1970s.
   - First edition of this text, 1977: ADABAS, System2000, Total,
-    IDMS, IMS. Body says ADABAS, IDMS, and IMS are still in use
-    with no substantial market share. Source slip: on the next
-    page the body says "no IDMS database is in use today," and
-    the chapter summary says only ADABAS and IMS survive.
+    IDMS, IMS. ADABAS and IMS are still in use with no
+    substantial market share.
   - KEY TERM: Data Language/I (DL/I): early method using
     hierarchies or trees to represent relationships. IMS (IBM)
     is based on it, still in limited use, popular with large
@@ -664,9 +615,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     for connecting to Web pages. Stateless: the server processes
     a request and forgets the user. Shopping carts are
     multistage, so capabilities were built on top to overcome
-    this. The body text calls it "Hypertext Transport Protocol,"
-    the Key Terms list says "Transfer." Transfer is the standard
-    expansion.
+    this.
   - KEY TERM: Web database application: an application with a
     Web user interface that depends on a database. Book example:
     Wedgewood Pacific (WP), a consumer drone maker (technical
@@ -680,9 +629,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     editions free, advanced editions or support purchased.
     MySQL released 1995 by Swedish company MySQL AB. Sun
     Microsystems bought MySQL AB in February 2008. Oracle
-    completed its acquisition of Sun in January 2013 (book's
-    date, see section 15). Oracle now owns Oracle Database and
-    Oracle MySQL. MySQL is popular on Linux Web servers.
+    completed its acquisition of Sun in January 2013. Oracle now
+    owns Oracle Database and Oracle MySQL. MySQL is popular on
+    Linux Web servers.
   - KEY TERM: MariaDB DBMS: an open source fork of the last open
     source MySQL code, made by users unhappy with the Oracle
     acquisition, largely compatible with MySQL. MySQL and MariaDB
@@ -714,9 +663,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     DBMS (April 2020, ranked fifth overall). More document DBMSs
     use JSON than XML.
   - Book's non-relational DBMS: ArangoDB from German company
-    triAGENS (book prints "GmgH"). ArangoDB query language (AQL)
-    is its SQL equivalent, output is JSON, with generated columns
-    _key, _id, and _rev.
+    triAGENS GmbH. ArangoDB query language (AQL) is its SQL
+    equivalent, output is JSON, with generated columns _key,
+    _id, and _rev.
   - Relational vendors responded: data transfer to and from
     non-relational stores, SQL Server 2019 supports graph
     databases, MySQL supports document data.
@@ -729,28 +678,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     Amazon Web Services (AWS), Google Cloud. Also Office 365
     Business as a hosted platform. Chapters 12 and 13.
 
-================================================================
-15. SOURCE SLIPS AND CORRECTIONS
-================================================================
-  - Summary figure numbers are stale: it cites Figure 1-18 for
-    application categories (body: 1-19), and Figures 1-25, 1-26,
-    1-27 for domains, priorities, and history (body: 1-28, 1-29,
-    1-30). Use the body numbers.
-  - IDMS: "still in use" (page 30) vs "no IDMS database is in
-    use today" (page 31) vs summary "only ADABAS and IMS."
-  - Oracle's acquisition of Sun Microsystems: the book says
-    "January 2013" and "early 2013." The deal closed in January
-    2010 (correction, added). For a course quiz, answer with the
-    book's date if asked.
-  - HTTP expansion: body "Transport," Key Terms "Transfer."
-  - "triAGENS GmgH" should read GmbH (added).
-  - Figure 1-30 prints Data Warehouses as "1998-present" even
-    though the body dates the term to 1988. Faithful to the
-    figure here.
-
-================================================================
-16. KEY TERMS (from source, 132 entries, alphabetical as printed)
-================================================================
+15. KEY TERMS (from source, 132 entries, alphabetical as printed)
   - KEY TERM: Access Database Engine (ADE): the DBMS engine
     inside Microsoft Access since Office 2007, an Office-specific
     version of Jet, not licensed separately.
@@ -964,8 +892,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
   - KEY TERM: Oracle Database Enterprise Edition: the full,
     complex, license-only Oracle DBMS.
   - KEY TERM: Oracle Database SQL Developer: the user client
-    interface for Oracle Database (body calls it Oracle SQL
-    Developer).
+    interface for Oracle Database.
   - KEY TERM: Oracle Database XE: common name for Oracle Database
     18c Express Edition.
   - KEY TERM: personal computer (PC): Apple II 1977, IBM PC 1981.
@@ -1035,9 +962,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
   - KEY TERM: Xerox Palo Alto Research Center (Xerox PARC): lab
     that developed Ethernet, the mouse, and the multi-window GUI.
 
-================================================================
-17. KEY TAKEAWAYS
-================================================================
+16. KEY TAKEAWAYS
   - Purpose of a database: help people keep track of things.
     Two categories: relational and non-relational. Relational is
     the most common.
@@ -1064,9 +989,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
     Access 1991, then OODBMS (failed), data warehouses, the Web,
     open source, XML, NoSQL and cloud.
 
-================================================================
-18. QUIZ-SAFE FACTS
-================================================================
+17. QUIZ-SAFE FACTS
   - Two categories of databases: relational and non-relational.
     Relational is most commonly used.
   - Rows = records, columns = fields. Table names all caps,
@@ -1091,7 +1014,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textb
   - Codd, 1970, Communications of the ACM, relational algebra.
     First edition of this text 1977. Access 1991 at $99.
   - MySQL: 1995, MySQL AB (Sweden), Sun 2008, Oracle completed
-    the Sun deal January 2013 per the book (actually 2010).
+    the Sun deal January 2013.
   - Data warehouse term: 1988, Devlin and Murphy, IBM.
   - HTTP is stateless. NoSQL = "Not only SQL", 2009. Document
     databases use XML or JSON. Facebook and Twitter use

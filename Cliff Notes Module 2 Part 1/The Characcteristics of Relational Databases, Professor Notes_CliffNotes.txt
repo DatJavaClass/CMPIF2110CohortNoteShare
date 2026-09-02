@@ -1,10 +1,4 @@
-The Characteristics of Relational Databases, Professor Notes: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Professor's notes (text version of the Coursera reading of the same name, Kroenke Chapter 1 Figures 1-3 to 1-6). The source filename spells it "Characcteristics".
-
-================================================================
 1. THE CHARACTERISTICS OF RELATIONAL DATABASES
-================================================================
   - Purpose of a database: help people track things of interest
     to them.
   - Two categories: relational and non-relational.
@@ -15,20 +9,16 @@ Source: Professor's notes (text version of the Coursera reading of the same name
     thing. Each row is one occurrence or instance of that thing.
   - A database stores data and relationships.
 
-================================================================
 2. NAMING CONVENTIONS IN THE TEXTBOOK
-================================================================
   - Table names in all capitals (the notes list STUDENT, CLASS,
     GRADE, COURSE_INFO).
   - Column names start with a capital, compound names capitalize
     each word (the notes list Term, Section, ClassNumber,
     StudentName).
-  - Adjacent example: table VEHICLE, columns PlateNumber,
-    MakeName, ModelYear (adjacent example).
+  - Example: table VEHICLE, columns PlateNumber, MakeName,
+    ModelYear.
 
-================================================================
 3. A DATABASE HAS DATA AND RELATIONSHIPS
-================================================================
   - Relational databases store data and have relationships among
     rows of data.
   - KEY TERM: primary key: identifies each row of a table.
@@ -39,30 +29,26 @@ Source: Professor's notes (text version of the Coursera reading of the same name
   - KEY TERM: foreign key: the link between two tables that
     provides the link to a relationship.
 
-================================================================
-4. FIGURES 1-3 TO 1-6, WHAT EACH ONE SHOWS
-================================================================
-  - Figure 1-3: STUDENT (StudentNumber, LastName, FirstName,
-    EmailAddress) and CLASS (ClassNumber, ClassName, Term,
-    Section). Four students plus a blank "New" row, and five
-    classes. Callouts: one row holds one student, one column
-    holds the ClassName for each class.
-  - Figure 1-4: adds GRADE with a single Grade column, six values
-    plus a blank row. Callout: who do these grades belong to?
-  - Figure 1-5, the key database characteristic, related tables:
-    GRADE becomes (StudentNumber, ClassNumber, Grade). GRADE's
-    StudentNumber links to STUDENT's, GRADE's ClassNumber links
-    to CLASS's. Now each grade is linked back to a student and a
-    class.
-  - Figure 1-6, Microsoft Access 2019 view: key symbols on
-    StudentNumber (STUDENT), on StudentNumber and ClassNumber
-    (GRADE, the composite key), and on ClassNumber (CLASS).
-    GRADE sits between the other two with lines to each. The
-    number 1 is on the STUDENT and CLASS sides, the infinity
-    symbol on the GRADE sides: one student may be linked to many
-    grades by StudentNumber. Notes say "many graded," read as
-    "many grades."
-  - Adjacent example with the same lesson (adjacent example):
+4. THE STUDENT, CLASS, AND GRADE TABLES (FIGURES 1-3 TO 1-6)
+  - Figure 1-3, in the professor's notes: STUDENT
+    (StudentNumber, LastName, FirstName, EmailAddress) and CLASS
+    (ClassNumber, ClassName, Term, Section). One row holds one
+    student, one column holds one characteristic of every class.
+  - Figure 1-4, in the professor's notes: a GRADE table with
+    only a Grade column. Grades with no link to a student or a
+    class are useless.
+  - Figure 1-5, in the professor's notes, the key database
+    characteristic, related tables: GRADE becomes
+    (StudentNumber, ClassNumber, Grade). GRADE's StudentNumber
+    links to STUDENT's, GRADE's ClassNumber links to CLASS's, so
+    each grade is linked back to one student and one class.
+  - Figure 1-6, in the professor's notes, Microsoft Access 2019
+    relationships view: key symbols mark primary keys, 1 and the
+    infinity symbol mark a one-to-many link. GRADE's primary key
+    is the composite (StudentNumber, ClassNumber), both columns
+    are foreign keys, and one student may be linked to many
+    grades by StudentNumber.
+  - Example:
       PATIENT (PatientNumber, LastName, FirstName, Phone).
       DOCTOR (DoctorNumber, DoctorName, Specialty, Office).
       VISIT (PatientNumber, DoctorNumber, VisitDate).
@@ -72,9 +58,7 @@ Source: Professor's notes (text version of the Coursera reading of the same name
     VisitDate) if a patient can see the same doctor more than
     once. One patient to many visits, one doctor to many visits.
 
-================================================================
 5. DATABASES CREATE INFORMATION
-================================================================
   - KEY TERM: data: recorded facts and figures.
   - KEY TERM: information: knowledge derived from data, OR data
     presented in a meaningful context, OR data processed by
@@ -84,9 +68,7 @@ Source: Professor's notes (text version of the Coursera reading of the same name
     produced from it. The STUDENT, CLASS, and GRADE data could
     yield each student's GPA.
 
-================================================================
 6. KEY TAKEAWAYS
-================================================================
   - Track things of interest. Relational vs non-relational. Big
     Data = enormous datasets.
   - Tables, rows (records), columns (fields). One table per
@@ -98,9 +80,7 @@ Source: Professor's notes (text version of the Coursera reading of the same name
   - Data = recorded facts and figures. Information = data made
     useful.
 
-================================================================
 7. QUIZ-SAFE FACTS
-================================================================
   - Row = record. Column = field.
   - Two categories of databases: relational and non-relational.
   - Enormous datasets are called Big Data.
