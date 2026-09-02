@@ -15,6 +15,12 @@ The notes are organized by module part:
 - `Cliff Notes Module 2 Part 2/` (the four components of a database system: users, database applications, the DBMS, and the database itself. What applications do, the nine functions of a DBMS, the metadata that makes a database self-describing, personal Microsoft Access versus enterprise-class systems, and the big three products with the operating systems they run on)
 - `Cliff Notes Module 2 Part 3/` (how databases come to exist and where they came from: the three database design paths, from existing data, for new systems development, and redesign, the two roles you are training for, and the history of database processing from file systems through the relational model, the PC era, object-oriented databases, OLTP and BI, the Web, open source, XML, and big data with NoSQL)
 
+## Guides
+
+Standalone walkthroughs and setup guides:
+
+- [`Guides/AltConnectInstructions.md`](Guides/AltConnectInstructions.md) (Pitt's VPN without the GlobalProtect client: OpenConnect inside WSL2, working from VS Code on the tunnel, a relay so Microsoft Access can reach the course server, and the fixes for when it goes sideways)
+
 ## Contributors
 
 - **DatJavaClass (Victor S)**, author and director. Conceived these notes, established their format and structure, directed their creation, and fact-checked, edited, and quality-controlled every one, with assistance by Claude. Some material may have been derived from assigned material, but has not been copied verbatim. For source materials please contact CMPINF-2110 Faculty and Assistants.
