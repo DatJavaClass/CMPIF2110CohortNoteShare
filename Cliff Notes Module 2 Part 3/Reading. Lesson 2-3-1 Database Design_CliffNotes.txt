@@ -1,0 +1,244 @@
+Reading, Lesson 2-3-1, Database Design: Study Guide
+Course: Managing, Querying, and Preserving Data (CMPINF-2110)
+Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 24-28), Coursera-packaged reading
+
+================================================================
+1. LEAD-IN: DBMS PRODUCTS NEED AN OPERATING SYSTEM
+================================================================
+  - A DBMS is an application like any other. It runs on top of
+    an operating system (OS) that handles file reads and writes,
+    printing, and the other basic operations. Pick a DBMS with
+    its supported OS in mind.
+  - Main OS products named: Microsoft Windows (desktop and
+    notebook), Microsoft Windows Server (servers), Apple macOS,
+    and various versions of Linux.
+  - Who runs where:
+      Microsoft Access and Microsoft SQL Server: Microsoft OSes.
+        SQL Server now also runs on Linux.
+      Oracle Database: Windows and Linux, NOT Apple macOS.
+      MySQL: the only one of the three relational DBMS products
+        that runs on all three operating systems.
+  - Learning by doing. Some Chapter 1, 2, and 7 work can be done
+    in Microsoft Access 2019, but the authors want an
+    enterprise-class product. All three have free downloads,
+    each with an online chapter: SQL Server 2019 (Chapter 10A),
+    Oracle Database XE (Chapter 10B), MySQL 8.0 (Chapter 10C).
+  - The book builds its examples in Microsoft SQL Server 2019.
+    SQL work starts in Chapter 2.
+
+================================================================
+2. WHAT DATABASE DESIGN IS
+================================================================
+  - KEY TERM: database design (as a process): the creation of
+    the proper structure of database tables, the proper
+    relationships between tables, appropriate data constraints,
+    and other structural components of the database.
+  - Correct design is both important and difficult, so the world
+    is full of poorly designed databases. Symptoms: poor
+    performance, application developers forced to write overly
+    complex and contrived SQL to get the data they want,
+    difficulty adapting to new and changing requirements, or
+    failure in some other way.
+  - Because it is important and difficult, most of the first
+    half of the text is about design.
+  - Figure 1-23, the three types of database design:
+
+      Type                 Chapters  Activities
+      From existing data   3 and 4   Analyze spreadsheets and
+                                     other data tables. Extract
+                                     data from other databases.
+                                     Design using normalization
+                                     principles.
+      New systems          5 and 6   Create data model from
+        development                  application requirements.
+                                     Transform data model into
+                                     database design.
+      Database redesign    8         Migrate databases to newer
+                                     databases. Integrate two or
+                                     more databases.
+                                     Reverse-engineer and design
+                                     new databases using
+                                     normalization principles
+                                     and data model
+                                     transformation.
+
+  - Figure note: Chapter 7 covers database implementation using
+    SQL. That knowledge is required before redesign makes sense.
+
+================================================================
+3. TYPE 1: DATABASE DESIGN FROM EXISTING DATA
+================================================================
+  - Figure 1-24, two inputs. Either a development team is handed
+    spreadsheets or text files holding tables of data and must
+    design a database and import them, OR the new database is
+    built from extracts of other databases.
+  - The extract route is especially common in business
+    intelligence (BI) systems, which include reporting and data
+    mining applications. Data from an operational database (a
+    CRM or ERP database) is copied into a new database used only
+    for studies and analysis.
+  - KEY TERM: data warehouse and data mart: databases that store
+    data organized specifically for research and reporting
+    (Chapter 12). Their data is often exported to analytical
+    tools. Named tools: SAS's Enterprise Miner, IBM's SPSS
+    Modeler, TIBCO's Spotfire.
+  - The design question: how should the multiple files or tables
+    in the new database be related? Even importing a single
+    table raises it (Figure 1-25 asks whether a flat table of
+    employees with their department numbers and names should
+    become one table or two).
+  - Adjacent example. A spreadsheet lists products with a
+    supplier number and supplier name on every row. Option (a),
+    one table: PRODUCT holding ProductNum, ProductName,
+    SupplierNum, SupplierName, with each supplier's name
+    repeated on every product it supplies. Option (b), two
+    tables: SUPPLIER (SupplierNum, SupplierName) and PRODUCT
+    (ProductNum, ProductName, SupplierNum), linked by
+    SupplierNum. Same data, two structures. (adjacent example)
+  - Such decisions are not arbitrary. Database professionals use
+    a set of principles, collectively called normalization, or
+    normal forms, to guide and assess designs. Chapter 3.
+      - KEY TERM: normalization: the principles used to judge and
+        improve table structure, in this case to decide when to
+        split data into related tables (added definition).
+
+================================================================
+4. TYPE 2: DATABASE DESIGN FOR NEW SYSTEMS DEVELOPMENT
+================================================================
+  - Figure 1-26. Inputs are the requirements for a new system:
+    desired data entry forms and reports, user requirements
+    statements, use cases, and other systems development
+    documents. Together: systems requirements.
+  - KEY TERM: use case: a scenario of users interacting with an
+    information system to obtain a desired result.
+  - In all but the simplest projects, the jump from user
+    requirements straight to a database design is too big. So
+    the team takes two steps:
+      1. Create a data model from the requirements statements.
+      2. Transform that data model into a database design.
+  - KEY TERM: data model: a blueprint used as a design aid on the
+    way to a database design (as a product), which in turn is
+    the basis for building the actual database in a DBMS.
+  - Two meanings of "database design," and the book uses both:
+      As a PROCESS: the activity of designing a database.
+      As a PRODUCT: the annotated diagram that results from that
+        process.
+    Read the context to know which is meant.
+  - Chapter 5 teaches the most popular data modeling technique,
+    entity-relationship (ER) data modeling, and how to represent
+    common form and report patterns with it. Chapter 6 teaches
+    transforming ER data models into database designs.
+
+================================================================
+5. TYPE 3: DATABASE REDESIGN
+================================================================
+  - Figure 1-27. Two common types of redesign.
+  - Type A, adapt an existing database to new or changing
+    requirements. Sometimes called database migration. Tables
+    may be created, modified, or removed, relationships altered,
+    data constraints changed, and so on.
+      - KEY TERM: database migration: redesign that adapts one
+        database into a new design to meet changed requirements.
+  - Type B, integrate two or more databases into one design.
+    Common when adapting or removing legacy systems, and in
+    enterprise application integration, when two or more
+    previously separate information systems are adapted to work
+    with each other.
+  - Redesign is complicated. No way around it. A first-exposure
+    instructor may skip it. Reread it later with more
+    experience. It is still important.
+  - Prerequisites: SQL statements for defining database
+    structures plus advanced SQL for querying and updating. So
+    redesign waits for Chapter 8, after Chapter 7 covers
+    creating and altering tables.
+
+================================================================
+6. WHAT YOU NEED TO LEARN: TWO ROLES
+================================================================
+  - Two ways to work with database technology: as a USER or as a
+    DATABASE ADMINISTRATOR.
+  - User comes in two flavors:
+      Knowledge worker: prepares reports, mines data, does other
+        data analysis.
+      Programmer: writes applications that process the database.
+  - KEY TERM: database administrator (DBA): the person who
+    designs, constructs, and manages the database itself.
+  - Focus split: users are primarily concerned with constructing
+    SQL statements to store and retrieve the data they want.
+    DBAs are primarily concerned with the management of the
+    database.
+  - Figure 1-28, working domains. Users reach the database
+    through applications: a Web server with PHP or Java
+    applications, client applications in C# or VB.NET, or a Web
+    portal with reporting applications. Those applications send
+    SQL to the DBMS (Access Database Engine, SQL Server, MySQL,
+    or Oracle Database), and the DBMS talks to the database.
+    Knowledge workers and programmers own the application side,
+    the DBA owns the DBMS and database side.
+  - Both roles need everything in the text, with different
+    emphasis. Figure 1-29 (the priorities table, covered in the
+    Lesson 2-3-2 reading) rates each topic for each role. The
+    authors say to discuss it with your instructor, who knows
+    the local job market.
+  - BY THE WAY box: a Rand Corporation study (Karoly and Panis,
+    The 21st Century at Work, 2004) says the most secure US jobs
+    involve adapting new technology to solve business problems
+    in innovative ways. 5 of the top 10 jobs on a CNNMoney list
+    used database knowledge and related skills.
+
+================================================================
+7. KEY TAKEAWAYS
+================================================================
+  - Database design = proper tables, relationships, constraints,
+    and other structure. Important, difficult, and most of the
+    book's first half.
+  - Three types: from existing data (normalization, Ch 3-4),
+    for new systems development (data model then transform,
+    Ch 5-6), and redesign (migration or integration, Ch 8, after
+    SQL in Ch 7).
+  - "Database design" means both the process and the resulting
+    annotated diagram. Watch the context.
+  - Existing-data design hinges on one question: how should the
+    tables be related? Normalization answers it.
+  - New-systems design goes requirements to data model
+    (blueprint, usually ER) to database design.
+  - Redesign is either migration (adapt one database) or
+    integration (merge two or more).
+  - Users (knowledge workers, programmers) live in SQL and
+    applications. DBAs design, construct, and manage the
+    database.
+
+================================================================
+8. QUIZ-SAFE FACTS
+================================================================
+  - Three types of database design: from existing data, for new
+    systems development, redesign of an existing database.
+  - From existing data: Chapters 3 and 4. New systems
+    development: Chapters 5 and 6. Redesign: Chapter 8. SQL
+    implementation: Chapter 7, prerequisite for redesign.
+  - Normalization (normal forms) guides design from existing
+    data. Taught in Chapter 3.
+  - Extracting from operational databases (CRM, ERP) is common
+    in BI systems. The extracts live in data warehouses and data
+    marts (Chapter 12).
+  - Analytical tools named: SAS Enterprise Miner, IBM SPSS
+    Modeler, TIBCO Spotfire.
+  - New systems: two steps, data model from requirements, then
+    data model transformed into database design. A data model is
+    a blueprint. ER data modeling is the most popular technique
+    (Chapter 5). Transformation is Chapter 6.
+  - Use case: a scenario of users interacting with a system to
+    get a desired result.
+  - Redesign type 1 = database migration (adapt to new or
+    changed requirements). Redesign type 2 = integration of two
+    or more databases (legacy systems, enterprise application
+    integration).
+  - Two roles: user (knowledge worker or programmer) and
+    database administrator (DBA). DBA designs, constructs, and
+    manages the database.
+  - DBMS to OS: Access and SQL Server on Microsoft OSes (SQL
+    Server also Linux). Oracle Database on Windows and Linux,
+    not macOS. MySQL on all three.
+  - Book examples use Microsoft SQL Server 2019. Online
+    chapters: 10A SQL Server 2019, 10B Oracle Database XE, 10C
+    MySQL 8.0.
