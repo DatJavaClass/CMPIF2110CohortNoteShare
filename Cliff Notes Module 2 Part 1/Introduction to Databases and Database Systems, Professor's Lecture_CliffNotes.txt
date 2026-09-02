@@ -1,0 +1,200 @@
+Introduction to Databases and Database Systems: Study Guide
+Course: Managing, Querying, and Preserving Data (CMPINF-2110)
+Source: Professor's lecture transcript "Introduction to Databases and Database Systems" (with the "Database Applications" slide excerpt as supplementary context)
+
+================================================================
+1. EVERY APP HAS A DATABASE
+================================================================
+  - Almost every website and mobile app has some sort of
+    database, to store information and make it useful later.
+  - Three paths, all ending at a database (the textbook's
+    Figure 1-2):
+      Web: user, Web browser, Internet, Web server, database.
+        Retail example: orders, wishlist, previous orders are
+        stored, useful to the user and to the company for
+        marketing. The user never touches the database, the
+        Web server does.
+      Mobile app: same idea, an application data server talks
+        to the database and presents results back. Difference:
+        the user is on a cellular network instead of just the
+        Internet.
+      Smart speaker or any IoT device: reaches the Internet, an
+        app server processes the data. Examples named: Amazon
+        Alexa, Ring doorbell, Nest doorbell.
+
+================================================================
+2. CHARACTERISTICS OF A RELATIONAL DATABASE
+================================================================
+  - Purpose of a database: track things, store that data. Data
+    is very important to organizations and individuals.
+  - Two categories:
+      Relational: multiple tables, all related to each other,
+        with values that link data between many objects. The
+        course uses MySQL.
+      Non-relational: no such relationships. Example: MongoDB,
+        which stores mostly JSON.
+        Transcript says JSON "stands for JavaScript Object
+        Mutation," read as JavaScript Object Notation
+        (professor's slip, the textbook has Notation).
+  - The database stores the data AND the relationships. It knows
+    what the relationships are and which data corresponds.
+  - Data is stored in tables with rows, also known as records,
+    another name being tuple, and columns, also known as fields,
+    like a spreadsheet. In MySQL Workbench the results grid
+    looks very much like a spreadsheet.
+  - A database may have multiple tables, each about a different
+    thing.
+  - Professor's rule of thumb: in relational databases the key
+    is to store the least amount of data possible, so you use
+    multiple tables. Adjacent example: a CUSTOMER table holds
+    the name once, and a separate PHONE table links back to the
+    customer for each number, instead of stuffing every number
+    into the customer row (adjacent example, the professor used
+    a person table and an address table for himself).
+  - Each row stores an occurrence or instance of the thing of
+    interest. It is an observation.
+  - KEY TERM: big data: enormous datasets. Typically stored in
+    flat files on a file system or in simple storage on a cloud
+    solution.
+
+================================================================
+3. THE FOUR COMPONENTS AND SQL
+================================================================
+  - Four components of a database system:
+      User: the individual working with the database.
+      Database application: the application used to access the
+        database, such as the Web server in the example above.
+      DBMS: the database engine, such as MySQL. Handles all the
+        objects.
+      Database: houses all your objects.
+  - KEY TERM: DBMS: a computer program used to create, process,
+    and administer the database. "That's your engine."
+  - KEY TERM: database application: a set of one or more
+    programs serving as intermediary between the user and the
+    DBMS.
+  - KEY TERM: SQL (Structured Query Language): internationally
+    recognized standard language used by all relational
+    databases. The way you access the data.
+  - Professor names the typical top four: MySQL, SQL Server,
+    Postgres, Oracle. The SQL is typically the same across them,
+    with small variations and nuances. Some are stricter than
+    others: Microsoft SQL Server is not as strict as Oracle or
+    Postgres. The basic structure is the same.
+  - Pronunciation aside: transcript garbles it ("some people
+    call it SQL, believe the proper pronunciation is SQL"). Read
+    as the "sequel" vs "S-Q-L" debate, both are in use.
+
+================================================================
+4. KEYS
+================================================================
+  - Relational databases store data and have relationships among
+    rows. The links are what the textbook diagrams show.
+  - KEY TERM: primary key: unique identifier for a particular
+    row. Needed because data changes and you must be able to
+    identify one observation.
+  - KEY TERM: surrogate key: a key automatically assigned by the
+    database and used as the primary key. The database handles
+    the value. In MySQL that is the auto-increment option on an
+    integer column, so the user never worries about assigning
+    the value.
+  - KEY TERM: composite key: more than one column used together
+    as the primary key.
+    Transcript slip: the professor says the book's example used
+    "a student number and a grade" as the composite key. The
+    composite key in the book's GRADE table is (StudentNumber,
+    ClassNumber), which is what his own demo then shows.
+  - KEY TERM: foreign key: provides a link between two tables
+    for a relationship. Typically the primary key in one table
+    is a foreign key in another.
+
+================================================================
+5. THE MYSQL WORKBENCH DEMO
+================================================================
+  - Tables from Module 2: STUDENT (student number, last name,
+    first name, email), GRADE (student number, class number,
+    grade), CLASS (class number, class name, term, section).
+  - Which table has the composite key? GRADE, because more than
+    one column carries the little key icon that marks the
+    primary key.
+  - STUDENT's primary key is an auto-incrementing number, so it
+    is a surrogate key.
+  - GRADE's two key columns are foreign keys: student number
+    links back to STUDENT's primary key, class number links back
+    to CLASS's.
+  - Surrogate key in action: inserting a new student without
+    supplying the number, the row received the next number
+    automatically. Nobody typed it.
+  - No surrogate key in action: CLASS has a plain primary key.
+    Inserting a row without the class number failed with an
+    error that the class number column has no default value.
+    Nothing assigns that key, so the user must supply it. Supply
+    the value, the insert succeeds.
+  - Adjacent version of the same demo (adjacent example): a
+    TICKET table with auto-increment TicketNumber accepts a row
+    with no number and stamps the next one. A VENUE table with a
+    hand-assigned VenueCode rejects a row that omits the code
+    until you give it one.
+  - The insert statements themselves come later in the course.
+
+================================================================
+6. SUPPLEMENTARY SLIDE: DATABASE APPLICATIONS
+================================================================
+  - The professor's excerpt reproduces textbook Figure 1-7
+    (example database applications with users and sizes) and
+    stresses four points:
+      Multiuser database applications include CRM systems,
+        which manage all customer contacts, and ERP systems,
+        which can include all departments in an organization.
+      E-commerce companies use Web activity databases for
+        marketing.
+      Reporting and data mining applications do not generate new
+        data. They summarize existing data to give management
+        insights.
+      Data mining is also used to predict future performance.
+  - Figure 1-7 numbers (also in the Lesson 2-1 reading note):
+    sales contact manager 1 user, 2,000 rows. Patient
+    appointment 15 to 50 users, 100,000 rows. CRM 500 users, 10
+    million rows. ERP 5,000 users, 10 million+ rows. E-commerce
+    possibly millions of users, 1 billion+ rows. Digital
+    dashboard 500 users, 100,000 rows. Data mining 25 users,
+    100,000 to millions+ rows.
+
+================================================================
+7. KEY TAKEAWAYS
+================================================================
+  - Users touch browsers and apps. Servers touch the database.
+  - Relational = related tables (MySQL). Non-relational = no
+    relationships, often JSON documents (MongoDB).
+  - Rows = records = tuples. Columns = fields.
+  - Four components: user, database application, DBMS,
+    database. SQL is how you talk to the DBMS.
+  - Primary key identifies a row. Surrogate key is auto-assigned
+    (MySQL auto-increment). Composite key spans columns. Foreign
+    key links tables.
+  - A table without auto-increment makes you supply the key or
+    the insert fails.
+
+================================================================
+8. QUIZ-SAFE FACTS
+================================================================
+  - Another name for a row: record or tuple. Another name for a
+    column: field.
+  - Course DBMS: MySQL. Non-relational example: MongoDB (JSON).
+  - JSON = JavaScript Object Notation (professor said Mutation).
+  - Big data is typically stored in flat files or simple cloud
+    storage.
+  - Four components of a database system: user, database
+    application, DBMS, database.
+  - DBMS = the database engine, creates, processes, administers.
+  - SQL = Structured Query Language, standard across relational
+    databases, minor vendor variations.
+  - Top four named: MySQL, SQL Server, Postgres, Oracle. SQL
+    Server is less strict than Oracle or Postgres.
+  - Surrogate key in MySQL = auto-increment integer.
+  - In the module's tables, GRADE has the composite key
+    (StudentNumber, ClassNumber), and both columns are foreign
+    keys. STUDENT's key is a surrogate key.
+  - MySQL error when inserting without a required primary key
+    value: the column "does not have a default value."
+  - Reporting and data mining apps summarize existing data, they
+    do not create new data. Data mining also predicts.

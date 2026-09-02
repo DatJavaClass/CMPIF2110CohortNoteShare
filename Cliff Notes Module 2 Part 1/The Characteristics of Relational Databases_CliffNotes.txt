@@ -1,0 +1,140 @@
+The Characteristics of Relational Databases: Study Guide
+Course: Managing, Querying, and Preserving Data (CMPINF-2110)
+Source: Coursera reading "The Characteristics of Relational Databases" (7 pages, condensed from Kroenke Chapter 1, Figures 1-3 to 1-6)
+
+================================================================
+1. THE CHARACTERISTICS OF RELATIONAL DATABASES
+================================================================
+  - The purpose of a database is to help people track things of
+    interest to them.
+  - Databases sort into two categories: relational and
+    non-relational.
+  - KEY TERM: Big Data: enormous datasets.
+  - Data is stored in tables, which have rows (also known as
+    records) and columns (also known as fields), like a
+    spreadsheet.
+  - A database may have multiple tables, each storing data about
+    a different thing.
+  - Each row stores data about one occurrence or instance of the
+    thing of interest.
+  - A database stores data AND relationships.
+
+================================================================
+2. NAMING CONVENTIONS IN THE TEXTBOOK
+================================================================
+  - Table names: all capital letters. The reading's examples are
+    the textbook table names STUDENT, CLASS, GRADE, COURSE_INFO.
+  - Column names: initial capital letter. Compound names
+    capitalize each word. Examples given: Term, Section,
+    ClassNumber, StudentName.
+  - Adjacent example of the same convention: table SUPPLIER,
+    columns SupplierNumber, CompanyName, City (adjacent
+    example).
+
+================================================================
+3. A DATABASE HAS DATA AND RELATIONSHIPS
+================================================================
+  - Relational databases are structured to store data and to
+    have relationships among rows of data.
+  - KEY TERM: primary key: identifies each row of a table.
+  - KEY TERM: surrogate key: automatically assigned by the
+    database and used as a primary key.
+  - KEY TERM: composite key: more than one column used together
+    as the primary key, when one column is not enough.
+  - KEY TERM: foreign key: provides the link between two tables,
+    which is the link that makes a relationship.
+
+================================================================
+4. FIGURES 1-3 TO 1-6: THE THREE-TABLE EXAMPLE
+================================================================
+  - Figure 1-3, STUDENT and CLASS. STUDENT has 4 columns
+    (StudentNumber, LastName, FirstName, EmailAddress) and four
+    student rows plus a blank "New" row. CLASS has 4 columns
+    (ClassNumber, ClassName, Term, Section) and five class rows.
+    Callouts: one row stores the data for one student, one
+    column stores the ClassName for every class.
+  - Figure 1-4 adds a GRADE table with ONE column, Grade, six
+    grade values and a blank row. Callout: "but who do these
+    grades belong to?" Grades with no link are useless.
+  - Figure 1-5, "The Key Database Characteristic: Related
+    Tables." GRADE now has 3 columns: StudentNumber,
+    ClassNumber, Grade. StudentNumber in GRADE links to
+    StudentNumber in STUDENT. ClassNumber in GRADE links to
+    ClassNumber in CLASS. Callout: with foreign keys, each grade
+    is linked back to the STUDENT and CLASS tables. One student
+    appears in two grade rows, so one student maps to many
+    grades.
+  - Figure 1-6, Microsoft Access 2019 relationships view. Key
+    symbols sit next to StudentNumber in STUDENT, next to both
+    StudentNumber and ClassNumber in GRADE (composite key), and
+    next to ClassNumber in CLASS. Lines connect STUDENT and CLASS
+    to GRADE, which sits between them. The number 1 is on the
+    STUDENT and CLASS ends, the infinity symbol on the GRADE
+    ends: one student may be linked to many grades by
+    StudentNumber. Source slip: the page-7 text reads "many
+    graded," read as "many grades" (the figure label says
+    grades).
+  - Adjacent example with the same shape (adjacent example):
+      AUTHOR (AuthorNumber, LastName, FirstName, Email).
+      BOOK (BookNumber, Title, Year, Edition).
+      ROYALTY (AuthorNumber, BookNumber, Percent).
+    ROYALTY alone is a column of percentages that belong to
+    nobody. Add AuthorNumber and BookNumber as foreign keys and
+    every percentage points at one author and one book. The
+    composite key is (AuthorNumber, BookNumber). One author to
+    many royalty rows, one book to many royalty rows.
+
+================================================================
+5. DATABASES CREATE INFORMATION
+================================================================
+  - KEY TERM: data: recorded facts and figures.
+  - KEY TERM: information, three definitions:
+      Knowledge derived from data.
+      Data presented in a meaningful context.
+      Data processed by summing, ordering, averaging, computing,
+        or other similar operations.
+    (The textbook's third definition lists "summing, ordering,
+    averaging, grouping, comparing." This reading says
+    "computing." Either wording is the same idea.)
+  - Databases record data, but in a way that lets us produce
+    information from it. The STUDENT, CLASS, and GRADE data could
+    produce each student's GPA.
+
+================================================================
+6. KEY TAKEAWAYS
+================================================================
+  - Database purpose: track things of interest. Two categories:
+    relational and non-relational. Big Data = enormous datasets.
+  - Tables have rows (records) and columns (fields). One table
+    per kind of thing, one row per instance.
+  - A database stores data and relationships. A table of values
+    with no foreign keys is useless.
+  - Primary key identifies a row, surrogate key is
+    DBMS-assigned, composite key uses several columns, foreign
+    key links tables.
+  - Access shows primary keys with a key symbol and one-to-many
+    links with 1 and the infinity symbol.
+  - Data = recorded facts and figures. Information = data made
+    meaningful, derived, or processed.
+
+================================================================
+7. QUIZ-SAFE FACTS
+================================================================
+  - Rows are also called records. Columns are also called
+    fields.
+  - Two categories of databases: relational and non-relational.
+  - Textbook convention: table names ALL CAPS, column names
+    initial capital with each word of a compound capitalized.
+  - Surrogate key = automatically assigned by the database, used
+    as the primary key.
+  - Composite key = more than one column forming the primary
+    key.
+  - Foreign key = the link between two tables that creates a
+    relationship.
+  - In the textbook figures, GRADE's primary key is the composite
+    (StudentNumber, ClassNumber). Both columns are foreign keys.
+  - Figure 1-6 symbols: key = primary key, 1 and infinity = one
+    to many.
+  - Information definitions: knowledge derived from data, data in
+    a meaningful context, data processed by summing, ordering,
+    averaging, computing, or similar operations.

@@ -1,0 +1,1116 @@
+Lesson 2-1 Reading, Kroenke Chapter 1, Introduction: Study Guide
+Course: Managing, Querying, and Preserving Data (CMPINF-2110)
+Source: Kroenke & Auer, Database Processing 16e, Chapter 1 "Introduction" (textbook chapter, book pages 2 to 42)
+
+================================================================
+1. CHAPTER OBJECTIVES (13, as listed)
+================================================================
+  - Understand the importance of databases in Internet Web
+    applications and smartphone apps.
+  - Understand the nature and characteristics of databases.
+  - Survey some important and interesting database applications.
+  - Gain a general understanding of tables and relationships.
+  - Describe the components of a Microsoft Access database
+    system and the functions they perform.
+  - Describe the components of an enterprise-class database
+    system and the functions they perform.
+  - Define database management system (DBMS) and describe its
+    functions.
+  - Define database and describe what a database contains.
+  - Define metadata and give examples.
+  - Define and understand database design from existing data.
+  - Define and understand database design as new systems
+    development.
+  - Define and understand database redesign of an existing
+    database.
+  - Understand the history and development of database
+    processing.
+
+================================================================
+2. DATABASES IN THE INTERNET AND MOBILE APP WORLD
+================================================================
+  - Timeline the chapter gives (dates are quiz bait):
+      Apple II 1977, IBM PC 1981 (the PC becomes widely
+        available).
+      Ethernet: developed at Xerox PARC in the early 1970s,
+        adopted as a national standard in 1983. PCs networked
+        into local area networks (LANs).
+      Internet: created as ARPANET (Department of Defense
+        Advanced Research Projects Agency Network) in 1969.
+      World Wide Web: easily accessible in 1993. Created by Tim
+        Berners-Lee in 1989 (Web) and 1990 (first browser).
+      Amazon.com online since 1995.
+      Web 2.0 sites (users add content: Facebook, Wikipedia,
+        Twitter) appear in the early 2000s. Term coined by Darcy
+        DiNucci in 1999, popularized by Tim O'Reilly in 2004.
+      Mobile phone demonstrated and developed commercially in
+        the 1970s. iPhone 2007. First Android phone 2008.
+      Chapter written in 2020. Internet of Things (IoT): smart
+        speakers (Amazon Echo, Apple HomePod, Google Home,
+        Harman Kardon INVOKE, book prints Harmon), smart home
+        devices, appliances.
+        Virtual assistants: Alexa, Siri, Google Assistant,
+        Cortana. Footnote: 8.4 billion IoT devices in 2017,
+        30 billion expected by 2020.
+  - Most of what people do in Web apps, smartphone apps, and IoT
+    depends on databases. Social posts, tweets, likes, photos,
+    and retail searches are stored in and served from databases.
+  - Initial definitions (refined later in the chapter):
+      KEY TERM: data: recorded facts and numbers.
+      KEY TERM: database (initial): the structure used to hold
+        or store data.
+      Data is processed to provide information.
+  - Figure 1-1 walks a search of the Pearson Higher Education
+    site for the author name Kroenke: search text box, Search
+    button, catalog database searched, results page returned.
+  - Point-of-sale (POS) systems record every purchase in a
+    database, monitor inventory, and track card-holder buying
+    for marketing.
+  - Figure 1-2, three rows of the same pattern:
+      PC with Web browser client, over the Internet, to a Web
+        server, to a database.
+      Smartphone with app client, over the cell phone data
+        network, to an app data server, to a database.
+      Smart speaker with virtual assistant client, over the
+        Internet, to an app data server, to a database.
+  - KEY TERM: client-server architecture: client applications
+    on user devices obtain services (searching, browsing,
+    purchasing, tweeting) from server computers, and the servers
+    hold the databases. Supports most Web applications in use.
+  - People are users, their computers and phones are devices.
+
+================================================================
+3. THE CHARACTERISTICS OF RELATIONAL DATABASES
+================================================================
+  - The purpose of a database is to help people keep track of
+    things.
+  - Databases are created and controlled by software called
+    database management systems (DBMSs).
+  - All DBMSs and databases sort into two categories: relational
+    and non-relational. The first databases were non-relational.
+    The relational database quickly became the most common type
+    once introduced and remains so.
+  - Big Data: enormous datasets from search tools (Google, Bing,
+    DuckDuckGo), Web 2.0 social networks, and scientific data
+    collection. Often stored in new non-relational databases, so
+    the non-relational database is making a resurgence.
+  - A relational database stores data in tables. A table has rows
+    and columns like a spreadsheet. A database usually has
+    multiple tables, each about a different type of thing.
+  - Each row holds data about one occurrence, or instance, of the
+    thing of interest. Rows are also called records. Each column
+    stores one characteristic common to all rows. Columns are
+    also called fields.
+  - Table vs spreadsheet: tables have column names instead of
+    letters, and rows are not necessarily numbered. Instances go
+    in rows and characteristics in columns in every database in
+    the book and "99.999999 percent" of databases worldwide.
+  - Naming conventions in this text (conventions only, DBMS
+    products do not require them):
+      Table names in all capitals.
+      Column names start with a capital, compound column names
+        capitalize each element (CamelCase, added name).
+      Payoff: an all-caps name is always a table, an
+        initial-cap name is always a column.
+
+================================================================
+4. A DATABASE HAS DATA AND RELATIONSHIPS: KEYS
+================================================================
+  - A relational database is not complete unless it also shows
+    the relationships among the rows. A table of values with no
+    link to what they describe is useless, like a list of exam
+    scores with no student attached to any of them (adjacent
+    example, the book uses a sports-scores joke).
+  - So a database contains both data AND the relationships among
+    the data.
+  - Book figures 1-3 to 1-6 build a three-table database:
+    STUDENT, CLASS, and GRADE. The GRADE table's primary key is
+    the composite (StudentNumber, ClassNumber), and each of those
+    two columns is also a foreign key back to STUDENT or CLASS.
+  - Adjacent example, same pattern, different data (adjacent
+    example):
+      EMPLOYEE (EmployeeNumber, LastName, FirstName,
+        EmailAddress). Primary key EmployeeNumber, auto-assigned
+        by the DBMS, so it is also a surrogate key.
+      PROJECT (ProjectNumber, ProjectName, Quarter, Phase).
+        Primary key ProjectNumber.
+      ASSIGNMENT (EmployeeNumber, ProjectNumber, HoursWorked).
+        Primary key is the composite (EmployeeNumber,
+        ProjectNumber). Each of those two columns is a foreign
+        key. One employee links to many assignments, one
+        project links to many assignments.
+      Without the two foreign key columns, ASSIGNMENT is just a
+        list of hours nobody can attribute.
+  - KEY TERM: primary key: uniquely identifies each row of a
+    table. The values of primary keys are used to create the
+    relationships between tables.
+  - KEY TERM: surrogate key: a primary key whose values are
+    automatically generated and assigned inside the database
+    itself.
+  - KEY TERM: composite key: a primary key formed when more than
+    one column must be combined to identify a row.
+  - KEY TERM: foreign key: a column that provides the link
+    between two tables. Adding a foreign key creates a
+    relationship between the two tables.
+  - Figure 1-6 (Microsoft Access 2019 relationships view): key
+    symbols mark primary keys, lines run from foreign keys to
+    the matching primary keys, and the symbols on the line (the
+    number 1 and the infinity symbol) mean one row on the "1"
+    side can link to many rows on the infinity side.
+
+================================================================
+5. DATABASES CREATE INFORMATION
+================================================================
+  - Decisions need information. Data was defined as recorded
+    facts and numbers. Information has three definitions (from
+    Kroenke's Using MIS and Experiencing MIS):
+      Knowledge derived from data.
+      Data presented in a meaningful context.
+      Data processed by summing, ordering, averaging, grouping,
+        comparing, or other similar operations.
+  - Databases record data in a way that lets them produce
+    information (a student's GPA, a class average, average class
+    size). Chapter 2 introduces SQL for producing information.
+  - Summary line: relational databases store data in tables,
+    represent relationships among rows, and do so in a way that
+    facilitates producing information. Relational model in depth
+    in Part 2 of the book.
+
+================================================================
+6. DATABASE EXAMPLES (FIGURE 1-7)
+================================================================
+  Application            Users            Number    Typical size
+  Sales contact manager  Salesperson      1         2,000 rows
+  Patient appointment    Medical office   15 to 50  100,000 rows
+  CRM                    Sales, marketing 500       10 million
+                         or cust. service           rows
+  ERP                    Entire org.      5,000     10 million+
+  E-commerce site        Internet users   Possibly  1 billion+
+                                          millions
+  Digital dashboard      Senior managers  500       100,000 rows
+  Data mining            Business         25        100,000 to
+                         analysts                   millions+
+
+  - Remarks column: GoldMine and Act! are database-centric
+    contact managers. Vertical market vendors build databases
+    into their products. Microsoft and Oracle PeopleSoft
+    Enterprise build CRM around the database. SAP uses a
+    database as the central repository for ERP data.
+    Drugstore.com's database grows 20 million rows per day.
+    Dashboards display extractions, summaries, and
+    consolidations of operational data. Data mining data are
+    extracted, reformatted, cleaned, and filtered for statistical
+    data mining tools.
+  - Single-user: the salesperson licenses a product rather than
+    building one.
+  - Multiuser: patient scheduling, 15 to 50 users, up to 100,000
+    rows in perhaps 5 or 10 tables. Risk: one user's work
+    interferes with another's (two clerks booking the same slot
+    for two patients). Concurrency control mechanisms prevent
+    this (Chapter 9).
+  - KEY TERM: customer relationship management (CRM) system:
+    manages customer contacts from initial solicitation through
+    acceptance, purchase, continuing purchase, support, and so
+    forth. Larger company: 500 users, 10 million+ rows, 50+
+    tables. Microsoft said Verizon's 2004 SQL Server customer
+    database exceeded 15 terabytes, a 450-mile bookshelf if
+    printed.
+  - KEY TERM: enterprise resource planning (ERP): information
+    system touching every department of a manufacturing company
+    (sales, inventory, production planning, purchasing). SAP is
+    the leading vendor. 5,000+ users, perhaps 100 million rows
+    in several hundred tables.
+  - E-commerce: the largest databases at an e-commerce site are
+    NOT the order-processing ones. They are the ones tracking
+    customer browser behavior (pages sent, clicks, cart adds,
+    abandoned carts). Used to test which page items work (does a
+    purple background sell more than a blue one).
+  - Reporting and data mining: use operational data to produce
+    information for management. They do not generate new data,
+    they summarize existing data. Dashboards and reporting
+    assess past and current performance. Data mining predicts
+    future performance (Chapter 12).
+  - Small is not simple: two parts distributors, one selling
+    $1 million a year and one $100 million, have similar
+    databases (same kinds of data, about the same number of
+    tables, same relationship complexity). Only the amount of
+    data differs. Adjacent version: a one-shop bakery and a
+    thirty-store chain need the same table design (adjacent
+    example).
+
+================================================================
+7. THE COMPONENTS OF A DATABASE SYSTEM
+================================================================
+  - Figure 1-8, four components: users, database application,
+    DBMS, database.
+  - Figure 1-9 inserts SQL between the application and the DBMS.
+    Applications send SQL statements to the DBMS. The chapter
+    summary calls SQL a fifth component.
+  - KEY TERM: Structured Query Language (SQL): internationally
+    recognized standard language understood by all commercial
+    relational DBMS products. Essentially the same in all
+    products, so vendor and product independent, with some
+    syntax differences.
+  - KEY TERM: database: a collection of related tables and other
+    structures (first pass). Full definition in section 10.
+  - KEY TERM: database management system (DBMS): a computer
+    program used to create, process, and administer the
+    database. Receives requests encoded in SQL and translates
+    them into actions on the database. Large, complicated,
+    licensed from a vendor. Companies almost never write their
+    own.
+  - KEY TERM: database application: a set of one or more computer
+    programs that serves as an intermediary between the user and
+    the DBMS. Reads or modifies data by sending SQL to the DBMS,
+    presents data as forms and reports. Bought from vendors or
+    written in house.
+  - KEY TERM: user: employs a database application to keep track
+    of things. Uses forms to read, enter, and query data, and
+    produces reports.
+
+================================================================
+8. DATABASE APPLICATIONS AND SQL (FIGURE 1-10)
+================================================================
+  - Five basic functions of application programs:
+      Create and process forms.
+      Process user queries.
+      Create and process reports.
+      Execute application logic.
+      Control the application itself.
+  - Forms hide the structure of the underlying tables. A form is
+    built for the users' needs, not the table structure. The
+    application generates the SQL insert, update, or delete
+    behind it.
+  - Queries: the application builds an SQL query, sends it to
+    the DBMS, formats the result. Adjacent example of the
+    chapter's sample query (adjacent example):
+
+      SELECT  LastName, FirstName, EmailAddress
+      FROM    EMPLOYEE
+      WHERE   EmployeeNumber > 10
+
+    Returns those three columns for every employee numbered 11
+    and up. The book's version selects from STUDENT with the
+    same WHERE pattern and returns two of four students.
+  - Reports: query the DBMS, then format the results, structured
+    to the users' needs (sorted, grouped).
+  - Application logic: a customer orders 5 units, the stock
+    query finds 3 (adjacent example). Refuse and notify, or ship
+    3 and backorder 2, or something else. The application, not
+    the DBMS, decides.
+  - Control: (1) present only logical choices to the user, for
+    example a menu of valid options, and (2) control data
+    activity with the DBMS, such as telling it to make a set of
+    changes as a unit, all or none (Chapter 9).
+
+================================================================
+9. THE DBMS (FIGURE 1-14)
+================================================================
+  - Creates, processes, and administers the database. Almost
+    always licensed. Five products hold the lion's share of the
+    market: Microsoft Access, Oracle Database and MySQL (both
+    Oracle Corporation), SQL Server (Microsoft), DB2 (IBM).
+  - Nine functions of a DBMS:
+      Create database.
+      Create tables.
+      Create supporting structures (e.g., indexes).
+      Modify (insert, update, or delete) database data.
+      Read database data.
+      Maintain database structures.
+      Enforce rules.
+      Control concurrency.
+      Perform backup and recovery.
+  - KEY TERM: index: a supporting structure, akin to the index
+    at the back of a book, that speeds sorting and searching.
+    Adjacent example: a 50,000-row CUSTOMER table searched
+    often by City gets an index on City so the DBMS does not
+    scan the whole table (adjacent example).
+  - Maintain structures: changing the format of a table or
+    supporting structure over time.
+  - KEY TERM: referential integrity constraints: rules the DBMS
+    enforces so that a value in a foreign key column must
+    already exist in the referenced table's primary key column.
+    In the adjacent example, an ASSIGNMENT row for
+    EmployeeNumber 42 is rejected if no employee 42 exists
+    (adjacent example).
+  - Administration: concurrency control (one user's work must
+    not inappropriately interfere with another's, Chapter 9), a
+    security system (only authorized users perform authorized
+    actions, users can be blocked from seeing certain data or
+    limited to certain changes), and backup and recovery
+    (protects a valuable centralized asset against errors,
+    hardware and software failures, catastrophes).
+
+================================================================
+10. THE DATABASE: SELF-DESCRIBING, INTEGRATED, METADATA
+================================================================
+  - KEY TERM: database (full definition): a self-describing
+    collection of integrated tables.
+  - KEY TERM: integrated table: a table that stores both data and
+    the relationships among the data.
+  - KEY TERM: self-describing: the database contains a
+    description of itself, tables of data that describe the
+    user data.
+  - KEY TERM: metadata: data about data. Its form and format vary
+    by DBMS. Most products keep it in tables, so SQL can query
+    it exactly as it queries user tables.
+  - Figure 1-15, generic metadata for the book's three tables:
+      USER_TABLES has columns TableName, NumberColumns,
+        PrimaryKey. STUDENT 4 columns, CLASS 4, GRADE 3 with
+        primary key (StudentNumber, ClassNumber).
+      USER_COLUMNS has ColumnName, TableName, DataType, Length
+        (bytes). Integers are 4 bytes, names Text 25,
+        EmailAddress Text 100, Term Text 12, Grade Decimal
+        (2, 1).
+  - SQL Server example: querying the compatibility view
+    SYS.SYSOBJECTS for a user table (Type = 'U') by name
+    returns that table's metadata. A view is a virtual table
+    defined by a saved SQL query (Chapter 7).
+  - Figure 1-16, database contents:
+      Tables of user data.
+      Metadata.
+      Indexes (speed sorting and searching).
+      User-defined functions, stored procedures, triggers
+        (programs stored inside the database). Triggers maintain
+        accuracy and consistency and enforce constraints. Stored
+        procedures do administration tasks and are sometimes
+        part of applications. Chapters 7, 10, 10A, 10B, 10C.
+      Security data (users, groups, permissions).
+      Backup/recovery data. Chapters 9, 10, 10A, 10B, 10C.
+
+================================================================
+11. PERSONAL VS ENTERPRISE-CLASS DATABASE SYSTEMS
+================================================================
+  - Two classes: personal database systems and enterprise-class
+    database systems.
+  - Microsoft Access is NOT just a DBMS. It is a personal
+    database system: a DBMS plus an application generator (form,
+    report, and query components).
+  - Figure 1-17: the Access form processing, report generator,
+    and query processing applications create SQL and pass it to
+    the DBMS. The DBMS can be the native Access Database Engine
+    (ADE) or another DBMS linked via ODBC.
+  - KEY TERM: Access Database Engine (ADE): the DBMS engine
+    inside Access, an Office-specific version of Microsoft's
+    Joint Engine Technology (JET or Jet). Jet was the engine
+    until Office 2007, when Access switched to ADE. ADE was
+    originally named the Office Access Connectivity Engine
+    (ACE), same technology. Not licensed as a separate product.
+  - Access is a low-end product for individuals and small
+    workgroups, so Microsoft hides the technology. Fine for
+    beginners, not for professionals on larger databases.
+  - Access ships in the Windows version of Office, not the
+    macOS version, so it is often a student's first DBMS.
+  - Other personal database systems: OpenOffice.org Base and
+    LibreOffice Base.
+  - Access 2000 and later can replace Jet/ADE with another DBMS
+    (typically SQL Server) using the Open Database Connectivity
+    (ODBC) standard (Chapter 11), for large databases or
+    advanced features.
+  - Enterprise-class (Figure 1-19): applications are separate
+    from each other and from the DBMS. Five application
+    categories shown:
+      Client-server applications over a corporate network,
+        written in VB.NET, C++, or Java.
+      E-commerce and other applications on a Web server. Browsers:
+        Edge (older Internet Explorer), Firefox, Chrome. Web
+        servers: Microsoft IIS and Apache. Languages: PHP,
+        Java, .NET languages (C#.NET, VB.NET). Chapter 11.
+      Reporting applications publishing query results on a
+        corporate portal, often built with IBM Cognos Business
+        Intelligence or MicroStrategy 10. Chapter 12.
+      XML Web services: XML plus other standards for
+        program-to-program communication, code spread over
+        several computers, written in Java or .NET. Chapter 12.
+      Mobile apps (not covered in the book).
+    Source slip: the chapter summary says Figure 1-18 shows
+    "four categories" of applications. The figure is 1-19 and
+    the body lists five, mobile apps being the fifth.
+  - All of them read and write data by sending SQL to the DBMS.
+  - DBMS popularity as of April 2020 (DB-Engines ranking):
+    Oracle Database, MySQL, Microsoft SQL Server, in that order.
+    PostgreSQL fourth, DB2 sixth, Microsoft Access tenth
+    (common because it ships with Office). Of the top 10, seven
+    relational and three non-relational.
+  - Book's primary DBMS: Microsoft SQL Server 2019, with support
+    for Oracle Database and MySQL.
+  - SQL Server 2019: Developer Edition is free, identical to the
+    full Enterprise edition, but single-user development only.
+    Express Edition is free and usable for smaller production
+    databases (limited, for example in maximum storage). Client:
+    SQL Server Management Studio. Online Chapter 10A.
+  - Oracle: Enterprise Edition current version 19c, 20c in
+    preview, purchased licenses only. Free version: Oracle
+    Database 18c Express Edition (Oracle Database XE), usable for
+    smaller production databases. Client: Oracle SQL Developer.
+    Online Chapter 10B. Book note: naming conventions differ by
+    DBMS.
+  - MySQL 8.0: Community Server 8.0 is free, full-strength, and
+    production-usable. Enterprise Edition 8.0 is purchased for
+    the full support package. Client: MySQL Workbench. MySQL
+    uses all lowercase object names. Popular for Web database
+    applications. Online Chapter 10C.
+  - Operating systems: Windows (desktop), Windows Server, macOS,
+    Linux. Microsoft DBMSs run on Microsoft OSs, and SQL Server
+    now also runs on Linux. Oracle Database runs on Windows and
+    Linux, not macOS. MySQL is the only one of the three that
+    runs on all three OSs.
+  - The book recommends installing a free enterprise-class DBMS
+    now. Examples in the book are built with SQL Server 2019.
+
+================================================================
+12. DATABASE DESIGN (FIGURE 1-23)
+================================================================
+  - KEY TERM: database design (as a process): creation of the
+    proper structure of tables, proper relationships between
+    tables, appropriate data constraints, and other structural
+    components.
+  - KEY TERM: database design (as a product): the annotated
+    diagram that results from that process, the basis for
+    constructing the actual database in a DBMS. The term is
+    used both ways.
+  - Design is important and difficult, so the world is full of
+    poorly designed databases: poor performance, overly complex
+    and contrived SQL, hard to adapt to changing requirements,
+    or failure in some other way. Most of the first half of the
+    book is design.
+  - Three types of database design:
+      From existing data (Chapters 3 and 4): analyze spreadsheets
+        and other data tables, extract data from other
+        databases, design using normalization principles.
+      New systems development (Chapters 5 and 6): create a data
+        model from application requirements, transform the data
+        model into a database design.
+      Database redesign (Chapter 8): migrate databases to newer
+        databases, integrate two or more databases, reverse
+        engineer and design new databases using normalization
+        and data model transformation. Needs Chapter 7 (SQL
+        implementation) first.
+  - From existing data (Figure 1-24): a team gets spreadsheets
+    or text files and must design a database and import them, OR
+    a new database is built from extracts of an operational
+    database (ERP, CRM). The extract path is common in business
+    intelligence (BI) systems, which include reporting and data
+    mining, and feeds data warehouses and data marts, databases
+    organized for research and reporting. Data often goes on to
+    SAS Enterprise Miner, IBM SPSS Modeler, or TIBCO Spotfire.
+  - Even one imported table raises design questions. Figure 1-25
+    asks whether an employee list with a department column
+    should be one table or two. Adjacent example: a product
+    spreadsheet with a SupplierName column, one PRODUCT table
+    or PRODUCT plus SUPPLIER (adjacent example). Not arbitrary:
+    KEY TERM: normalization (normal forms): the set of
+    principles database professionals use to guide and assess
+    database designs (Chapter 3).
+  - New systems development (Figure 1-26): requirements (forms,
+    reports, user requirement statements, use cases) are
+    analyzed. The step from requirements to design is too big,
+    so two steps: build a data model, then transform it.
+      KEY TERM: data model: a blueprint used as a design aid on
+        the way to a database design.
+      KEY TERM: use case: a scenario of users interacting with
+        an information system to obtain a desired result.
+      KEY TERM: entity-relationship (ER) data modeling: the most
+        popular data modeling technique (Chapter 5, transform in
+        Chapter 6).
+  - Database redesign (Figure 1-27), two common types:
+      KEY TERM: database migration: adapting a database to new
+        or changing requirements. Tables created, modified, or
+        removed, relationships altered, constraints changed.
+      Integration of two or more databases: common when
+        adapting or removing legacy systems and in enterprise
+        application integration.
+    Redesign is complicated and may be skipped in a first
+    course. Chapter 8, after SQL in Chapter 7.
+
+================================================================
+13. WHAT YOU NEED TO LEARN (FIGURES 1-28 AND 1-29)
+================================================================
+  - Two roles: user or database administrator.
+      KEY TERM: knowledge worker: a user who prepares reports,
+        mines data, and does other data analysis.
+      KEY TERM: programmer: a user who writes applications that
+        process the database.
+      KEY TERM: database administrator (DBA): designs,
+        constructs, and manages the database itself.
+    Users care about SQL to store and retrieve data. DBAs care
+    about managing the database.
+  - Figure 1-28 domains: knowledge worker and programmer own the
+    applications side (Web server with PHP or Java, client apps
+    in C# or VB.NET, Web portal reporting). The DBA owns the
+    DBMS and database side (ADE, SQL Server, MySQL, Oracle
+    Database). SQL sits between.
+  - Rand Corporation study (2004): most secure US jobs adapt new
+    technology to business problems. 5 of CNNMoney's top 10 jobs
+    use database skills.
+  - Figure 1-29 priorities (1 = very important, 2 = important,
+    3 = less important), DBA / knowledge worker and programmer:
+      Basic SQL (Ch 2): 1 / 2
+      Relational model (Ch 3): 2 / 2
+      Design via normalization (Ch 4): 2 / 1
+      Data models (Ch 5): 2 / 1
+      Data model transformation (Ch 6): 2 / 1
+      SQL DDL and constraints (Ch 7): 3 / 1
+      Database redesign (Ch 8): 3 / 1
+      Database administration (Ch 9): 3 / 1
+      SQL Server, Oracle, MySQL, ArangoDB specifics
+        (Ch 10, 10A to 10D): 3 / 1
+      Database application technology (Ch 11 to 13): 1 / 3
+    Read the columns as the book prints them. The DBA column
+    rates SQL DDL, redesign, and administration "3" while the
+    programmer column rates them "1". Opinions vary, the book
+    says ask your instructor.
+
+================================================================
+14. A BRIEF HISTORY OF DATABASE PROCESSING (FIGURE 1-30)
+================================================================
+  Era                    Years         Products
+  Predatabase            Before 1970   File managers
+  Early database         1970-1980     ADABAS, System2000, Total,
+                                       IDMS, IMS
+  Emergence of           1978-1985     DB2, Oracle Database,
+    relational model                   Ingres
+  Microcomputer DBMS     1982-1992+    dBase-II, R:base, Paradox,
+                                       Microsoft Access
+  Object-oriented DBMS   1985-2000     Oracle ODBMS, Gemstone,
+                                       O2, Versant
+  Data warehouses        1998-present  Red Brick Warehouse, Prism
+                                       Warehouse Manager, others
+  Web databases          1995-present  IIS, Apache, PHP, ASP.NET,
+                                       Java
+  Open source DBMS       1995-present  MySQL, PostgreSQL, others
+  XML and Web services   1998-present  XML, SOAP, WSDL, UDDI
+  Big Data, NoSQL,       2009-present  Hadoop, Cassandra, Hbase,
+    cloud computing                    CouchDB, ArangoDB,
+                                       MongoDB, JSON, Azure, AWS,
+                                       Google Cloud
+
+  - Remarks worth remembering: predatabase data sat in separate
+    files, integration very difficult, storage expensive. Early
+    database products were the first to provide related tables,
+    with CODASYL DBTG and hierarchical (DL/I) models prevalent.
+    Early relational products had inertia to overcome. Microsoft
+    Access eliminated all other micro DBMS products in the early
+    1990s. OODBMS never caught on (required converting relational
+    data, too much work). Data warehouses exist for data analysis
+    and BI. HTTP's stateless nature was the early Web problem.
+    Open source gives much of commercial functionality at reduced
+    cost. XML and NoSQL "may replace relational databases during
+    your career."
+  - Early years: before 1970 data lived in separate files on
+    magnetic tape. Disks and drums were expensive and tiny (a
+    1.44 MB floppy beat many of them). A 1969 payroll machine had
+    32,000 bytes of memory versus 16 gigabytes on the author's
+    machine. Integrated processing (relating accounts on one tape
+    to claims on another) drove the first database technology. By
+    1973 several commercial DBMS products existed, in use by the
+    mid-1970s.
+  - First edition of this text, 1977: ADABAS, System2000, Total,
+    IDMS, IMS. Body says ADABAS, IDMS, and IMS are still in use
+    with no substantial market share. Source slip: on the next
+    page the body says "no IDMS database is in use today," and
+    the chapter summary says only ADABAS and IMS survive.
+  - KEY TERM: Data Language/I (DL/I): early method using
+    hierarchies or trees to represent relationships. IMS (IBM)
+    is based on it, still in limited use, popular with large
+    manufacturers.
+  - KEY TERM: CODASYL DBTG: network data model from the Database
+    Task Group of the CODASYL Committee (the COBOL group).
+    Unnecessarily complicated, but several successful products.
+    IDMS was the most successful, and its vendor Cullinane
+    Corporation was the first software company listed on the New
+    York Stock Exchange.
+  - KEY TERM: relational model: in 1970 IBM engineer Edgar Frank
+    (E. F.) Codd published a paper in Communications of the ACM
+    applying relational algebra to "shared data banks." All
+    relational DBMS products are built on this model.
+  - Early objections: too theoretical, too slow, too much
+    storage. Codd reviewed the relational chapter in the 1977
+    edition of this text. Wayne Ratliff got the idea for dBase
+    reading that chapter. Codd convinced IBM to build DB2.
+  - By 1980 more relational products shipped. Oracle Database
+    (originally just "Oracle") won by running on almost any
+    machine and OS, plus an elegant internal design and hard
+    sales.
+  - PC era: dBase most successful early, R:base first to
+    implement true relational algebra on the PC, Paradox later
+    (acquired by Borland). Microsoft Access released 1991 at $99,
+    killed R:base and Paradox. Microsoft bought the dBase
+    work-alike FoxPro to eliminate dBase, then discontinued
+    Visual FoxPro. Access is the only major survivor. Today's
+    challenger: OpenOffice.org Base and LibreOffice Base.
+  - KEY TERM: object-oriented DBMS (OODBMS or ODBMS): DBMS built
+    by 1990 to store data encapsulated in OOP objects. Oracle
+    added OOP constructs to make an object-relational DBMS
+    hybrid. OODBMS failed for two reasons: (1) required
+    converting billions of bytes of relational data, (2) no
+    substantial advantage for most commercial processing. SQL is
+    not object-oriented, but it works.
+  - KEY TERM: online transaction processing (OLTP): recording
+    business transactions (a purchase) in the company's
+    accounts. Well understood by the late 1980s.
+  - KEY TERM: data warehouse: a separate place to store data for
+    analysis so the production database is never at risk. First
+    formal presentation and use of the term: 1988 article by IBM
+    researchers B. A. Devlin and P. T. Murphy.
+  - KEY TERM: online analytical processing (OLAP): analysis work
+    done on the data warehouse, an example of a business
+    intelligence (BI) system (tools to analyze and report on
+    company data). Chapters 2 and 12.
+  - Web: by the mid-1990s the Internet changed customer-business
+    relations. Early sites were online brochures, then dynamic
+    database-driven sites.
+  - KEY TERM: Hypertext Transfer Protocol (HTTP): the protocol
+    for connecting to Web pages. Stateless: the server processes
+    a request and forgets the user. Shopping carts are
+    multistage, so capabilities were built on top to overcome
+    this. The body text calls it "Hypertext Transport Protocol,"
+    the Key Terms list says "Transfer." Transfer is the standard
+    expansion.
+  - KEY TERM: Web database application: an application with a
+    Web user interface that depends on a database. Book example:
+    Wedgewood Pacific (WP), a consumer drone maker (technical
+    term unmanned aerial vehicle, UAV), the database built in
+    chapter exercises.
+  - KEY TERM: application programming interface (API): a
+    programming language interface (PHP, JavaScript) that
+    applications and Web pages use to connect to a DBMS, send
+    SQL, and receive results (Chapter 11).
+  - Open source DBMS: source code widely available, some
+    editions free, advanced editions or support purchased.
+    MySQL released 1995 by Swedish company MySQL AB. Sun
+    Microsystems bought MySQL AB in February 2008. Oracle
+    completed its acquisition of Sun in January 2013 (book's
+    date, see section 15). Oracle now owns Oracle Database and
+    Oracle MySQL. MySQL is popular on Linux Web servers.
+  - KEY TERM: MariaDB DBMS: an open source fork of the last open
+    source MySQL code, made by users unhappy with the Oracle
+    acquisition, largely compatible with MySQL. MySQL and MariaDB
+    are named for developer Monty Widenius's daughters My and
+    Maria.
+  - PostgreSQL is among the most widely used open source DBMSs.
+    Open source pushed proprietary vendors to free editions: SQL
+    Server 2019 Developer and Express, Oracle Database XE.
+  - KEY TERM: eXtensible Markup Language (XML): defined in the
+    late 1990s to fix HTML's problems for exchanging business
+    documents, superior for exchanging views of database data.
+    Bill Gates, 2002: "XML is the lingua franca of the Internet
+    Age." Two unresolved problems: database to XML document and
+    XML document to database. Appendix H.
+  - XML Web services standards: SOAP (once an acronym, now just
+    a name), WSDL (Web Services Description Language), UDDI
+    (Universal Description, Discovery, and Integration). Let a
+    vendor expose parts of its inventory application to
+    suppliers in a standardized way.
+  - KEY TERM: NoSQL ("Not only SQL") movement: emerged with Big
+    Data after a 2009 conference on open source distributed
+    databases. Should really be called NoRelational. Big Data
+    plus NoSQL is the basis of Facebook and Twitter, both of
+    which use Apache Cassandra. Large datasets run on server
+    clusters for storage and parallel processing.
+  - KEY TERM: document database: a non-relational model that
+    structures data on XML or, more recently, JSON (JavaScript
+    Object Notation). MongoDB is the most popular non-relational
+    DBMS (April 2020, ranked fifth overall). More document DBMSs
+    use JSON than XML.
+  - Book's non-relational DBMS: ArangoDB from German company
+    triAGENS (book prints "GmgH"). ArangoDB query language (AQL)
+    is its SQL equivalent, output is JSON, with generated columns
+    _key, _id, and _rev.
+  - Relational vendors responded: data transfer to and from
+    non-relational stores, SQL Server 2019 supports graph
+    databases, MySQL supports document data.
+  - KEY TERM: cloud computing: using hardware owned and operated
+    by another company instead of in-house servers, lowering
+    costs. If you know where your servers are, you are not in the
+    cloud. If they are at somebody else's data center (a
+    facility housing many servers and infrastructure), you are.
+    Vendors: Microsoft Azure (Azure SQL, Cosmos DB non-relational),
+    Amazon Web Services (AWS), Google Cloud. Also Office 365
+    Business as a hosted platform. Chapters 12 and 13.
+
+================================================================
+15. SOURCE SLIPS AND CORRECTIONS
+================================================================
+  - Summary figure numbers are stale: it cites Figure 1-18 for
+    application categories (body: 1-19), and Figures 1-25, 1-26,
+    1-27 for domains, priorities, and history (body: 1-28, 1-29,
+    1-30). Use the body numbers.
+  - IDMS: "still in use" (page 30) vs "no IDMS database is in
+    use today" (page 31) vs summary "only ADABAS and IMS."
+  - Oracle's acquisition of Sun Microsystems: the book says
+    "January 2013" and "early 2013." The deal closed in January
+    2010 (correction, added). For a course quiz, answer with the
+    book's date if asked.
+  - HTTP expansion: body "Transport," Key Terms "Transfer."
+  - "triAGENS GmgH" should read GmbH (added).
+  - Figure 1-30 prints Data Warehouses as "1998-present" even
+    though the body dates the term to 1988. Faithful to the
+    figure here.
+
+================================================================
+16. KEY TERMS (from source, 132 entries, alphabetical as printed)
+================================================================
+  - KEY TERM: Access Database Engine (ADE): the DBMS engine
+    inside Microsoft Access since Office 2007, an Office-specific
+    version of Jet, not licensed separately.
+  - KEY TERM: Advanced Research Projects Agency Network
+    (ARPANET): Department of Defense network created in 1969
+    that grew into the Internet.
+  - KEY TERM: Amazon Web Services (AWS): Amazon's cloud
+    computing service.
+  - KEY TERM: Amazon.com: online retailer, online since 1995,
+    the chapter's example of database search and Web activity
+    tracking.
+  - KEY TERM: Android operating system: Google's smartphone OS,
+    first Android phone 2008.
+  - KEY TERM: app: application program for smartphones and
+    tablets, thousands in daily use (added definition).
+  - KEY TERM: Apple II: 1977 computer that made the PC widely
+    available.
+  - KEY TERM: Apple macOS: Apple's OS for Mac desktops and
+    notebooks. Office for macOS lacks Access, Oracle Database
+    does not run on it.
+  - KEY TERM: application programming interface (API):
+    programming language interface (PHP, JavaScript) used to
+    connect to a DBMS, send SQL, and receive results.
+  - KEY TERM: ArangoDB DBMS: the non-relational DBMS used in the
+    book, from German company triAGENS.
+  - KEY TERM: ArangoDB query language (AQL): ArangoDB's
+    equivalent of SQL, results returned as JSON.
+  - KEY TERM: Big Data: enormous datasets from search tools,
+    social networks, and scientific collection, often stored in
+    non-relational databases.
+  - KEY TERM: business intelligence (BI) system: tools used to
+    analyze and report on company data. Includes reporting and
+    data mining. OLAP is an example.
+  - KEY TERM: cell phone: mobile phone, demonstrated and
+    developed for commercial use in the 1970s (added definition).
+  - KEY TERM: client: the application on the user's device (Web
+    browser, app) or the program that connects to a database
+    server.
+  - KEY TERM: client-server architecture: clients on user devices
+    request services from server computers that hold the
+    databases.
+  - KEY TERM: cloud computing: using hardware owned and operated
+    by another company, off site, at their data center.
+  - KEY TERM: CODASYL DBTG: network data model from the CODASYL
+    Committee's Database Task Group. IDMS was its most
+    successful product.
+  - KEY TERM: column: stores one characteristic common to all
+    rows. Also called a field.
+  - KEY TERM: composite key: a primary key made of more than one
+    column.
+  - KEY TERM: concurrency: multiple users working against the
+    same database at once. The DBMS controls it so one user's
+    work does not interfere with another's (added definition).
+  - KEY TERM: customer relationship management (CRM): system
+    managing customer contacts from solicitation through
+    purchase and support.
+  - KEY TERM: data: recorded facts and numbers (also "facts and
+    figures").
+  - KEY TERM: data analysis: studying stored data for insight,
+    a knowledge worker task, done on a data warehouse rather
+    than the production database (added definition).
+  - KEY TERM: data center: a facility that houses many servers
+    and their associated infrastructure.
+  - KEY TERM: Data Language/I (DL/I): early hierarchical (tree)
+    data model. IMS is based on it.
+  - KEY TERM: data mart: with data warehouses, a database
+    organized for research and reporting, fed by extracts.
+  - KEY TERM: data model: a blueprint built from requirements,
+    a design aid on the way to a database design.
+  - KEY TERM: data mining: applications that predict future
+    performance from existing data, using extracted, reformatted,
+    cleaned, and filtered data.
+  - KEY TERM: data warehouse: separate database for analysis
+    away from production. Term first used in a 1988 IBM article.
+  - KEY TERM: database: a self-describing collection of
+    integrated tables.
+  - KEY TERM: database administrator (DBA): designs, constructs,
+    and manages the database itself.
+  - KEY TERM: database application: one or more programs
+    serving as intermediary between user and DBMS.
+  - KEY TERM: database design (as a process): creating the
+    proper table structure, relationships, constraints, and
+    other structural components.
+  - KEY TERM: database design (as a product): the annotated
+    diagram that results, used to build the database in a DBMS.
+  - KEY TERM: database management system (DBMS): program used to
+    create, process, and administer the database.
+  - KEY TERM: database migration: adapting a database to new or
+    changing requirements.
+  - KEY TERM: database system: users, database application,
+    DBMS, and database, with SQL as a fifth component.
+  - KEY TERM: device: the computer or smartphone a user works
+    on.
+  - KEY TERM: digital dashboard: reporting application for
+    senior managers showing extractions, summaries, and
+    consolidations of operational data. Assesses past and
+    current performance.
+  - KEY TERM: distributed database: a database spread across
+    multiple computers, such as the server clusters that process
+    Big Data (added definition, Chapter 12 topic).
+  - KEY TERM: document database: non-relational model built on
+    XML or JSON documents. MongoDB is one.
+  - KEY TERM: enterprise resource planning (ERP): system touching
+    every department of a manufacturing company. SAP leads.
+  - KEY TERM: enterprise-class database system: applications
+    separate from each other and from the DBMS.
+  - KEY TERM: entity-relationship (ER) data modeling: the most
+    popular data modeling technique.
+  - KEY TERM: Ethernet networking technology: LAN technology
+    from Xerox PARC, early 1970s, national standard 1983.
+  - KEY TERM: eXtensible Markup Language (XML): markup language
+    from the late 1990s for exchanging business documents and
+    views of database data.
+  - KEY TERM: e-commerce: buying and selling online. Order
+    entry, billing, shipping, support, and browser tracking are
+    all database-backed.
+  - KEY TERM: Hypertext Transfer Protocol (HTTP): stateless
+    protocol used to connect to Web pages.
+  - KEY TERM: field: another name for column.
+  - KEY TERM: foreign key: column that links two tables and
+    creates a relationship.
+  - KEY TERM: Google Cloud: Google's cloud computing platform.
+  - KEY TERM: IBM Personal Computer (IBM PC): introduced 1981.
+  - KEY TERM: "in the cloud": describes computing resources
+    hosted on another company's hardware.
+  - KEY TERM: index: supporting structure that speeds sorting
+    and searching, like a book index.
+  - KEY TERM: information: knowledge derived from data, data
+    presented in a meaningful context, or data processed by
+    summing, ordering, averaging, grouping, comparing, or
+    similar operations.
+  - KEY TERM: instance: one particular occurrence of the thing
+    of interest, stored as a row.
+  - KEY TERM: integrated table: table that stores both data and
+    the relationships among the data.
+  - KEY TERM: Internet: the global network of networks, born as
+    ARPANET in 1969.
+  - KEY TERM: Internet of Things (IoT): smart speakers, smart
+    home devices, and appliances connected to the Internet.
+  - KEY TERM: iPhone: Apple's smartphone, 2007.
+  - KEY TERM: JavaScript Object Notation (JSON): data format
+    used by document databases and ArangoDB output.
+  - KEY TERM: Joint Engine Technology (JET): Microsoft's Jet
+    database engine, used by Access until Office 2007.
+  - KEY TERM: knowledge worker: user who prepares reports, mines
+    data, and does other data analysis.
+  - KEY TERM: Linux: OS available in various versions, notable
+    for its shareware development environment. MySQL runs on it,
+    and SQL Server now does too.
+  - KEY TERM: local area network (LAN): network of PCs, built on
+    Ethernet.
+  - KEY TERM: MariaDB DBMS: open source fork of MySQL, largely
+    compatible with it.
+  - KEY TERM: metadata: data about data. Describes the tables,
+    columns, and structures of the database.
+  - KEY TERM: Microsoft Azure: Microsoft's cloud platform (Azure
+    SQL, Cosmos DB).
+  - KEY TERM: Microsoft Office 365 Business: Microsoft's hosted
+    Office product, an example cloud platform for email or Web
+    hosting.
+  - KEY TERM: Microsoft Windows: OS for desktop and notebook
+    computers.
+  - KEY TERM: Microsoft Windows Server: OS for servers.
+  - KEY TERM: Microsoft SQL Server 2019: the book's primary DBMS.
+  - KEY TERM: Microsoft SQL Server 2019 Developer Edition: free,
+    identical to Enterprise, single-user development only.
+  - KEY TERM: Microsoft SQL Server 2019 Express Edition: free,
+    usable for smaller production databases, capacity limited.
+  - KEY TERM: Microsoft SQL Server Management Studio: the user
+    client interface to SQL Server 2019.
+  - KEY TERM: mobile phone: see cell phone (added definition).
+  - KEY TERM: MongoDB: most popular non-relational DBMS as of
+    April 2020, a document database, fifth overall.
+  - KEY TERM: MySQL Community Server 8.0: free, full-strength,
+    production-usable MySQL edition.
+  - KEY TERM: MySQL Enterprise Edition 8.0: purchased edition
+    with the full support package.
+  - KEY TERM: MySQL Workbench: the user client interface to
+    MySQL 8.0.
+  - KEY TERM: non-relational database: a database not built on
+    the relational model. The earliest type, revived by Big
+    Data.
+  - KEY TERM: NoSQL ("not only SQL") movement: post-2009 movement
+    toward non-relational databases for large datasets.
+  - KEY TERM: normal forms: the principles that make up
+    normalization.
+  - KEY TERM: normalization: principles used to guide and assess
+    database designs.
+  - KEY TERM: object-oriented DBMS (OODBMS or ODBMS): DBMS for
+    storing OOP objects, never caught on.
+  - KEY TERM: object-oriented programming (OOP): programming
+    style that emerged in the mid-1980s.
+  - KEY TERM: object-relational DBMS: hybrid made by adding OOP
+    constructs to a relational DBMS (Oracle).
+  - KEY TERM: Office Access Connectivity Engine (ACE): original
+    name of ADE, same technology.
+  - KEY TERM: online analytical processing (OLAP): analysis on a
+    data warehouse, a BI example.
+  - KEY TERM: online transaction processing (OLTP): recording
+    business transactions as they happen.
+  - KEY TERM: Open Database Connectivity (ODBC): standard Access
+    uses to connect to another DBMS such as SQL Server.
+  - KEY TERM: operating system (OS): required by every DBMS to
+    handle basic system operations (files, printing).
+  - KEY TERM: Oracle Database 18c Express Edition: free Oracle
+    edition, known as Oracle Database XE, used in the book.
+  - KEY TERM: Oracle Database 19c: current Enterprise Edition
+    version at time of writing.
+  - KEY TERM: Oracle Database 20c: version in preview at time of
+    writing.
+  - KEY TERM: Oracle Database Enterprise Edition: the full,
+    complex, license-only Oracle DBMS.
+  - KEY TERM: Oracle Database SQL Developer: the user client
+    interface for Oracle Database (body calls it Oracle SQL
+    Developer).
+  - KEY TERM: Oracle Database XE: common name for Oracle Database
+    18c Express Edition.
+  - KEY TERM: personal computer (PC): Apple II 1977, IBM PC 1981.
+  - KEY TERM: personal database system: a DBMS plus an
+    application generator (Access, OpenOffice.org Base,
+    LibreOffice Base).
+  - KEY TERM: point of sale (POS) system: records every purchase
+    in a database, monitors inventory, tracks card-holder buying.
+  - KEY TERM: primary key: uniquely identifies each row.
+  - KEY TERM: programmer: user who writes applications that
+    process the database.
+  - KEY TERM: record: another name for row.
+  - KEY TERM: referential integrity constraints: DBMS-enforced
+    rules that a foreign key value must exist in the referenced
+    table.
+  - KEY TERM: relational database: stores data in tables and
+    represents relationships among rows. A self-describing
+    collection of related tables.
+  - KEY TERM: relational model: Codd's 1970 model applying
+    relational algebra to shared data banks. Basis of all
+    relational DBMS products.
+  - KEY TERM: relationship: a link between rows of different
+    tables, created by a foreign key.
+  - KEY TERM: row: data about one instance. Also called a record.
+  - KEY TERM: Search button: the button that submits a Web page
+    search (Figure 1-1 Pearson example).
+  - KEY TERM: self-describing: contains a description of itself
+    (metadata).
+  - KEY TERM: server: computer that provides services and holds
+    the database.
+  - KEY TERM: service: what a server provides to clients
+    (searching, browsing, purchasing, tweeting).
+  - KEY TERM: smartphone: phone running apps. iPhone 2007,
+    Android 2008.
+  - KEY TERM: Structured Query Language (SQL): internationally
+    recognized standard language understood by all commercial
+    relational DBMSs.
+  - KEY TERM: surrogate key: primary key generated and assigned
+    automatically by the database.
+  - KEY TERM: table: rows and columns holding data about one
+    type of thing.
+  - KEY TERM: tablet computer (tablet): app-running device
+    widely used alongside smartphones.
+  - KEY TERM: transaction: a purchase or other business event
+    recorded in the company's accounts (OLTP).
+  - KEY TERM: unmanned aerial vehicle (UAV): technical term for
+    a drone (the WP company product).
+  - KEY TERM: user: person who employs a database application to
+    keep track of things.
+  - KEY TERM: view: a virtual table defined by a saved SQL query.
+  - KEY TERM: virtualization: running servers as software-defined
+    virtual machines on shared hardware, a leading-edge topic
+    alongside cloud computing (added definition).
+  - KEY TERM: Web (the): the World Wide Web, easily accessible
+    from 1993.
+  - KEY TERM: Web 2.0: sites where users add content, early
+    2000s (Facebook, Wikipedia, Twitter).
+  - KEY TERM: Web browser: client software for browsing Web
+    sites (Edge, Internet Explorer, Firefox, Chrome).
+  - KEY TERM: Web database application: application with a Web
+    user interface that depends on a database.
+  - KEY TERM: Web site: a set of Web pages served by a Web server
+    (added definition).
+  - KEY TERM: World Wide Web: created by Tim Berners-Lee, 1989
+    and 1990.
+  - KEY TERM: WWW: abbreviation for the World Wide Web.
+  - KEY TERM: Xerox Palo Alto Research Center (Xerox PARC): lab
+    that developed Ethernet, the mouse, and the multi-window GUI.
+
+================================================================
+17. KEY TAKEAWAYS
+================================================================
+  - Purpose of a database: help people keep track of things.
+    Two categories: relational and non-relational. Relational is
+    the most common.
+  - A database holds data AND relationships. Primary keys
+    identify rows, foreign keys link tables, composite keys
+    combine columns, surrogate keys are DBMS-generated.
+  - Data = recorded facts and numbers. Information = knowledge
+    from data, data in context, or processed data.
+  - Database system = users + database application + DBMS +
+    database, with SQL between application and DBMS.
+  - DBMS = create, process, administer. Nine functions in Figure
+    1-14. Application = five functions in Figure 1-10.
+  - Database = self-describing collection of integrated tables.
+    Self-describing means metadata, stored in tables, queryable
+    with SQL.
+  - Access = personal database system (DBMS + application
+    generator). Enterprise-class = applications separate from
+    the DBMS.
+  - Three design paths: from existing data (normalization), new
+    systems (data model, then transform), redesign (migration or
+    integration).
+  - History arc: files, then hierarchical and network models,
+    then Codd 1970 and the relational model, then PC DBMSs and
+    Access 1991, then OODBMS (failed), data warehouses, the Web,
+    open source, XML, NoSQL and cloud.
+
+================================================================
+18. QUIZ-SAFE FACTS
+================================================================
+  - Two categories of databases: relational and non-relational.
+    Relational is most commonly used.
+  - Rows = records, columns = fields. Table names all caps,
+    column names initial cap (book convention).
+  - Four components of a database system: users, database
+    application, DBMS, database. SQL is the fifth.
+  - DBMS: create, process, administer the database.
+  - Five DBMS market leaders named: Access, Oracle Database,
+    MySQL, SQL Server, DB2.
+  - April 2020 top three enterprise-class relational DBMSs:
+    Oracle Database, MySQL, Microsoft SQL Server. Access ranks
+    tenth. PostgreSQL fourth, DB2 sixth, MongoDB fifth.
+  - Database = self-describing collection of integrated tables.
+    Metadata = data about data.
+  - Access = DBMS (ADE, formerly Jet, also called ACE) plus
+    application generator. ODBC links Access to another DBMS.
+  - Three types of database design: from existing data, for new
+    systems development, redesign of an existing database.
+  - Two types of redesign: migration and integration.
+  - Data model = blueprint. ER modeling is the most popular
+    technique. Normalization guides design from existing data.
+  - Codd, 1970, Communications of the ACM, relational algebra.
+    First edition of this text 1977. Access 1991 at $99.
+  - MySQL: 1995, MySQL AB (Sweden), Sun 2008, Oracle completed
+    the Sun deal January 2013 per the book (actually 2010).
+  - Data warehouse term: 1988, Devlin and Murphy, IBM.
+  - HTTP is stateless. NoSQL = "Not only SQL", 2009. Document
+    databases use XML or JSON. Facebook and Twitter use
+    Cassandra. Book uses ArangoDB with AQL.
+  - Figure 1-7 sizes: contact manager 1 user 2,000 rows, patient
+    appointment 15 to 50 users 100,000 rows, CRM 500 users 10
+    million rows, ERP 5,000 users 10 million+ rows, e-commerce
+    millions of users 1 billion+ rows, dashboard 500 users
+    100,000 rows, data mining 25 users 100,000 to millions+.
+  - Drugstore.com adds 20 million rows per day. Verizon 2004
+    SQL Server database over 15 terabytes.
+  - Timeline: Apple II 1977, IBM PC 1981, Ethernet standard
+    1983, ARPANET 1969, Web accessible 1993, Amazon 1995, iPhone
+    2007, Android 2008.
+  - SQL Server 2019 Developer = free, full Enterprise features,
+    single user. Express = free, small production use.
+  - MySQL is the only one of the big three running on Windows,
+    macOS, and Linux. Oracle Database skips macOS.
+  - Concurrency control keeps one user's work from interfering
+    with another's (Chapter 9).
+  - Referential integrity constraint: a foreign key value must
+    already exist in the referenced primary key column.
