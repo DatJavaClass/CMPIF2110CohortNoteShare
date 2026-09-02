@@ -1,0 +1,12 @@
+# Ignore everything
+/*
+
+# Except these
+!.gitignore
+!.gitattributes
+!LICENSE
+!README.md
+!/Cliff Notes Module 2 Part 1/
+!/Cliff Notes Module 2 Part 2/
+!/Cliff Notes Module 2 Part 3/
+!/Cliff Jumper Notes/
