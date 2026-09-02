@@ -1,10 +1,4 @@
-Reading, Lesson 2-2-2: Personal Versus Enterprise-Class Database Systems: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera reading), textbook pages 18-24
-
-================================================================
 1. THE TWO CLASSES
-================================================================
   - Database systems and DBMS products divide into two classes:
     personal database systems and enterprise-class database
     systems.
@@ -18,9 +12,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     security data, backup and recovery data) repeats the end of
     Lesson 2-2-1. See that note.
 
-================================================================
 2. WHAT IS MICROSOFT ACCESS? (FIGURES 1-17 AND 1-18)
-================================================================
   - Common misconception: Access is not just a DBMS. It is a
     personal database system: a DBMS plus an application
     generator.
@@ -28,10 +20,10 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     administers the database, plus form, report, and query
     components that are the application generator. Those
     components create SQL statements and pass them to the DBMS.
-  - Figure 1-17 flow: Users supply data entry forms, reports, and
-    queries to three applications (form processing, report
-    generator, query processing). The applications go through SQL
-    to the DBMS, then to the database. Both directions.
+  - Figure 1-17, in the Lesson 2-2-2 reading: the three Access
+    application components (form processing, report generator,
+    query processing) send SQL to the DBMS, which works the
+    database.
   - Access is a low-end product for individuals and small
     workgroups. Microsoft hides the underlying database
     technology from the user. Users work through forms, request
@@ -58,11 +50,9 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     the macOS version, so it is often the first DBMS students
     use. The book gives some Access 2019 examples. Appendix A,
     "Getting Started with Microsoft Access 2019."
-  - Figure 1-18 shows Access 2019 running the chapter's sample
-    query: the database name on a tab, the query result in table
-    format, the STUDENT table object in the Tables section of
-    All Access Objects, and a query object in the Queries section
-    that stores the SQL query itself.
+  - Figure 1-18, in the Lesson 2-2-2 reading, shows Access 2019
+    running the chapter's sample query. A saved query object in
+    Access stores the SQL query itself.
   - Swapping the engine: with Access 2000 and later, the Access
     engine (Jet or ADE) can be replaced with another DBMS,
     typically Microsoft SQL Server. Access 2019 uses the Open
@@ -72,9 +62,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     connecting an application to a DBMS other than its native
     engine (added definition).
 
-================================================================
 3. ENTERPRISE-CLASS DATABASE APPLICATIONS (FIGURE 1-19)
-================================================================
   - In an enterprise-class system the applications and the DBMS
     are not under the same cover. Applications are separate from
     each other and from the DBMS.
@@ -109,9 +97,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     and implement application logic beyond simple form and report
     processing. (Book cites out-of-stock and backorder handling.)
 
-================================================================
 4. THE ENTERPRISE-CLASS DBMS AND THE THREE PRODUCTS
-================================================================
   - The DBMS manages the database: processes SQL and provides
     features for creating, processing, and administering it.
   - Popularity, as of April 2020 (DB-Engines ranking, footnote
@@ -131,9 +117,6 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
     between products.
   - The same sample query runs in all three products with
     matching results, sorted in a different order in each.
-  - Textbook slip: the SQL Server paragraph says its results
-    match Figure 1-20 (the SQL Server figure itself). The Oracle
-    and MySQL paragraphs say Figure 1-12, which is what is meant.
 
   Microsoft SQL Server 2019 (Figure 1-20)
   - Client interface: Microsoft SQL Server Management Studio.
@@ -170,9 +153,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
   - Widely used for Web database applications.
   - Online Chapter 10C, "Managing Databases with MySQL 8.0."
 
-================================================================
 5. OPERATING SYSTEMS AND LEARNING BY DOING
-================================================================
   - A DBMS does not run by itself. It needs an operating system
     for basic operations (reading and writing files, printing).
     Pick a DBMS the OS supports.
@@ -193,9 +174,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
   - DBMS work starts in Chapter 2 with SQL queries. Book examples
     are built in SQL Server 2019.
 
-================================================================
 6. TAIL: DATABASE DESIGN (FIGURE 1-23)
-================================================================
   - KEY TERM: database design (as a process): creating the proper
     structure of tables, the proper relationships between tables,
     appropriate data constraints, and other structural components.
@@ -211,9 +190,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
   - The excerpt ends here. The next reading continues Database
     Design.
 
-================================================================
 7. KEY TAKEAWAYS
-================================================================
   - Personal system (Access): DBMS plus application generator
     under one cover, technology hidden. Enterprise-class:
     applications separate from each other and from the DBMS.
@@ -233,9 +210,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (Coursera rea
   - Three types of database design: from existing data, for new
     systems development, redesign of an existing database.
 
-================================================================
 8. QUIZ-SAFE FACTS
-================================================================
   - Microsoft Access = personal database system = DBMS + an
     application generator (form, report, and query components).
   - Access engine: Access Database Engine (ADE), an Office-

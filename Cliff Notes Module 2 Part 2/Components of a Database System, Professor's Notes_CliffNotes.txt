@@ -1,20 +1,14 @@
-Components of a Database System, Professor's Notes: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 1-8 through 1-22)
-
-================================================================
 1. THE FOUR COMPONENTS (FIGURES 1-8 AND 1-9)
-================================================================
   - A database system consists of four components:
       1. Users
       2. Database application
       3. Database management system (DBMS)
       4. Database
-  - Figure 1-8 draws the four in that order, connected by two-way
-    arrows showing process flow. The DBMS box carries three
-    steps: Create, Process, Administer.
-  - Figure 1-9 is the same diagram with SQL inserted between the
-    Database Application and the DBMS.
+  - Figure 1-8, in the professor's notes: the four components
+    interact in that order, and the DBMS creates, processes, and
+    administers the database.
+  - Figure 1-9, in the professor's notes: SQL sits between the
+    database application and the DBMS.
   - KEY TERM: Structured Query Language (SQL): an internationally
     recognized standard language used by all relational
     databases. (The textbook phrases it as understood by all
@@ -28,36 +22,29 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
     to read, enter, and query data and produce reports (added
     definition, from the textbook).
 
-================================================================
 2. BASIC FUNCTIONS OF APPLICATION PROGRAMS (FIGURES 1-10 TO 1-13)
-================================================================
   - Five functions:
       1. Create and process forms
       2. Process user queries
       3. Create and process reports
       4. Execute application logic
       5. Control the application itself
-  - Figure 1-11, example data entry form: a header block for one
-    class (class number, class name, term, section) above an
-    enrollment grid (student number, last name, first name,
-    email) whose last row is blank for a new entry. The form
+  - Figure 1-11, in the professor's notes, is an example data
+    entry form for one class and its enrolled students. The form
     hides the two underlying tables from the user (added, from
-    the textbook). (Adjacent example: a clinic form showing one
-    doctor at the top and an appointment grid below, ending in an
-    empty row for the next booking.)
-  - Figure 1-12, example SQL query result: a small result table
-    with three columns (last name, first name, email address)
-    and two rows, the output of the chapter's sample query.
-  - Figure 1-13, example report: one row per enrollment across
-    seven columns (class number, class name, term, section, last
-    name, first name, grade), six rows, joined from the class,
-    student, and grade tables and sorted by class number then
-    last name. The report follows the users' needs, not the table
-    structure (both sentences added, from the textbook).
+    the textbook). (Example: a clinic form showing one doctor at
+    the top and an appointment grid below, ending in an empty row
+    for the next booking.)
+  - Figure 1-12, in the professor's notes, is an example SQL
+    query result: the output of the chapter's sample query,
+    returned to the user as a table.
+  - Figure 1-13, in the professor's notes, is an example report.
+    It joins the class, student, and grade tables and sorts by
+    class number then last name. The report follows the users'
+    needs, not the table structure (both sentences added, from
+    the textbook).
 
-================================================================
 3. FUNCTIONS OF A DBMS (FIGURE 1-14)
-================================================================
   - Nine functions:
       1. Create database
       2. Create tables
@@ -71,9 +58,7 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
   - Memory hook (added): three create, two touch data, one
     maintain, three administer (rules, concurrency, backup).
 
-================================================================
 4. THE DATABASE (FIGURES 1-15 AND 1-16)
-================================================================
   - KEY TERM: database: a self-describing collection of
     integrated tables.
   - KEY TERM: integrated: the tables store data about the
@@ -92,9 +77,7 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
       - Security data, backup/recovery data: discussed in
         Chapters 9, 10, 10A, 10B, 10C
 
-================================================================
 5. MICROSOFT ACCESS (FIGURES 1-17 AND 1-18)
-================================================================
   - KEY TERM: Microsoft Access: a personal database system
     consisting of a DBMS plus an application generator.
   - Low-end product intended for individual users and small
@@ -103,55 +86,38 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
     technology from the user. Good strategy for beginners, not
     for database professionals.
   - Microsoft Access 2019 is discussed in detail in Appendix A.
-  - Figure 1-17 flow: Users feed data entry forms to form
-    processing applications, reports to report generating
-    applications, and queries to query processing applications.
-    The applications go through SQL to the DBMS, which is either
-    the native Microsoft Access Access Database Engine (ADE) or
-    another DBMS linked via ODBC. The DBMS connects to the
-    database. Information flows both directions.
-  - Figure 1-18, Access 2019 window: a tab with the database
-    name, a right pane with query results in table format, and a
-    left pane, All Access Objects, listing tables, queries,
-    forms, and reports. The STUDENT table object sits in the
-    Tables section. A highlighted query object in the Queries
-    section stores the SQL query itself.
+  - Figure 1-17, in the professor's notes: Access's form
+    processing, report generating, and query processing
+    applications send SQL to the DBMS, which is either the
+    native Access Database Engine (ADE) or another DBMS linked
+    via ODBC.
+  - Figure 1-18, in the professor's notes: Access 2019 running
+    the chapter's sample query. Access holds tables, queries,
+    forms, and reports as objects, and a saved query object
+    stores the SQL query itself.
 
-================================================================
 6. ENTERPRISE-CLASS SYSTEMS (FIGURES 1-19 TO 1-22)
-================================================================
-  - Figure 1-19: users create SQL statements through five kinds
-    of application, all passed to the DBMS (Create, Process,
-    Administer), which connects to the database:
+  - Figure 1-19, in the professor's notes: five kinds of
+    application, all of which pass SQL to the DBMS:
       1. Applications running over corporate network
          (client/server)
       2. E-commerce applications on Web server
       3. Web portal with reporting applications
       4. XML Web services applications
       5. Mobile apps
-  - Figures 1-20, 1-21, 1-22 show the same query run in three
-    enterprise-class DBMS client tools. Each window has a right
-    pane split into the SQL query (top) and the results table
-    (bottom), and a left pane listing objects:
-      - Figure 1-20, Microsoft SQL Server 2019: left pane
-        Connections. Highlighted Student_Class_Grade database
-        object. The STUDENT table object under dbo, in the
-        Tables folder.
-      - Figure 1-21, Oracle Database XE: left pane Connections.
-        Highlighted Student_Class_Grade database connection
-        object. The STUDENT table object in the Tables folder.
-      - Figure 1-22, MySQL 8.0: left pane Schemas. The
-        student_class_grade database (schema) object. The
-        student table object in the Tables folder.
-  - Professor's notes write the product as "My SQL 8.0" (with a
-    space). Read as MySQL 8.0.
+  - Figures 1-20, 1-21, 1-22, in the professor's notes, show the
+    same query run in three enterprise-class DBMS client tools:
+      - Figure 1-20, Microsoft SQL Server 2019: the
+        Student_Class_Grade database, STUDENT table under dbo.
+      - Figure 1-21, Oracle Database XE: the Student_Class_Grade
+        connection, STUDENT table.
+      - Figure 1-22, MySQL 8.0: the student_class_grade schema,
+        student table.
   - Naming note: MySQL shows object names in all lowercase (from
     the textbook). The dbo in dbo.Student (Figure 1-20) is SQL
     Server's default schema (added).
 
-================================================================
 7. KEY TAKEAWAYS
-================================================================
   - Four components: users, database application, DBMS,
     database. SQL sits between application and DBMS.
   - Five application functions, nine DBMS functions. Memorize
@@ -164,9 +130,7 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
     a separate DBMS. Three products shown: SQL Server 2019,
     Oracle Database XE, MySQL 8.0.
 
-================================================================
 8. QUIZ-SAFE FACTS
-================================================================
   - Four components of a database system: users, database
     application, DBMS, database.
   - SQL: internationally recognized standard language used by
@@ -195,5 +159,4 @@ Source: Professor's notes (text outline of Kroenke & Auer Ch. 1 slides, Figures 
     (client/server), e-commerce on Web server, Web portal with
     reporting, XML Web services, mobile apps.
   - Figure 1-20 SQL Server 2019, Figure 1-21 Oracle Database XE,
-    Figure 1-22 MySQL 8.0. Left pane is Connections in SQL
-    Server and Oracle, Schemas in MySQL.
+    Figure 1-22 MySQL 8.0.
