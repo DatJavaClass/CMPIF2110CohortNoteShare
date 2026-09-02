@@ -1,22 +1,4 @@
-Three Types of Database Design, Professor Notes: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: professor's notes (slide bullets plus written descriptions of textbook Figures 1-24 through 1-33, Kroenke & Auer, Database Processing 16e, Chapter 1)
-
-================================================================
-1. WHAT THIS FILE IS
-================================================================
-  - Three parts. First, the Figure 1-23 outline of the three
-    types of database design plus prose descriptions of Figures
-    1-24 through 1-30. Second, slide bullets on the relational
-    model and post-relational developments. Third, descriptions
-    of Figures 1-31 through 1-33.
-  - It condenses both Lesson 2-3-1 (design) and Lesson 2-3-2
-    (history). Where the professor's wording differs from the
-    textbook, the difference is flagged below.
-
-================================================================
-2. THE THREE TYPES OF DATABASE DESIGN (FIGURE 1-23)
-================================================================
+1. THE THREE TYPES OF DATABASE DESIGN (FIGURE 1-23)
   - From existing data (Chapters 3 and 4):
       Analyze spreadsheets and other data tables.
       Extract data from other databases.
@@ -32,73 +14,62 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
   - Note carried from the figure: Chapter 7 covers database
     implementation using SQL, needed before redesign.
 
-================================================================
-3. THE FIGURES, AS THE PROFESSOR DESCRIBES THEM
-================================================================
-  - Figure 1-24, databases from existing data. Top: a stack of
-    spreadsheets and a stack of text files feed an arrow into a
-    Database Design cylinder. Bottom: an Operational Database
-    (ERP, CRM) cylinder feeds a Database Design cylinder through
-    an arrow the professor labels "Database design" (the
-    textbook labels that arrow Database Extraction).
-  - Figure 1-25, one table or two. Option (a): one four-column
-    table holding employee number, employee name, department
-    number, and department name for four employees, so each
-    department's name repeats on every employee row. Option
-    (b): a two-column department table (number, name, two rows)
-    plus a three-column employee table (number, name,
-    department number, four rows). The department name lives
-    once, in the department table, and the employee table links
-    to it by department number.
-  - Adjacent example of the same split: a flat list of library
-    books with a branch code and branch name on every row,
-    versus a BRANCH table (code, name) and a BOOK table (book
-    id, title, branch code). Same lesson: repeated descriptive
-    text signals a second table. (adjacent example)
-  - Figure 1-26, databases from new systems development. Inputs
-    (Forms, Reports, User Requirement Statements, Use Cases and
-    Other Systems Development Documents) are grouped as systems
-    requirements. Two steps produce the design: Data Model,
-    then Data Model Transformation.
-  - Figure 1-27, databases from redesign. Top: Database 1 flows
-    to Database Design 2 by an arrow labeled Migration. Bottom:
-    Database 1 plus Database 2 flow to Database Design 3 by an
-    arrow labeled Database Integration.
-  - Figure 1-28, working domains. Users are knowledge workers
-    and programmers using a Web server with PHP or Java
-    applications, client applications in C# or VB.NET, or a Web
-    portal with reporting applications. Database administrators
-    use Access Database Engine (ADE), SQL Server, MySQL, or
-    Oracle Database. Users' SQL statements pass through the
-    applications to the DBMS, which connects to the database.
-    Information flows both directions.
+2. FIGURES 1-24 THROUGH 1-33 AND THEIR LESSONS
+  - All of these figures are in the professor's notes. Figures
+    1-24 through 1-28 are also in the Lesson 2-3-1 reading, and
+    Figures 1-29 through 1-33 in the Lesson 2-3-2 reading.
+  - Figure 1-24, databases from existing data. Two inputs:
+    spreadsheets and text files, or extraction from an
+    operational database (ERP, CRM).
+  - Figure 1-25, one table or two. The same employee data can be
+    one table (employee number, employee name, department
+    number, department name, with each department's name
+    repeated on every employee row) or two tables, DEPARTMENT
+    (department number, department name) and EMPLOYEE (employee
+    number, employee name, department number). The department
+    name lives once, and EMPLOYEE links to DEPARTMENT by
+    department number.
+  - Example of the same split: a flat list of library books
+    with a branch code and branch name on every row, versus a
+    BRANCH table (code, name) and a BOOK table (book id, title,
+    branch code). Same lesson: repeated descriptive text signals
+    a second table.
+  - Figure 1-26, databases from new systems development. Forms,
+    reports, user requirement statements, use cases, and other
+    systems development documents together are the systems
+    requirements. Two steps produce the design: build a data
+    model, then transform it into the database design.
+  - Figure 1-27, databases from redesign. Migration turns one
+    existing database into a new design. Database integration
+    turns two or more existing databases into one new design.
+  - Figure 1-28, working domains. Knowledge workers and
+    programmers work on the application side: a Web server with
+    PHP or Java applications, client applications in C# or
+    VB.NET, or a Web portal with reporting applications.
+    Database administrators work on the DBMS side: Access
+    Database Engine (ADE), SQL Server, MySQL, or Oracle
+    Database. SQL passes from the applications to the DBMS,
+    which reads and writes the database.
   - Figure 1-29, priorities of what you need to know, and Figure
-    1-30, database history: named only, no description. Both
-    are captured in the Lesson 2-3-2 Cliff Notes.
-  - Figure 1-31, the Wedgewood Pacific Web page: a top view
-    illustration of a drone.
-  - Figure 1-32, ArangoDB non-relational DBMS: the Student Class
-    Grade database, top pane an ArangoDB Query Language (AQL)
-    query, bottom pane the results in JavaScript Object Notation
-    (JSON). Professor's text says "Arango BD" in one spot, read
-    as ArangoDB.
+    1-30, database history: see the Lesson 2-3-2 Cliff Notes.
+  - Figure 1-31, the Wedgewood Pacific (WP) Web page. WP, the
+    book's running company, sells drones.
+  - Figure 1-32, ArangoDB non-relational DBMS. The Student Class
+    Grade database queried in ArangoDB Query Language (AQL),
+    with results in JavaScript Object Notation (JSON).
   - Figure 1-33, Microsoft Azure cloud services: a Microsoft
     Azure Cosmos DB (non-relational DBMS) account named dbpe16
     and a Microsoft Azure SQL database named WP.
 
-================================================================
-4. THE RELATIONAL MODEL (SLIDE BULLETS)
-================================================================
+3. THE RELATIONAL MODEL (SLIDE BULLETS)
   - The dominant database model is the relational database
     model. All current major DBMS products are based on it.
   - Created by IBM engineer E. F. Codd in 1970.
   - Based on mathematics called relational algebra.
   - The text examines and explains the relational database
-    model. (Professor's text says "mode," read as model.)
+    model.
 
-================================================================
-5. POST-RELATIONAL DEVELOPMENTS (SLIDE BULLETS)
-================================================================
+4. POST-RELATIONAL DEVELOPMENTS (SLIDE BULLETS)
   - Object-Oriented Programming (OOP) emerged and many products
     were developed based on it, designed to easily store data
     encapsulated in OOP objects.
@@ -106,8 +77,7 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
     due to business requirements. (Textbook gives two reasons:
     conversion cost of existing relational data, and no
     substantial advantage.)
-  - "Continues today on product type databases." Professor's
-    phrase, unclear. The textbook's nearest statement: Oracle
+  - OOP constructs continue today in product databases. Oracle
     added OOP constructs to make a hybrid object-relational
     DBMS, and the OODBMS category is fading.
   - Data warehouses store massive amounts of information, used
@@ -117,11 +87,10 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
     the Internet.
   - Application Programming Interface (API) is used by Web
     pages, in programming languages, to connect to a DBMS.
-  - Web Database Application: an application with a Web-based
-    interface that "allows shopping using an API." The textbook
-    definition is broader: any Web-interface application that
-    depends on a database. Shopping is the example, not the
-    definition.
+  - Web Database Application: in the slides, an application
+    with a Web-based interface that allows shopping using an
+    API. In the textbook, any Web-interface application that
+    depends on a database, with shopping as the example.
   - eXtensible Markup Language (XML) was designed to overcome
     problems that occur when HTML is used in business
     transactions.
@@ -129,9 +98,7 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
     relational model. Used by databases that require massive
     amounts of data (Facebook, Twitter).
 
-================================================================
-6. KEY TAKEAWAYS
-================================================================
+5. KEY TAKEAWAYS
   - Three design types, three chapter homes: existing data
     (3-4), new systems (5-6), redesign (8), with SQL (7) as the
     gate to redesign.
@@ -146,9 +113,7 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
     fixes HTML for business exchange, NoSQL means non-relational
     at massive scale.
 
-================================================================
-7. QUIZ-SAFE FACTS
-================================================================
+6. QUIZ-SAFE FACTS
   - Three types of database design: from existing data, new
     systems development, database redesign.
   - Existing data: analyze spreadsheets and data tables, extract
@@ -157,8 +122,8 @@ Source: professor's notes (slide bullets plus written descriptions of textbook F
     the data model into the database design.
   - Redesign: migrate, integrate, or reverse-engineer and design
     new using normalization and data model transformation.
-  - Figure 1-27 labels: Migration (one source database) and
-    Database Integration (two source databases).
+  - Figure 1-27: migration (one source database) and database
+    integration (two source databases).
   - Figure 1-28 DBMSs: Access Database Engine (ADE), SQL Server,
     MySQL, Oracle Database. Application stacks: PHP or Java on
     a Web server, C# or VB.NET clients, Web portal reporting.

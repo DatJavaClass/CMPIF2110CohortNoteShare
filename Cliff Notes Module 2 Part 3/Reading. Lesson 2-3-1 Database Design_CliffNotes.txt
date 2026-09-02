@@ -1,10 +1,4 @@
-Reading, Lesson 2-3-1, Database Design: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 24-28), Coursera-packaged reading
-
-================================================================
 1. LEAD-IN: DBMS PRODUCTS NEED AN OPERATING SYSTEM
-================================================================
   - A DBMS is an application like any other. It runs on top of
     an operating system (OS) that handles file reads and writes,
     printing, and the other basic operations. Pick a DBMS with
@@ -26,9 +20,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - The book builds its examples in Microsoft SQL Server 2019.
     SQL work starts in Chapter 2.
 
-================================================================
 2. WHAT DATABASE DESIGN IS
-================================================================
   - KEY TERM: database design (as a process): the creation of
     the proper structure of database tables, the proper
     relationships between tables, appropriate data constraints,
@@ -65,9 +57,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - Figure note: Chapter 7 covers database implementation using
     SQL. That knowledge is required before redesign makes sense.
 
-================================================================
 3. TYPE 1: DATABASE DESIGN FROM EXISTING DATA
-================================================================
   - Figure 1-24, two inputs. Either a development team is handed
     spreadsheets or text files holding tables of data and must
     design a database and import them, OR the new database is
@@ -87,14 +77,14 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     table raises it (Figure 1-25 asks whether a flat table of
     employees with their department numbers and names should
     become one table or two).
-  - Adjacent example. A spreadsheet lists products with a
-    supplier number and supplier name on every row. Option (a),
-    one table: PRODUCT holding ProductNum, ProductName,
-    SupplierNum, SupplierName, with each supplier's name
-    repeated on every product it supplies. Option (b), two
-    tables: SUPPLIER (SupplierNum, SupplierName) and PRODUCT
-    (ProductNum, ProductName, SupplierNum), linked by
-    SupplierNum. Same data, two structures. (adjacent example)
+  - Example: a spreadsheet lists products with a supplier
+    number and supplier name on every row. Option (a), one
+    table: PRODUCT holding ProductNum, ProductName, SupplierNum,
+    SupplierName, with each supplier's name repeated on every
+    product it supplies. Option (b), two tables: SUPPLIER
+    (SupplierNum, SupplierName) and PRODUCT (ProductNum,
+    ProductName, SupplierNum), linked by SupplierNum. Same data,
+    two structures.
   - Such decisions are not arbitrary. Database professionals use
     a set of principles, collectively called normalization, or
     normal forms, to guide and assess designs. Chapter 3.
@@ -102,9 +92,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
         improve table structure, in this case to decide when to
         split data into related tables (added definition).
 
-================================================================
 4. TYPE 2: DATABASE DESIGN FOR NEW SYSTEMS DEVELOPMENT
-================================================================
   - Figure 1-26. Inputs are the requirements for a new system:
     desired data entry forms and reports, user requirements
     statements, use cases, and other systems development
@@ -129,9 +117,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     common form and report patterns with it. Chapter 6 teaches
     transforming ER data models into database designs.
 
-================================================================
 5. TYPE 3: DATABASE REDESIGN
-================================================================
   - Figure 1-27. Two common types of redesign.
   - Type A, adapt an existing database to new or changing
     requirements. Sometimes called database migration. Tables
@@ -152,9 +138,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     redesign waits for Chapter 8, after Chapter 7 covers
     creating and altering tables.
 
-================================================================
 6. WHAT YOU NEED TO LEARN: TWO ROLES
-================================================================
   - Two ways to work with database technology: as a USER or as a
     DATABASE ADMINISTRATOR.
   - User comes in two flavors:
@@ -186,9 +170,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     in innovative ways. 5 of the top 10 jobs on a CNNMoney list
     used database knowledge and related skills.
 
-================================================================
 7. KEY TAKEAWAYS
-================================================================
   - Database design = proper tables, relationships, constraints,
     and other structure. Important, difficult, and most of the
     book's first half.
@@ -208,9 +190,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     applications. DBAs design, construct, and manage the
     database.
 
-================================================================
 8. QUIZ-SAFE FACTS
-================================================================
   - Three types of database design: from existing data, for new
     systems development, redesign of an existing database.
   - From existing data: Chapters 3 and 4. New systems

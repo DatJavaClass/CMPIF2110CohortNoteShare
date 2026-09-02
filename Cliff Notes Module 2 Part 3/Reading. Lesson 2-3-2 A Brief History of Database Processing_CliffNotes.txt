@@ -1,10 +1,4 @@
-Reading, Lesson 2-3-2, A Brief History of Database Processing: Study Guide
-Course: Managing, Querying, and Preserving Data (CMPINF-2110)
-Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 29-40: Figure 1-29, the history section, chapter Summary, Key Terms), Coursera-packaged reading
-
-================================================================
 1. FIGURE 1-29: PRIORITIES OF WHAT YOU NEED TO KNOW
-================================================================
   - The reading opens with the priorities table promised at the
     end of Lesson 2-3-1. Scale: 1 = Very important,
     2 = Important, 3 = Less important. The authors warn that
@@ -27,16 +21,12 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
         technology
 
     (DBA = database administrator. KW/Prog = knowledge worker
-    and programmer.) As printed, the DBA column rates Basic SQL
-    and application technology 1 and the DDL, redesign,
+    and programmer.) The DBA column rates Basic SQL and
+    application technology 1 and the DDL, redesign,
     administration, and product chapters 3. The knowledge worker
-    and programmer column is nearly the mirror image. That reads
-    backwards for a DBA, but it is what the figure shows. Answer
-    quizzes from the figure.
+    and programmer column is nearly the mirror image.
 
-================================================================
 2. THE EARLY YEARS (BEFORE 1970 TO THE MID-1970s)
-================================================================
   - Database processing emerged around 1970 and has evolved
     continuously since.
   - Before 1970 all data lived in separate files, most on reels
@@ -47,22 +37,17 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - Memory was expensive too. The authors' 1969 payroll machine
     had 32,000 bytes of memory. The machine the history was
     written on has 16 gigabytes.
-  - The driving problem: integrated processing. Adjacent
-    example: a bank keeps customer account records on one tape
-    and loan records on another. To review a customer's loans
-    against their balances, the two tapes had to be integrated
-    somehow. (adjacent example)
+  - The driving problem: integrated processing. For instance, a
+    bank keeps customer account records on one tape and loan
+    records on another. To review a customer's loans against
+    their balances, the two tapes had to be integrated somehow.
   - The need for data integration drove the first database
     technology. By 1973 several commercial DBMS products had
     emerged. They were in use by the mid-1970s.
   - First edition of this text, copyrighted 1977, featured five
     DBMS products: ADABAS, System2000, Total, IDMS, and IMS. Of
-    those five, ADABAS, IDMS, and IMS are still in use, none with
+    those five, ADABAS and IMS are still in use, neither with
     substantial market share.
-  - Source inconsistency. The same section later says "no IDMS
-    database is in use today," and the chapter Summary says only
-    ADABAS and IMS are still in use. Quiz-safe reading: ADABAS
-    and IMS survive, IDMS is the contested one.
   - Two ways the early products structured relationships:
       Hierarchies or trees. KEY TERM: Data Language/I (DL/I):
         the method that used hierarchies or trees to represent
@@ -80,11 +65,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     the Cullinane Corporation, was the first software company
     listed on the New York Stock Exchange.
 
-================================================================
 3. FIGURE 1-30: DATABASE HISTORY (THE ERA TABLE)
-================================================================
-  Read from the PDF page image. Years exactly as printed.
-
   Era                 Years         Important Products
   Predatabase         Before 1970   File managers
   Early database      1970-1980     ADABAS, System2000, Total,
@@ -131,8 +112,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     problem at first. Early applications were simple one-stage
     transactions, later more complex logic developed.
   - Open source: much of the functionality and features of
-    commercial DBMS products at reduced cost. (Figure prints
-    PostgresQL. Read as PostgreSQL.)
+    commercial DBMS products at reduced cost.
   - XML and Web services: tremendous benefits to Web-based
     database applications, very important today, may replace
     relational databases during your career (Chapter 11,
@@ -143,15 +123,8 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     supplant relational databases during your career. Many
     companies rely on cloud computing to host servers,
     applications, and data (Chapters 12 and 13).
-  - Table-vs-text date trap: the table dates Data Warehouses
-    1998-present, but the body text credits the term to a 1988
-    article and the Summary says the concept arrived in the late
-    1980s. Know both. Also note the table's era ranges overlap
-    on purpose (1978-1985 relational, 1982-1992+ micro).
 
-================================================================
 4. THE EMERGENCE AND DOMINANCE OF THE RELATIONAL MODEL
-================================================================
   - 1970: Edgar Frank Codd (E. F. Codd), then a little-known IBM
     engineer, published a paper in the Communications of the ACM
     (June 1970, pp. 377-387, "A Relational Model of Data for
@@ -181,9 +154,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     10B). Design plus hard-driving sales pushed it to the top
     of the DBMS market.
 
-================================================================
 5. THE PC ERA AND THE MICROSOFT ACCESS "BLOODBATH"
-================================================================
   - Gordon Moore and others at Intel made PCs prevalent by the
     early 1980s, and DBMS products followed, built around the
     relational model.
@@ -202,13 +173,10 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - Today's main challenger to Access: the Apache Software
     Foundation and the open source community, who took over
     OpenOffice.org, a free suite including the personal database
-    OpenOffice.org Base and its sister LibreOffice. The text
-    says LibreOffice started when Oracle acquired Sun
-    Microsystems "in early 2013."
+    OpenOffice.org Base and its sister LibreOffice. LibreOffice
+    started when Oracle acquired Sun Microsystems in early 2013.
 
-================================================================
 6. POST-RELATIONAL: OBJECT-ORIENTED DBMS
-================================================================
   - Mid-1980s: object-oriented programming (OOP) emerged, its
     advantages over structured programming quickly recognized.
   - By 1990 some vendors had object-oriented DBMS products.
@@ -228,9 +196,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
          most commercial processing. SQL is not object-oriented,
          but it works and thousands of developers use it.
 
-================================================================
 7. OLTP, DATA WAREHOUSES, AND BI
-================================================================
   - A purchase, in a store or online, is a business transaction
     that must be recorded in the company's accounts. By the late
     1980s database applications for online transaction
@@ -250,9 +216,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     analyze and report on company data. Introduced in Chapter 2,
     extended discussion in Chapter 12.
 
-================================================================
 8. THE INTERNET, HTTP, AND WEB DATABASE APPLICATIONS
-================================================================
   - By the mid-1990s the Internet was clearly one of the most
     important phenomena in history. It changed how customers and
     businesses relate. Early Web sites were online brochures.
@@ -262,14 +226,10 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     technology that connects to Web pages over the Internet, is
     a stateless protocol. The server receives a request,
     processes it, then forgets about the user and the request.
-    (Body text says "Hypertext Transport Protocol." The Key
-    Terms list and the professor's notes say Transfer. Read as
-    Transfer.)
-  - Many database interactions are multistage. Adjacent example:
-    booking travel. Pick a flight, add a seat, add a bag, come
+  - Many database interactions are multistage. Booking travel,
+    for instance: pick a flight, add a seat, add a bag, come
     back later, add a hotel, then pay. A protocol that forgets
-    you after each page cannot carry that on its own. (adjacent
-    example)
+    you after each page cannot carry that on its own.
   - Over time the capability gap closed. Developers learned to
     add SQL statements to their Web applications and soon
     thousands of databases were processed over the Web. Today's
@@ -278,8 +238,8 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - KEY TERM: Web database application: an application with a
     Web user interface that depends on a database to store the
     data the application needs. The book names Amazon.com (a Key
-    Term). Adjacent example: a museum ticket site that reads
-    time slots and prices from a database. (adjacent example)
+    Term). Another example: a museum ticket site that reads time
+    slots and prices from a database.
   - Figure 1-31 shows the Web page of Wedgewood Pacific (WP),
     the book's running company, which manufactures and sells
     consumer drones (technically unmanned aerial vehicles,
@@ -289,9 +249,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     JavaScript, to connect to a DBMS, send SQL commands, and
     receive results back. Chapter 11.
 
-================================================================
 9. OPEN SOURCE DBMS PRODUCTS
-================================================================
   - Open source products make source code widely available so
     programmers not bound to a single company can contribute.
     Some editions are free downloads. Advanced editions or
@@ -300,9 +258,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
       1995: originally released by the Swedish company MySQL AB.
       February 2008: Sun Microsystems bought MySQL AB.
       January 2013: Oracle Corporation completed its acquisition
-        of Sun Microsystems. (Book's date. Oracle actually closed
-        the Sun deal in January 2010. Answer 2013 on a book-keyed
-        quiz.)
+        of Sun Microsystems.
     So Oracle now owns two major DBMS products: Oracle Database
     and Oracle MySQL. The free MySQL Community Server edition is
     downloadable from the MySQL Web site. MySQL is especially
@@ -314,8 +270,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     for Finnish developer Monty Widenius's daughters, My and
     Maria.
   - PostgreSQL is among the most widely used of the many other
-    open source DBMS products. (Source typo: "PostgreSQL begin
-    one of the most widely used," read as being.)
+    open source DBMS products.
   - Knock-on effect: proprietary vendors now offer free
     versions. Microsoft SQL Server 2019 Developer and Express
     editions are free downloads. Oracle Database Express Edition
@@ -327,9 +282,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
         Enterprise edition but limited to one user. A great
         learning platform.
 
-================================================================
 10. XML AND WEB SERVICES
-================================================================
   - Late 1990s: eXtensible Markup Language (XML) was defined to
     overcome the problems that occur when HTML is used to
     exchange business documents. XML also proved superior for
@@ -348,19 +301,16 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     Integration), and others.
   - Web services expose nuggets of database processing to other
     programs over the Internet infrastructure, in a standardized
-    way. Adjacent example: a parcel carrier exposes a
-    package-status lookup so any retailer's site can show
-    tracking without touching the carrier's database directly.
-    (adjacent example)
+    way. For example, a parcel carrier exposes a package-status
+    lookup so any retailer's site can show tracking without
+    touching the carrier's database directly.
 
-================================================================
 11. BIG DATA, THE NoSQL MOVEMENT, AND CLOUD COMPUTING
-================================================================
   - The NoSQL ("Not only SQL") movement and Big Data emerged in
     recent years, particularly after a 2009 conference organized
     around work on open source distributed databases (Chapter
     12).
-  - The authors' correction: it should really be called a
+  - The authors add that it should really be called a
     NoRelational movement, since the work is on databases that
     do not follow the relational model.
   - KEY TERM: Big Data: the movement based on the need for
@@ -384,7 +334,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     quickly. Facebook and Twitter both use the Apache Software
     Foundation's Cassandra database.
   - The book's non-relational DBMS: ArangoDB, from the German
-    company triAGENS (source prints "GmgH," read as GmbH).
+    company triAGENS GmbH.
     Figure 1-32 shows an ArangoDB query language (AQL) query,
     ArangoDB's equivalent of SQL, returning the same data as the
     chapter's earlier SQL queries (Figures 1-18, 1-20, 1-21,
@@ -419,9 +369,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     XML. Closing pitch: as in 1977, no product has a lock on the
     future.
 
-================================================================
 12. CHAPTER 1 SUMMARY (THE EXCERPT INCLUDES IT)
-================================================================
   - Today's Internet and mobile app world depends on databases.
     PCs use Web clients, smartphones and smart speakers (part of
     the Internet of Things, IoT) use apps over cell data
@@ -466,13 +414,12 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     and recovery data (Figure 1-16).
   - Microsoft Access is a personal database product: an
     application generator (forms, reports, queries) plus a DBMS.
-    Its default DBMS is the Access Data Engine (ADE), not
-    licensed separately. (The Key Terms list spells it Access
-    Database Engine.)
+    Its default DBMS is the Access Database Engine (ADE), not
+    licensed separately.
   - Enterprise-class systems keep applications separate from
-    each other and from the DBMS. Four application categories
-    (Figure 1-18): client-server, Web, reporting, XML Web
-    services.
+    each other and from the DBMS. Five application categories
+    (Figure 1-19): client-server, Web, reporting, XML Web
+    services, mobile apps.
   - As of April 2020, the three most popular enterprise-class
     relational DBMS products: Oracle Database, MySQL, Microsoft
     SQL Server. Microsoft Access ranks 10th despite being a
@@ -492,13 +439,8 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     and Web services against stateless HTTP, and now NoSQL,
     non-relational (document databases using JSON or XML), Big
     Data, virtualization, and cloud computing.
-  - Source slip: the Summary cites Figures 1-25, 1-26, and 1-27
-    for role domains, priorities, and history. The figures in
-    this excerpt are 1-28, 1-29, and 1-30. Stale numbering.
 
-================================================================
 13. KEY TERMS (from source)
-================================================================
   The Key Terms list at the end of the reading covers ALL of
   Chapter 1, including sections not in this excerpt. Every term
   is listed. Definitions the excerpt itself does not state are
@@ -507,7 +449,6 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
 
   - KEY TERM: Access Database Engine (ADE): the default DBMS
     inside Microsoft Access, not licensed as a separate product.
-    The Summary text calls it Access Data Engine.
   - KEY TERM: Advanced Research Projects Agency Network
     (ARPANET): the 1969 US Defense Department network that grew
     into the Internet (added).
@@ -541,7 +482,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     requests services from a server (added).
   - KEY TERM: client-server architecture: applications on client
     machines request work from a DBMS on a server. One of the
-    four enterprise application categories.
+    five enterprise application categories.
   - KEY TERM: cloud computing: using computing resources owned
     and operated by another company, off-site, at their data
     center.
@@ -781,9 +722,7 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     lab where the graphical interface, Ethernet, and other PC
     era technology originated (added).
 
-================================================================
 14. KEY TAKEAWAYS
-================================================================
   - Database processing started around 1970 to solve data
     integration across separate files.
   - Early models: hierarchical (DL/I, IMS) and network (CODASYL
@@ -807,16 +746,14 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - A database is a self-describing collection of integrated
     tables. Metadata is the self-description.
 
-================================================================
 15. QUIZ-SAFE FACTS
-================================================================
   - Database processing emerged around 1970. Before that: all
     data in separate files on magnetic tape.
   - By 1973 several commercial DBMS products existed, in use by
     the mid-1970s.
   - First edition (1977) products: ADABAS, System2000, Total,
-    IDMS, IMS. Still in use per the section: ADABAS, IDMS, IMS.
-    Per the Summary: ADABAS and IMS only.
+    IDMS, IMS. Still in use: ADABAS and IMS, neither with
+    substantial market share.
   - DL/I = hierarchies or trees. IMS (IBM) is based on it.
   - CODASYL Committee developed COBOL. Its Database Task Group
     (DBTG) produced the CODASYL DBTG network model. Most
@@ -837,16 +774,14 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
   - OOP emerged mid-1980s. OODBMS products by 1990. Two failure
     reasons: conversion cost, no substantial advantage.
   - Data warehouse term: 1988, IBM researchers Devlin and
-    Murphy. Figure 1-30 dates the Data Warehouses era
-    1998-present.
+    Murphy.
   - OLAP is an example of a BI system. BI systems analyze and
     report on company data.
   - HTTP is stateless. Web database application = Web interface
     plus a database. Wedgewood Pacific (WP) sells drones (UAVs).
   - MySQL: 1995, MySQL AB (Sweden). Sun bought it February 2008.
-    Oracle completed the Sun acquisition January 2013 (book's
-    date, real date January 2010). MariaDB is the fork. My and
-    Maria are Monty Widenius's daughters.
+    Oracle completed the Sun acquisition January 2013. MariaDB
+    is the fork. My and Maria are Monty Widenius's daughters.
   - Free editions: SQL Server 2019 Developer (full Enterprise,
     one user) and Express. Oracle Database XE = Express Edition
     18c.
@@ -870,8 +805,8 @@ Source: Kroenke & Auer, Database Processing 16e, Chapter 1 excerpt (book pages 2
     Database, MySQL, SQL Server. Access ranks 10th.
   - Five components of a database system: database, DBMS,
     applications, users, SQL.
-  - Four enterprise application categories: client-server, Web,
-    reporting, XML Web services.
+  - Five enterprise application categories: client-server, Web,
+    reporting, XML Web services, mobile apps.
   - Database = self-describing collection of integrated tables.
     Relational database = self-describing collection of related
     tables. Metadata = the self-description.
