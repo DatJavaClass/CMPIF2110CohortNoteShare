@@ -1,3 +1,5 @@
+<p align="center"><img width="511" height="768" alt="PatchLad" src="https://github.com/user-attachments/assets/70a8d516-5a21-4829-a594-b7b6222028ae" /></p>
+
 # Guides
 
 Standalone walkthroughs and setup guides for the cohort, gathered here so they live in one place. Each guide is its own file. Read whichever one you need.
