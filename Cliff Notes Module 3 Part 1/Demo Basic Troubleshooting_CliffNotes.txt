@@ -1,0 +1,109 @@
+1. SCOPE
+  - Demo goal: run queries that fail, read the error, resolve
+    it. Four failures are walked through: bad database name,
+    bad table name, a WHERE clause missing its column, and an
+    unknown column in the select list.
+  - Every lab contains a couple of questions dedicated to
+    troubleshooting. It is treated as a skill worth drilling.
+  - Companion demos in this module cover SELECT itself (Demo
+    Select) and filtering and sorting (Demo Filtering &
+    Sorting). This one is only about reading and clearing
+    errors.
+
+2. THE ACTION OUTPUT PANE
+  - KEY TERM: action output: the pane at the bottom of the
+    query window that logs every statement submitted.
+  - Fields it shows: timestamp, the action (the SQL command
+    submitted), the message, the error code, and the duration.
+  - Status icon per row: a red X means the statement failed, a
+    green check means it succeeded.
+  - Right click a message and choose Copy Response to pull the
+    text out. Messages are often cut off in the pane, so
+    copying is the reliable way to read a long one.
+  - Practice used throughout the demo: paste the copied error
+    into the editor above the query as a comment, so the full
+    text stays visible while the statement is fixed. Copy the
+    response only, not the duration.
+  - Right click inside the output and choose Clear to empty the
+    action output once it gets long.
+
+3. THE RED X IN THE EDITOR
+  - A red X appears in the editor next to a line with a syntax
+    error, before anything is run.
+  - Stated in the demo: a command underneath an unresolved red
+    X will not run. The red X has to be resolved first, by
+    fixing or commenting the flagged line.
+  - Commenting out the offending line clears the X and unblocks
+    the statements under it. This is why pasted error text gets
+    commented.
+  - MySQL comment syntax: -- followed by a space, or #, for a
+    line comment; /* */ for a block. (added)
+
+4. FAILURE 1: DATABASE DOES NOT EXIST
+  - USE simple; fails. Message: unknown database simple. That
+    database does not exist.
+  - Fix: USE demo; returns the green check.
+
+5. FAILURE 2: TABLE DOES NOT EXIST
+  - A SELECT run against categories fails. Message: the table
+    does not exist.
+  - Cause: the table is named category, singular. Correcting
+    the name and rerunning returns rows.
+
+6. FAILURE 3: WHERE CLAUSE MISSING ITS COLUMN
+  - A filtered query is attempted against category: a LIKE
+    search for produce, with a wildcard on each side of the
+    search term.
+  - The red X shows before the run. Running it produces a long
+    syntax error message, copied out and pasted up top.
+  - Cause: the WHERE clause never names a column to compare
+    against. LIKE has a pattern but no left operand.
+  - Fix: supply the column, the category name column. The red X
+    clears and the query returns rows.
+  - Generic shape of the corrected pattern:
+      SELECT * FROM inventory
+      WHERE item_label LIKE '%widget%';
+  - Wildcards on both ends match the term anywhere inside the
+    value. A pattern with no wildcard matches only an exact
+    value. (added)
+  - The missing column surfaced as a syntax error, flagged by
+    the red X before the statement was ever run.
+
+7. FAILURE 4: UNKNOWN COLUMN IN THE SELECT LIST
+  - A second column is added to the select list, cat ID.
+    Message: unknown column.
+  - Cause: no such column. The real column is the category ID
+    column. Removing the bad name, or replacing it with the
+    correct one, resolves it.
+  - Selecting a column already present in the result set is
+    legal: the demo ends with the category ID appearing twice,
+    two columns of the same data, and no error.
+
+8. TROUBLESHOOTING WORKFLOW
+  - Read the action output first. It gives clues: it names what
+    failed.
+  - The messages in this demo name the problem directly:
+    unknown database, table does not exist, unknown column. In
+    each case the name written in the statement resolved to
+    nothing on the server.
+  - Copy the full message out before editing, since the pane
+    cuts messages off.
+  - Clear the red X before rerunning anything below it.
+  - Look the error code up online if the message is not enough.
+  - Clear the action output when it gets noisy so the next
+    failure is easy to spot.
+
+9. KEY TAKEAWAYS
+  - A red X in the editor blocks execution below it. A green
+    check in the output means the statement ran.
+  - Output pane fields: timestamp, action, message, error code,
+    duration.
+  - Right click gives Copy Response and Clear.
+  - simple is not a database; demo is. categories is not a
+    table; category is. cat ID is not a column; category ID is.
+  - A WHERE clause with a LIKE pattern but no column errors
+    out, and the red X flags it before the run.
+  - Duplicate columns in a select list are permitted.
+  - Explicit instruction: refrain from using ChatGPT on these
+    queries. The point is to build a foundation through
+    repetition and to learn to troubleshoot yourself.

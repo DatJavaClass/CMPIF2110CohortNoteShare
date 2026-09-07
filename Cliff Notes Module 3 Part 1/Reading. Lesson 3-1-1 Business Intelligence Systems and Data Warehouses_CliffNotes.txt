@@ -1,0 +1,421 @@
+1. AD HOC QUERIES AND SQL
+  - BI reporting tools let users who do not know the
+    underlying database structures create ad hoc queries.
+    (added)
+  - Open Text's Open Text Business Intelligence product
+    (formerly LiveLink ECM BI Query) uses a user friendly
+    graphical user interface (GUI) to simplify creating ad hoc
+    queries.
+  - Personal databases such as Microsoft Access also have ad
+    hoc query tools. Access uses a GUI style called query by
+    example (QBE).
+  - KEY TERM: query by example (QBE): the GUI style Microsoft
+    Access uses to simplify ad hoc queries.
+  - KEY TERM: Structured Query Language (SQL): the universal
+    query language of relational DBMS products. SQL is always
+    behind the user friendly GUIs.
+  - Chapter 2 introduces writing and running SQL queries.
+    Chapter 7 returns to SQL for other purposes, such as
+    creating databases and adding data to them.
+
+2. CAPE CODD OUTDOOR SPORTS AND THE OLTP SYSTEM
+  - Cape Codd Outdoor Sports is a fictitious company based on
+    a real outdoor retail equipment vendor. Its Web site home
+    page is Figure 2-1.
+  - Sells recreational outdoor equipment in 15 retail stores
+    across the United States and Canada.
+  - Also sells over the Internet from a Web storefront
+    application and via mail order, using annual catalogs sent
+    to all recorded customers in early January of each year.
+  - All retail sales are recorded in a sales database managed
+    by the Oracle Database 19c DBMS.
+  - KEY TERM: online transaction processing (OLTP) system: the
+    type of sales system used to record all sales transactions
+    of the company, whether in a store, on the Web, or from
+    mail order or phone order sales. OLTP systems are the
+    backbone of businesses as they operate today.
+  - Extraction path in Figure 2-2: point of sale applications
+    for Store 1 through Store 15, a Web storefront Internet
+    sales application, and mail order sales all feed the
+    Oracle Database 19c OLTP sales database. Retail store
+    sales data extraction from that database produces the
+    Cape_Codd sales data database.
+
+3. BUSINESS INTELLIGENCE SYSTEMS AND DATA WAREHOUSES
+  - BI systems typically store their associated data in a data
+    warehouse (Figure 2-3).
+  - KEY TERM: data warehouse: a database system that has data,
+    programs, and personnel that specialize in the preparation
+    of data for BI processing.
+  - Data warehouses are covered in detail in Chapter 12. They
+    vary in scale and scope: as simple as a sole employee
+    processing a data extract on a part time basis, or as
+    complex as a department with dozens of employees
+    maintaining libraries of data and programs.
+  - KEY TERM: operational databases: the databases that store
+    the company's current day to day transaction data.
+  - KEY TERM: Extract, Transform, and Load (ETL) system: the
+    system that reads data from operational databases, from
+    other internal data, or from external data sources, then
+    cleans and prepares that data for BI processing. This can
+    be a complex process.
+  - The prepared data is stored in the data warehouse DBMS for
+    use by BI users, who access it with various BI tools.
+  - Component chain in Figure 2-3: operational databases,
+    other internal data, and external data feed the ETL system
+    (data extraction, cleaning, and preparation programs); the
+    ETL system feeds the data warehouse DBMS; that DBMS holds
+    the data warehouse database and the data warehouse
+    metadata; the DBMS feeds business intelligence tools,
+    which serve BI users.
+  - As described in Chapter 1, the DBMS used for the data
+    warehouse stores both databases and the metadata for those
+    databases.
+  - KEY TERM: data mart: a small, specialized data warehouse.
+    Data marts and their relationship to data warehouses are
+    discussed in Chapter 12.
+  - The data warehouse DBMS may or may not be the same DBMS
+    product used for the operational databases. Book example:
+    operational databases in Oracle Database 19c, data
+    warehouse in Microsoft SQL Server 2019.
+
+4. THE CAPE CODD EXTRACTED RETAIL SALES DATA DATABASE
+  - Marketing wants an analysis of (1) in store sales and (2)
+    catalog content, so marketing analysts ask IT to extract
+    retail sales data from the operational database.
+  - The extracted data is stored in a database named Cape_Codd
+    in the data warehouse DBMS. That is the SQL Server 2019
+    name; other DBMSs may use a variant depending on their
+    naming conventions. MySQL does not use uppercase
+    characters in database names, so there the name would be
+    cape_codd.
+  - Cape_Codd is a relational database (Chapter 1; more depth
+    in Chapter 3).
+  - KEY TERM: primary key: one or more columns that uniquely
+    identify each row (or record) in a table. Every table in
+    the database has one.
+  - KEY TERM: foreign key: a column used to create
+    relationships between tables to logically link the tables
+    together. Some tables have one or more.
+  - Six tables are needed (Figures 2-4 and 2-5):
+      RETAIL_ORDER, ORDER_ITEM, SKU_DATA, and BUYER for retail
+        sales analysis.
+      CATALOG_SKU_2020 and CATALOG_SKU_2021 for catalog
+        content analysis.
+  - The extract omits columns an operational sales OLTP
+    database would need. RETAIL_ORDER does not have
+    CustomerLastName, CustomerFirstName, or OrderDay columns.
+  - Analysts need similar data from different years to compare
+    catalog content year to year, which is why two CATALOG_SKU
+    tables are extracted.
+  - KEY TERM: stock keeping unit (SKU): a unique identifier
+    for each particular item that Cape Codd sells.
+  - RETAIL_ORDER has data about each retail sales order,
+    ORDER_ITEM about each item in an order, SKU_DATA about
+    each SKU, and BUYER about the buyers in the Purchasing
+    Department who are responsible for purchasing the SKUs.
+    These four tables are linked in a relational structure.
+  - KEY TERM: recursive relationship: a relationship between
+    columns in the same table. BUYER has one: Supervisor (a
+    foreign key) is linked to BuyerName (the primary key).
+  - Figure 2-4 shows the tables and relationships as they
+    appear in the Microsoft Access 2019 Relationships window.
+    The key symbol marks the primary key. The number 1 and the
+    infinity symbol mark one to many, so one retail order may
+    be linked to many order items by OrderNumber. Access 2019
+    cannot properly display recursive relationships, so the
+    one inside BUYER is not shown there.
+  - Cardinalities in Figure 2-4: RETAIL_ORDER 1 to ORDER_ITEM
+    many, SKU_DATA 1 to ORDER_ITEM many, BUYER 1 to SKU_DATA
+    many.
+  - Figure 2-6 does show the recursive relationship within
+    BUYER, and primary keys and foreign keys are clearly
+    visible there.
+  - CATALOG_SKU_2020 and CATALOG_SKU_2021 hold data about the
+    content of the annual printed catalog and the items
+    available for sale on the Web site. Because some items are
+    added to the Web site after the catalog is printed, an
+    item on the Web site may not be in the corresponding
+    catalog.
+  - Those two tables are free standing: they have primary keys
+    but are not linked to any other table via foreign keys.
+  - Figure 2-6 holds the sample data. Part (a) is the linked
+    RETAIL_ORDER, ORDER_ITEM, SKU_DATA, and BUYER tables. Part
+    (b) is the non linked CATALOG_SKU_2020 and
+    CATALOG_SKU_2021 tables.
+  - Row counts in Figure 2-6: RETAIL_ORDER 3, ORDER_ITEM 7,
+    SKU_DATA 13, BUYER 5, and 9 in each CATALOG_SKU table.
+  - The dataset shown is deliberately small: big enough to
+    illustrate the chapter's concepts while keeping the
+    database easily manageable. A real world extract would be
+    much larger.
+
+5. DATA TYPES (FIGURE 2-5)
+  - RETAIL_ORDER: OrderNumber Integer, StoreNumber Integer,
+    StoreZIP Character (9), OrderMonth Character (12),
+    OrderYear Integer, OrderTotal Currency.
+  - ORDER_ITEM: OrderNumber Integer, SKU Integer, Quantity
+    Integer, Price Currency, ExtendedPrice Currency.
+  - SKU_DATA: SKU Integer, SKU_Description Character (35),
+    Department Character (30), Buyer Character (35).
+  - BUYER: BuyerName Character (35), Department Character
+    (30), Position Character (10), Supervisor Character (35).
+  - CATALOG_SKU_20##: CatalogID Integer, SKU Integer,
+    SKU_Description Character (35), Department Character (30),
+    CatalogPage Integer, DateOnWebSite Date.
+
+6. THE RETAIL_ORDER TABLE
+  - Columns: OrderNumber, StoreNumber, StoreZIP (the ZIP code
+    of the store selling the order), OrderMonth, OrderYear,
+    OrderTotal.
+      RETAIL_ORDER (OrderNumber, StoreNumber, StoreZIP,
+          OrderMonth, OrderYear, OrderTotal)
+  - OrderNumber is the primary key, underlined in the schema
+    notation.
+  - The extract includes only retail store sales data.
+    Operational data for other types of sales, returns, and
+    other sales related transactions is not copied.
+  - The extraction selects only a few columns. Point of sale
+    (POS) and other sales applications process far more data.
+  - The operational database stores the data in a different
+    format. The Oracle Database 19c order data has a column
+    named OrderDate storing dates as MM/DD/YYYY (for example,
+    10/22/2020 for October 22, 2020). The extraction program
+    converts OrderDate into two separate values, OrderMonth
+    and OrderYear, because that is the format marketing wants.
+  - Such filtering and data transformation are typical of a
+    data extraction process.
+  - Sample rows (Figure 2-6): 1000, store 10, ZIP 98110,
+    December 2020, $445.00; 2000, store 20, ZIP 02335,
+    December 2020, $310.00; 3000, store 10, ZIP 98110,
+    January 2021, $480.00.
+
+7. THE ORDER_ITEM TABLE
+  - Columns: OrderNumber, SKU, Quantity, Price, ExtendedPrice
+    (which equals Quantity * Price).
+      ORDER_ITEM (OrderNumber, SKU, Quantity, Price,
+          ExtendedPrice)
+  - KEY TERM: composite primary key: a primary key made of
+    more than one column. Here OrderNumber and SKU together
+    are the composite primary key, and both are also foreign
+    keys.
+  - One row per item in an order. Think of a retail sales
+    receipt: it has one order's data plus one line per item
+    purchased, and ORDER_ITEM rows correspond to those lines.
+  - OrderNumber relates each ORDER_ITEM row to the
+    corresponding OrderNumber in RETAIL_ORDER. SKU relates
+    each row to its corresponding SKU in SKU_DATA.
+  - Quantity is the number of items of that SKU purchased in
+    that order, Price is the price of each item, ExtendedPrice
+    is Quantity * Price.
+  - Sample rows (Figure 2-6): order 1000 has SKU 201000,
+    quantity 1, price $300.00, ExtendedPrice $300.00; and SKU
+    202000, quantity 1, price $130.00, ExtendedPrice $130.00.
+  - The ORDER to ORDER_ITEM structure is typical for a sales
+    system with many items in one order. Data models and
+    designs for a complete order come in Chapters 5 and 6.
+  - The total of ExtendedPrice for an order does not equal
+    OrderTotal in RETAIL_ORDER. For order 1000 the
+    ExtendedPrice sum is $300.00 + $130.00 = $430.00, while
+    OrderTotal is $445.00. OrderTotal includes tax, shipping,
+    and other charges that do not appear in the data extract.
+
+8. THE SKU_DATA TABLE
+  - Columns: SKU, SKU_Description, Department, Buyer.
+      SKU_DATA (SKU, SKU_Description, Department, Buyer)
+  - SKU is the primary key and is an integer value identifying
+    a particular product. SKU 100100 is a yellow, standard
+    size SCUBA tank; SKU 100200 is the magenta version of the
+    same tank.
+  - SKU_Description is a brief text description of each item.
+    Department and Buyer identify the department and the
+    individual responsible for purchasing the product.
+  - These columns are a subset of the SKU data held in the
+    operational database.
+  - Buyer is a foreign key relating each SKU_DATA row to the
+    corresponding BuyerName in BUYER.
+  - Sample department values (Figure 2-6): Water Sports,
+    Camping, Climbing. Sample buyers: Pete Hansen, Nancy
+    Meyers, Cindy Lo, Jerry Martin.
+
+9. THE BUYER TABLE
+  - Columns: BuyerName, Department, Position, Supervisor.
+      BUYER (BuyerName, Department, Position, Supervisor)
+  - BuyerName is the primary key and is the combined first and
+    last names of the buyer. Supervisor is a foreign key in a
+    recursive relationship back to BuyerName in the same
+    table.
+  - Department is the Cape Codd organizational unit the buyer
+    works in, which is Purchasing for all buyers. Position
+    records the buyer's rank within the Purchasing department.
+    Supervisor records who the buyer reports to.
+  - Important point: column names that are the same in
+    different tables may contain very different types of data.
+    SKU_DATA.Department uses product department values (Water
+    Sports and so on); BUYER.Department is Purchasing for
+    every row. Better practice is different names, but that is
+    not always done.
+  - KEY TERM: domain: the set of possible data values for a
+    column. Two columns sharing the same set of data values
+    have data from the same domain. SKU_DATA.Department and
+    BUYER.Department do not share a set of values, so their
+    data comes from different domains.
+  - KEY TERM: null value: a missing data value. As Manager of
+    Purchasing, Mary Smith has no supervisor, so her
+    Supervisor value is null. Null values are detailed in
+    Chapter 4. Treat a null just like any other data value:
+    you can search for nulls with the same techniques used for
+    any other value.
+  - BUYER data is itself a subset of a table named EMPLOYEE,
+    which contains data on all Cape Codd employees, not just
+    those in Purchasing.
+  - Sample rows (Figure 2-6): Cindy Lo, Buyer 2, supervisor
+    Mary Smith; Jerry Martin, Buyer 1, supervisor Cindy Lo;
+    Mary Smith, Manager, no supervisor; Nancy Meyers, Buyer 1,
+    supervisor Pete Hansen; Pete Hansen, Buyer 3, supervisor
+    Mary Smith. All are in Purchasing.
+  - Recursive relationships are also discussed in Chapters 3,
+    5, and 6.
+
+10. THE CATALOG_SKU_20## TABLES
+  - All CATALOG_SKU_20## tables have the same columns:
+    CatalogID, SKU, SKU_Description, Department, CatalogPage,
+    DateOnWebSite.
+      CATALOG_SKU_20## (CatalogID, SKU, SKU_Description,
+          Department, CatalogPage, DateOnWebSite)
+  - CatalogID is the primary key and is an integer value
+    identifying a particular catalog item.
+  - SKU, SKU_Description, and Department have the same meaning
+    as in SKU_DATA. CatalogPage is an integer giving the page
+    in the printed catalog where the item appeared.
+    DateOnWebSite is the first date the item could be seen on
+    the Cape Codd Web site.
+  - The SKU column could be used as a foreign key to
+    SKU_DATA, but that link is not created at this time. These
+    tables are not linked to any other table.
+  - More null values: in CATALOG_SKU_2020 the row for SKU
+    100400 (Std. Scuba Tank, Dark Blue) has no CatalogPage,
+    and in CATALOG_SKU_2021 the row for SKU 203000 (Half-dome
+    Tent Vestibule, Wide) has no CatalogPage. Both rows still
+    carry a DateOnWebSite: 8/1/2020 and 4/1/2021.
+  - Each table holds nine rows in Figure 2-6, with CatalogID
+    values running 20200001 to 20200009 and 20210001 to
+    20210009.
+
+11. THE COMPLETE CAPE CODD DATA EXTRACT SCHEMA
+  - KEY TERM: database schema: a complete logical view of the
+    database, containing all the tables, all the columns in
+    each table, the primary key of each table (indicated by
+    underlining those column names), and the foreign keys that
+    link the tables together (indicated by italicizing those
+    column names).
+  - The Cape_Codd sales data extract schema:
+      RETAIL_ORDER (OrderNumber, StoreNumber, StoreZIP,
+          OrderMonth, OrderYear, OrderTotal)
+      ORDER_ITEM (OrderNumber, SKU, Quantity, Price,
+          ExtendedPrice)
+      SKU_DATA (SKU, SKU_Description, Department, Buyer)
+      BUYER (BuyerName, Department, Position, Supervisor)
+      CATALOG_SKU_2020 (CatalogID, SKU, SKU_Description,
+          Department, CatalogPage, DateOnWebSite)
+      CATALOG_SKU_2021 (CatalogID, SKU, SKU_Description,
+          Department, CatalogPage, DateOnWebSite)
+  - Keys by table: RETAIL_ORDER PK OrderNumber. ORDER_ITEM
+    composite PK OrderNumber plus SKU, both also FKs.
+    SKU_DATA PK SKU, FK Buyer. BUYER PK BuyerName, FK
+    Supervisor. Each CATALOG_SKU table PK CatalogID, no FKs.
+  - The composite primary key for ORDER_ITEM also contains the
+    foreign keys linking it to RETAIL_ORDER and SKU_DATA.
+  - The chapter's Review Questions extend this schema with
+    three more tables: WAREHOUSE, INVENTORY, and
+    CATALOG_SKU_2019. Some figures in the chapter include them
+    but the chapter text does not use them.
+
+12. DATA EXTRACTS ARE COMMON
+  - The extraction process described is not an academic
+    exercise. Such processes are realistic, common, and
+    important BI system operations. Hundreds of businesses
+    worldwide use BI systems to create extract databases like
+    the one Cape Codd created.
+  - KEY TERM: ad hoc SQL query: how SQL is used to "ask
+    questions" about the data in the database. The next
+    sections write SQL statements to process the extracted
+    data via an ad hoc SQL query.
+  - SQL is an essential asset for a knowledge worker,
+    application programmer, or database administrator.
+  - The SELECT/FROM/WHERE framework itself is covered in the
+    next reading of this lesson.
+
+13. SQL BACKGROUND
+  - Developed by the IBM Corporation in the late 1970s.
+  - Endorsed as a national standard by the American National
+    Standards Institute (ANSI) in 1986, and by the
+    International Organization for Standardization (ISO) in
+    1987. The acronym is ISO, not IOS.
+  - Subsequent versions adopted in 1989 and 1992. The 1992
+    version is referred to as SQL-92 or as ANSI-92 SQL.
+  - SQL:1999 released in 1999, also called SQL3, incorporating
+    some object oriented concepts.
+  - Then SQL:2003 in 2003, SQL:2006 in 2006, SQL:2008 in 2008,
+    SQL:2011 in 2011, and most recently SQL:2016 in 2016.
+  - Each version added new features or extended existing ones.
+    The ones the book calls out:
+      SQL standardization of the INSTEAD OF trigger in
+        SQL:2008 (triggers are covered in Chapter 7).
+      Support for Extensible Markup Language (XML) added in
+        SQL:2009 (XML is covered in Chapter 11 and Appendix
+        H).
+      Support for JavaScript Object Notation (JSON) added in
+        SQL:2016 (JSON is covered in Chapter 13).
+  - Chapters 2 and 7 mostly focus on common language features
+    present since SQL-92, but do include some features from
+    SQL:2003 and SQL:2008.
+
+14. LIKELY QUIZ POINTS
+  - SQL is the universal query language of relational DBMS
+    products and sits behind GUI query tools.
+  - QBE is the Microsoft Access GUI style for ad hoc queries.
+  - OLTP system records all sales transactions; the Cape Codd
+    OLTP database runs on Oracle Database 19c.
+  - Data warehouse: data, programs, and personnel specializing
+    in preparing data for BI processing. Data mart: a small,
+    specialized data warehouse.
+  - ETL = Extract, Transform, and Load. It reads operational,
+    other internal, and external data, then cleans and
+    prepares it.
+  - Figure 2-3 order: sources, ETL system, data warehouse DBMS
+    (holding the warehouse database and warehouse metadata),
+    BI tools, BI users.
+  - The warehouse DBMS need not match the operational DBMS
+    (Oracle Database 19c operational, Microsoft SQL Server
+    2019 warehouse).
+  - Extract database name: Cape_Codd in SQL Server 2019,
+    cape_codd in MySQL (MySQL does not use uppercase in
+    database names).
+  - Six tables: RETAIL_ORDER, ORDER_ITEM, SKU_DATA, BUYER,
+    CATALOG_SKU_2020, CATALOG_SKU_2021.
+  - ORDER_ITEM has a composite primary key of OrderNumber plus
+    SKU, and both columns are also foreign keys.
+  - ExtendedPrice = Quantity * Price. The ExtendedPrice sum
+    does not match OrderTotal because OrderTotal includes tax,
+    shipping, and other charges.
+  - Recursive relationship: a relationship within one table.
+    In BUYER, Supervisor (FK) to BuyerName (PK). Mary Smith,
+    Manager of Purchasing, has a null Supervisor.
+  - Domain = the set of possible values for a column.
+    SKU_DATA.Department and BUYER.Department come from
+    different domains.
+  - OrderDate (MM/DD/YYYY) in the operational database is
+    split into OrderMonth and OrderYear during extraction.
+  - StoreZIP is Character (9), not Integer. OrderMonth is
+    Character (12). OrderYear is Integer. DateOnWebSite is
+    Date.
+  - CATALOG_SKU tables are free standing: primary keys, no
+    foreign keys.
+  - Database schema = all tables, all columns, primary keys
+    (underlined), foreign keys (italicized).
+  - SQL dates: IBM late 1970s, ANSI 1986, ISO 1987, revisions
+    1989 and 1992 (SQL-92 / ANSI-92 SQL), SQL:1999 (SQL3),
+    2003, 2006, 2008, 2011, 2016.
+  - Review Questions add WAREHOUSE, INVENTORY, and
+    CATALOG_SKU_2019.

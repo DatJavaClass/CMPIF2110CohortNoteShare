@@ -1,0 +1,111 @@
+1. DEMO SETUP
+  - Open a connection, then a new SQL tab.
+  - Select the working database first with USE, then run it:
+      USE demo_database_name;
+  - Clicking a table in the object browser lists its columns,
+    which is how you confirm a column name before writing the
+    WHERE clause.
+  - Tables used in the demo: customer (city column) and product
+    (unit price column).
+  - Companion note: the SELECT demo covers SELECT and FROM; this
+    note covers WHERE filtering and ORDER BY sorting.
+
+2. FILTERING WITH WHERE
+  - WHERE follows the FROM clause and restricts which rows come
+    back. SELECT * returns all columns.
+      SELECT * FROM employee WHERE branch = 'Denver';
+  - String and VARCHAR values in a WHERE comparison go in single
+    quotes. Numbers do not.
+  - KEY TERM: VARCHAR: variable length character string data
+    type (added definition). The demo defers the detail to a
+    later week.
+  - Every statement ends with a semicolon.
+
+3. CASE SENSITIVITY OF DATA
+  - Comparisons against the data are case sensitive. Searching
+    for the city Berlin returns a matching customer row.
+    Running the same query with BERLIN in all capitals returns
+    zero results.
+  - Rule: the value in the WHERE clause has to be typed the way
+    it is stored in the table.
+
+4. WILDCARD SEARCH WITH LIKE
+  - Use LIKE instead of the equals sign for a pattern match
+    rather than an exact match.
+  - The SQL wildcard character is the percent sign. It stands
+    for any sequence of characters, whatever they are.
+  - Wildcard on the right means "starts with":
+      SELECT DISTINCT branch FROM employee
+        WHERE branch LIKE 'D%';
+  - DISTINCT strips duplicate values out of the result, so the
+    demo used it to list each matching city once.
+  - The wildcard can go anywhere in the pattern. Wildcard in
+    front means "ends with":
+      WHERE branch LIKE '%n';
+  - Searching for cities ending in B returned no rows; a
+    trailing letter in a stored city name is most likely
+    lowercase. Searching for cities ending in n returned
+    Berlin, London and others.
+  - Adding more literal characters before the wildcard narrows
+    the match.
+  - (added) The other SQL wildcard is the underscore, which
+    matches exactly one character.
+
+5. COMPARISON OPERATORS
+  - Numeric columns take the comparison operators directly, with
+    no quotes:
+      SELECT * FROM part WHERE list_price > 25;
+  - The demo filtered the product table on unit price greater
+    than 25 to return every product above that price.
+  - That unsorted result came back looking disorganized, which
+    is the setup for ORDER BY.
+
+6. SORTING WITH ORDER BY
+  - ORDER BY goes after the WHERE clause, followed by the column
+    or columns to sort on:
+      SELECT * FROM part WHERE list_price > 25
+        ORDER BY list_price;
+  - The result grid in the tool can also sort, ascending or
+    descending. Do the sorting with SQL anyway, because the
+    labs ask for the SQL.
+
+7. BETWEEN
+  - BETWEEN filters on a range:
+      SELECT * FROM part WHERE list_price BETWEEN 25 AND 50
+        ORDER BY list_price;
+  - BETWEEN is inclusive. Both endpoint values are returned.
+  - For a non inclusive range, use greater than and less than
+    instead. Swapping BETWEEN 25 AND 50 for the strict operators
+    drops the rows priced at exactly 25.
+  - ORDER BY works on a BETWEEN filtered result the same as on
+    any other result.
+
+8. SORT DIRECTION AND MULTIPLE SORT COLUMNS
+  - ORDER BY is ascending by default when no direction keyword
+    is given.
+  - DESC sorts descending. To find the most expensive rows, drop
+    the WHERE clause and sort descending:
+      SELECT * FROM part ORDER BY list_price DESC;
+  - A query with no WHERE clause is legal. Filtering is
+    optional, sorting is optional.
+  - ORDER BY takes several columns, separated by commas, each
+    with its own direction. (added) Sort priority runs left to
+    right.
+      SELECT * FROM part
+        ORDER BY supplier_id ASC, list_price DESC;
+  - ASC can be typed but is not necessary, since ascending is
+    the default.
+
+9. KEY TAKEAWAYS
+  - Clause order: SELECT, FROM, WHERE, ORDER BY.
+  - Quote string and VARCHAR values with single quotes, leave
+    numbers unquoted, end with a semicolon.
+  - Data comparisons are case sensitive.
+  - LIKE plus the percent sign does wildcard matching; position
+    of the percent sign decides starts with, ends with, or
+    contains.
+  - DISTINCT removes duplicate values from the result.
+  - BETWEEN is inclusive; greater than and less than give the
+    exclusive version.
+  - ORDER BY is ascending by default; DESC reverses it, and
+    multiple sort columns each carry their own direction.

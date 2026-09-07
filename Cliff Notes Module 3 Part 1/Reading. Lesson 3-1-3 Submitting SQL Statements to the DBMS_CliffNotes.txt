@@ -1,0 +1,398 @@
+1. SCOPE AND SETUP
+  - Section covers submitting SQL statements to four DBMS
+    products: Microsoft Access 2019, Microsoft SQL Server 2019,
+    Oracle Database, and Oracle MySQL 8.0.
+  - SQL can be learned without running the queries, but it is
+    easier to understand and remember when run while reading.
+  - Free options named: SQL Server 2019 Developer and Express
+    editions, Oracle Database XE, MySQL 8.0 Server Community
+    Edition. Access 2019 is purchased as part of many Microsoft
+    Office suites.
+  - Install and database-creation instructions: Chapter 10A
+    (SQL Server), 10B (Oracle), 10C (MySQL). Appendix A covers
+    building the Access database by hand.
+  - Sample database for the chapter: Cape Codd Outdoor Sports.
+    Scripts for every product are at
+    www.pearsonhighered.com/kroenke.
+  - Tables and sample data come from Figures 2-4, 2-5, and 2-6.
+    Chapter tables: RETAIL_ORDER, ORDER_ITEM, SKU_DATA, BUYER.
+  - Three extra tables ship with the downloads and are used
+    only for the end-of-chapter Review Questions: INVENTORY,
+    WAREHOUSE, and CATALOG_SKU_2019.
+
+2. MICROSOFT ACCESS AND THE ANSI-89 PROBLEM
+  - The book's SQL is based on features present in the
+    standards since ANSI SQL-92, which Microsoft calls ANSI-92
+    SQL. Access 2019 still defaults to the earlier SQL-89
+    version.
+  - KEY TERM: Microsoft Jet SQL: Microsoft's other name for
+    Access ANSI-89 SQL, after the Microsoft Jet DBMS engine,
+    since replaced by the ACE DBMS engine.
+  - ANSI-89 SQL differs significantly from SQL-92, so some
+    SQL-92 features will not work in Access.
+  - Access 2019, and the 2003, 2007, 2010, 2013, and 2016
+    versions before it, contains a setting to use SQL-92
+    instead. Microsoft added it so Access tools such as forms
+    and reports could be used in application development for
+    Microsoft SQL Server.
+  - The chapter assumes default ANSI-89 mode, on the argument
+    that this teaches the limitations and how to cope with
+    them. Boxes titled "Does Not Work with Microsoft Access
+    ANSI-89 SQL" flag the commands and clauses that fail there
+    and give workarounds. The one permanent workaround is the
+    SQL-92 syntax option.
+  - Two Access files ship for the chapter: Cape-Codd.accdb (set
+    to Access ANSI-89) and Cape-Codd-SQL-92.accdb (set to
+    Access SQL-92).
+
+3. TURNING ON SQL-92 SYNTAX IN ACCESS 2019
+  - Path: File command tab, then the Options command to open
+    the Access Options dialog box, then the Object Designers
+    button. Figure 2-7, p. 61, shows the resulting Access
+    Options Object Designers page.
+  - The controlling group is SQL Server Compatible Syntax
+    (ANSI 92), in the Query design area of that page. It
+    controls SQL-89 versus SQL-92 syntax in Access queries.
+      This database check box: SQL-92 syntax in the currently
+        open database only.
+      Default for new databases check box: SQL-92 syntax as the
+        default for all new databases you create.
+  - Click OK to save the option. The SQL syntax information
+    dialog box then appears (Figure 2-8, p. 61). Read it, then
+    click OK to close it.
+  - Warnings that dialog states: existing queries may return
+    different results or not run at all; the range of data
+    types and reserved words will change; different wildcards
+    will be used; make a backup copy first, because Access will
+    close the database, compact it, and re-open it in the new
+    mode.
+  - Very few Access users or organizations set the SQL-92
+    option, which is why the chapter stays on ANSI-89.
+
+4. OPENING AN ACCESS QUERY WINDOW IN DESIGN VIEW
+  - Open the database first, then create a new tabbed Query
+    window.
+  - Steps:
+      1. Click the Create command tab (Figure 2-9, p. 62).
+      2. Click the Query Design button.
+      3. The Query1 tabbed document window opens in Design view
+         along with the Show Table dialog box (Figure 2-10,
+         p. 63).
+      4. Click the Close button on the Show Table dialog box.
+         Query1 now shows the Query Tools contextual command
+         tab and the Design command tab (Figure 2-11, p. 63).
+  - Design view is the window used for creating and editing
+    Access queries, and is used with Access QBE.
+  - KEY TERM: QBE: Query By Example, the Access graphical query
+    builder.
+  - In Figure 2-11 the Select button is selected in the Query
+    Type group on the Design tab, meaning the query being built
+    is the equivalent of an SQL SELECT statement. Active or
+    selected buttons are always shown highlighted in gray on
+    the Ribbon.
+  - The View gallery sits in the Results group of the Design
+    tab and switches between Design view and SQL view. A
+    separate SQL View button is also displayed because Access
+    always presents a "most likely needed" view choice as a
+    button above the View gallery.
+
+5. RUNNING AND SAVING AN SQL QUERY IN ACCESS
+  - Steps to run:
+      1. Click the SQL View button in the Results group on the
+         Design tab. Query1 switches to SQL view (Figure 2-12,
+         p. 64). It opens holding only SELECT; which is an
+         incomplete command and produces no results if run. It
+         is only the start of a query.
+      2. Edit the statement, leaving out the SQL comment line
+         (Figure 2-13, p. 64).
+      3. Click the Run button on the Design tab. Results appear
+         (Figure 2-14, p. 65).
+  - The worked example is the chapter's first query, labeled
+    SQL-Query-CH02-01: a four-column SELECT against SKU_DATA.
+  - Generic form of the statement typed in every product:
+      SELECT ProductID, ProductName, Category
+      FROM   CATALOG_ITEM;
+  - Access is a personal database and includes an application
+    generator, so Access queries can be saved inside the
+    database for future use. Enterprise-class products
+    generally do not allow saved queries.
+  - Steps to save:
+      1. Click the Save button on the Quick Access Toolbar. The
+         Save As dialog box appears (Figure 2-15, p. 65).
+      2. Type the query name SQL-Query-CH02-01 and click OK.
+         The document window is renamed and a query object of
+         that name appears in the Queries section of the
+         Navigation Pane (Figure 2-16, p. 66).
+      3. Close the window with the document window's Close
+         button.
+      4. If Access asks whether to save changes to the design
+         of the query, click Yes.
+  - Assignment pattern, repeated for all four products: work
+    through the other three queries from the SELECT/FROM/WHERE
+    framework discussion and save each as SQL-Query-CH02-##,
+    where ## is a sequential number from 02 to 04 matching the
+    query label in that query's SQL comment line.
+
+6. MICROSOFT SQL SERVER 2019
+  - Needs SQL Server installed and a database holding the
+    tables and data of Figures 2-4, 2-5, and 2-6. Chapter 10A
+    covers obtaining and installing SQL Server 2019, creating
+    the Cape_Codd database (note the underscore), and running
+    the creation and population scripts.
+  - GUI tool: Microsoft SQL Server Management Studio, shortened
+    in the text to SQL Server Management Studio. It manages the
+    DBMS and its databases, and installs as part of SQL Server
+    2019 setup.
+  - Steps to run a query (Figure 2-17, p. 67):
+      1. Click the New Query button to display a new tabbed
+         query window.
+      2. If Cape_Codd is not shown in the Available Database
+         box, select it in the Available Databases drop-down
+         list.
+      3. Click the IntelliSense Enabled button to disable
+         IntelliSense.
+      4. Type the SELECT command, without the SQL comment line.
+      5. Optionally click the Parse button to check syntax
+         before running. A Results window returns the message
+         "Command(s) completed successfully" if the syntax is
+         correct, or an error message if it is not.
+      6. Click the Execute button to run the query. Results
+         appear in a results window.
+  - The Object Browser in the left-side window lists database
+    objects; in Figure 2-17 Cape_Codd is expanded to show its
+    tables. Many Management Studio functions attach to Object
+    Browser objects and are reached by right-clicking for a
+    shortcut menu.
+
+7. SAVING QUERIES AS SCRIPTS IN SQL SERVER
+  - SQL Server 2019 is an enterprise-class product and does not
+    store queries within the DBMS. It does store SQL Views,
+    which can be considered a type of query, covered in
+    Chapter 7.
+  - KEY TERM: SQL script file: a separately stored plain text
+    file, usually with a .sql file name extension, that can be
+    opened and run as an SQL command or set of commands. Often
+    used to create and populate databases, and also used to
+    store a query or set of queries.
+  - Steps to save (Figure 2-18, p. 68):
+      1. Click the Save button. The Save File As dialog box
+         appears.
+      2. Browse to \Documents\SQL Server Management Studio\
+         Projects\DBP-e16-Cape-Codd-Database.
+      3. Two SQL script names are already listed there: the
+         scripts used to create and populate the Cape_Codd
+         tables.
+      4. In the File Name text box, type the script file name
+         SQL-Query-CH02-01.
+      5. Click the Save button.
+  - Rerun a saved query by clicking the Open File button,
+    opening the script that holds the query, then clicking
+    Execute.
+  - Recommended layout: a folder per database inside the
+    Projects folder.
+
+8. ORACLE DATABASE
+  - Versions named: Oracle Database 18c, Oracle Database 19c,
+    and Oracle Database XE. Chapter 10B covers obtaining and
+    installing Oracle Database XE and creating the Cape Codd
+    database. Oracle database naming is complex, so the text
+    uses the generic name Cape Codd here and explains the
+    naming in Chapter 10B.
+  - Tooling: Oracle users have long been dedicated to the
+    Oracle SQL*Plus command-line tool, but professionals are
+    moving to the Oracle SQL Developer GUI tool, which the book
+    adopts as its standard Oracle GUI. SQL Developer installs
+    as part of Oracle Database 19c, but must be downloaded and
+    installed separately for Oracle Database XE.
+  - Steps to run a query (Figure 2-19, p. 69):
+      1. Open the Cape-Codd-Database connection in SQL
+         Developer. A tabbed SQL Worksheet is displayed.
+      2. In the SQL Worksheet, type the SELECT command, without
+         the SQL comment line.
+      3. Click the Execute button. Results appear in the Query
+         Result tabbed window.
+  - The left-side pane is the Connections object browser, which
+    shows connected databases and expands to show tables. Many
+    SQL Developer functions attach to its objects and are
+    reached by right-clicking for a shortcut menu.
+  - Enterprise-class, so no queries stored in the DBMS. SQL
+    Views are stored, discussed later in the chapter. Queries
+    are saved as SQL script files.
+  - Steps to save a script (Figure 2-20, p. 71):
+      1. Click the Save button. The Save dialog box appears.
+      2. Click the Documents button on the Save dialog box,
+         then browse to the DBP-e16-Cape-Codd-Database folder.
+      3. Two creation and population scripts are already listed
+         there.
+      4. In the File Name text box, type the script file name
+         SQL-Query-CH02-01.sql.
+      5. Click the Save button.
+  - Path shown in Figure 2-20: Users\{UserName}\Documents\
+    SQL Developer\DBP-e16-Cape-Codd-Database. Recommended
+    layout: a SQL Developer folder inside Documents, then a
+    subfolder per database.
+  - Rerun a saved query with the SQL Developer Open File
+    button, browse to and open the query file, then click
+    Execute.
+
+9. ORACLE MYSQL 8.0
+  - Needs MySQL installed and a database holding the tables and
+    data of Figures 2-4, 2-5, and 2-6. Chapter 10C covers
+    obtaining and installing MySQL Community Server 8.0,
+    creating the cape_codd database (all lowercase, with an
+    underscore), and running the scripts.
+  - GUI tool: MySQL Workbench, installable alongside the DBMS
+    using the MySQL Installer. SQL statements are created and
+    run in the Workbench, which calls a database a schema.
+  - Steps to run a query (Figure 2-21, p. 72):
+      1. Right-click the cape_codd schema object to display the
+         shortcut menu, then click Set as Default Schema. This
+         makes cape_codd the default schema, that is, the
+         active database.
+      2. In the Query 1 tabbed window inside the SQL Editor
+         tabbed window, type the SELECT command, without the
+         SQL comment line.
+      3. Click the "Execute the statement under the keyboard
+         cursor" button. Results appear in a tabbed Result Grid
+         window.
+  - The left-side pane is the Navigator; expanding cape_codd
+    shows its tables. Many Workbench functions attach to
+    Navigator objects and are reached by right-clicking for a
+    shortcut menu.
+  - Enterprise-class, so no queries stored in the DBMS. SQL
+    Views are stored, discussed later in the chapter. Queries
+    are saved as SQL script files.
+  - Steps to save a script (Figure 2-22, p. 73):
+      1. Click the "Save the script to a file" button. The Save
+         SQL Script dialog appears.
+      2. Browse to Documents\MySQL Workbench\Schemas\
+         DBP-e16-Cape-Codd-Database.
+      3. In the File name text box, type the query file name
+         SQL-Query-CH02-01.
+      4. Click the Save button.
+  - MySQL Workbench stores files in the user's Documents folder
+    by default. Recommended layout: a subfolder per MySQL
+    database.
+  - Rerun a saved query with the File | Open SQL Script menu
+    command, select and open the .sql file, then click the
+    "Execute the statement under the keyboard cursor" button.
+
+10. CROSS-PRODUCT PATTERNS WORTH MEMORIZING
+  - The same SELECT text runs unchanged in all four products.
+    The SQL comment line is left out of the statement as run,
+    though it could have been included in the SQL code.
+  - Comment syntax the book uses to label queries:
+      /* *** SQL-Query-CH02-01 *** */
+  - Only Access stores queries inside the database, because it
+    is a personal database with an application generator. The
+    three enterprise-class products store SQL Views but not
+    queries, so queries live in .sql script files instead.
+  - Database naming by product: Cape-Codd.accdb (Access file
+    name), Cape_Codd (SQL Server, underscore), Cape Codd
+    (Oracle, the generic name used in the text; the SQL
+    Developer connection is Cape-Codd-Database), cape_codd
+    (MySQL, all lowercase with underscore).
+  - Run button by product: Run (Access), Execute (SQL Server
+    Management Studio and Oracle SQL Developer), Execute the
+    statement under the keyboard cursor (MySQL Workbench).
+  - Left-side object pane by product: Navigation Pane (Access),
+    Object Browser (SQL Server), Connections object browser
+    (Oracle), Navigator (MySQL).
+  - Query entry surface by product: SQL view of the Query
+    window (Access), tabbed query window (SQL Server), SQL
+    Worksheet (Oracle), Query 1 tab inside the SQL Editor
+    (MySQL).
+  - Results surface by product: query results (Access), Results
+    window (SQL Server), Query Result tabbed window (Oracle),
+    Result Grid (MySQL).
+  - Right-clicking an object in the left-side pane to get a
+    shortcut menu is stated for SQL Server, Oracle, and MySQL.
+  - Parse in SQL Server Management Studio is the only syntax
+    check separate from running given anywhere in this section;
+    the Access, Oracle, and MySQL walkthroughs go straight from
+    typing to running. (added)
+  - The three enterprise-class tools all use a folder named
+    DBP-e16-Cape-Codd-Database for that database's scripts, but
+    under different parent paths.
+  - Book environment for all three enterprise walkthroughs:
+    Windows 10. Command terminology may vary on Windows 7,
+    Windows 8.1, Microsoft Server 2016 or 2019, or Linux.
+
+11. FIGURE INDEX FOR THIS SECTION
+  - Figure 2-7, p. 61: Access 2019 Options Object Designers
+    page. Carries the Object Designers button and the SQL
+    Server Compatible Syntax (ANSI 92) check boxes.
+  - Figure 2-8, p. 61: Access 2019 SQL Syntax Information
+    dialog box. Carries the mode-switch warnings.
+  - Figure 2-9, p. 62: the Create command tab and the Query
+    Design button.
+  - Figure 2-10, p. 63: the Show Table dialog box and its Close
+    button.
+  - Figure 2-11, p. 63: the Query Tools contextual command tab,
+    the Design tab, the Query Type group with Select selected,
+    the SQL View button, and the View gallery drop-down arrow.
+  - Figure 2-12, p. 64: the Query1 window in SQL view, showing
+    the incomplete SELECT; statement.
+  - Figure 2-13, p. 64: the complete SQL query statement in the
+    window, plus the Run button.
+  - Figure 2-14, p. 65: the query results.
+  - Figure 2-15, p. 65: the Access Save As dialog box. Carries
+    the Save button, the dialog box, the query name entry, and
+    the OK button.
+  - Figure 2-16, p. 66: the named and saved query: renamed
+    window plus the query object in the Queries section of the
+    Navigation Pane.
+  - Figure 2-17, p. 67: running a query in SQL Server
+    Management Studio. Carries the New Query, IntelliSense
+    Enabled, Parse, and Execute buttons, the Available
+    Databases drop-down, the expanded Cape_Codd database and
+    tables, and the Results tabbed window.
+  - Figure 2-18, p. 68: saving a query as an SQL script in SQL
+    Server Management Studio. Save File As dialog box, the
+    script folder, and the two existing scripts.
+  - Figure 2-19, p. 69: running a query in Oracle SQL
+    Developer. Connections object browser, SQL Worksheet,
+    Execute button, Query Result tabbed window.
+  - Figure 2-20, p. 71: saving an Oracle query as an SQL
+    script. Save dialog box, Documents folder button, existing
+    scripts.
+  - Figure 2-21, p. 72: running a query in the MySQL Workbench.
+    SQL Editor tabbed window and toolbar, the Query 1 tab, the
+    execute button, the Navigator with cape_codd expanded, and
+    the Result Grid window.
+  - Figure 2-22, p. 73: saving a MySQL query as an SQL script.
+    The Save the script to a file button and the Save SQL
+    Script dialog box.
+
+12. LIKELY QUIZ POINTS
+  - Access 2019 defaults to ANSI-89 SQL, also called Microsoft
+    Jet SQL. The book's SQL is SQL-92 and later.
+  - The Jet engine was replaced by the ACE engine in Access.
+  - The Access option that switches to SQL-92 is SQL Server
+    Compatible Syntax (ANSI 92), on the Object Designers page
+    of Access Options, with two check boxes: This database, and
+    Default for new databases.
+  - QBE stands for Query By Example.
+  - SELECT; alone is incomplete and returns nothing.
+  - SQL script file: plain text, separately stored, .sql
+    extension, opened and run as SQL commands.
+  - Access saves queries in the database; SQL Server, Oracle,
+    and MySQL do not, but all three save SQL Views.
+  - GUI tool per product: Access Query window, SQL Server
+    Management Studio, Oracle SQL Developer (professionals
+    moving to it from SQL*Plus), MySQL Workbench.
+  - Parse checks SQL Server syntax and returns "Command(s)
+    completed successfully" when valid.
+  - IntelliSense is disabled before typing in the SQL Server
+    example.
+  - MySQL requires Set as Default Schema on cape_codd before
+    running.
+  - Oracle SQL Developer must be installed separately for
+    Oracle Database XE, but ships with Oracle Database 19c.
+  - Chapter 10A is SQL Server, 10B is Oracle, 10C is MySQL;
+    Appendix A is building the Access database. SQL Views are
+    Chapter 7.
+  - Queries in this chapter are saved as SQL-Query-CH02-##, ##
+    running 02 to 04 after the first one.
+  - INVENTORY, WAREHOUSE, and CATALOG_SKU_2019 are for the
+    Review Questions only, not the chapter discussion.

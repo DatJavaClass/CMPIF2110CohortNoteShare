@@ -1,0 +1,146 @@
+1. THE SQL SELECT/FROM/WHERE FRAMEWORK
+  - KEY TERM: SQL SELECT/FROM/WHERE framework: the basic form
+    of SQL queries. SELECT names the columns, FROM names the
+    tables, WHERE names the rows.
+  - The SQL SELECT clause specifies which columns are to be
+    listed in the query results.
+  - The SQL FROM clause specifies which tables are to be used
+    in the query.
+  - The SQL WHERE clause specifies which rows are to be listed
+    in the query results.
+  - Clause order as written is SELECT, then FROM, then WHERE.
+
+2. SQL AND THE DBMS PRODUCTS
+  - The enterprise DBMS products the chapter covers, Oracle
+    Database and Oracle MySQL 8.0 among them, require that you
+    know SQL. With these products all data manipulation is
+    expressed using SQL.
+  - If you have used Microsoft Access, you have used SQL even
+    if you did not know it. Every time you process a form,
+    create a report, or run a query, Access generates SQL and
+    sends it to Access's internal ACE DBMS engine.
+  - To do more than elementary database processing you have to
+    uncover the SQL that Access hides.
+  - Once you know SQL, writing a query statement in SQL is
+    easier than fighting the graphical forms, buttons, and
+    other paraphernalia of the Access query by example style
+    GUI.
+  - The chapter goes on to show how to submit SQL statements
+    to Microsoft Access, SQL Server, Oracle Database, and
+    MySQL.
+
+3. READING SPECIFIED COLUMNS FROM A SINGLE TABLE
+  - Simplest query: list the columns you want, then the table
+    they come from.
+      SELECT  PartNo, PartName, Category, Vendor
+      FROM    PART_STOCK;
+  - Naming every column of the table returns the entire table.
+  - The chapter's worked queries run against SKU_DATA, columns
+    SKU, SKU_Description, Department, and Buyer, data in
+    Figure 2-6. (SKU_DATA and the other Cape Codd tables are
+    covered in the Lesson 3-1-1 note.)
+  - Statements are labeled in comments so the text can point
+    at them: SQL-Query-CH02-01 reads all four SKU_DATA
+    columns, CH02-02 uses the asterisk wildcard, CH02-03 reads
+    Department then Buyer, CH02-04 reads Buyer then
+    Department.
+
+4. EVERY SQL STATEMENT PRODUCES ONE TABLE
+  - Executing an SQL statement transforms tables. A statement
+    starts with a table, processes that table in some way, and
+    places the results in another table structure.
+  - Even if the result of the processing is just a single
+    number, that number is considered to be a table with one
+    row and one column.
+  - Some SQL statements process multiple tables (covered at
+    the end of the chapter). Regardless of the number of input
+    tables, the result of every SQL statement is a single
+    table.
+
+5. STATEMENT MECHANICS: SEMICOLON, COMMENTS, WILDCARD
+  - SQL statements terminate with a semicolon (;) character.
+    The semicolon is required by the SQL standard.
+  - Some DBMS products allow you to omit the semicolon and
+    some will not, so develop the habit of always terminating
+    with it.
+  - KEY TERM: SQL comment: a block of text used to document an
+    SQL statement but not executed as part of the statement.
+  - SQL comments are enclosed in the symbols /* and */. Any
+    text between these symbols is ignored when the statement
+    executes:
+      /* *** SQL-Query-CH02-01 *** */
+  - Because the comment is ignored at execution, adding one
+    does not change the query output at all.
+  - KEY TERM: SQL asterisk (*) wildcard character: shorthand
+    notation for querying all of the columns of a table.
+      SELECT  *
+      FROM    PART_STOCK;
+  - With no WHERE clause, that returns all rows and every
+    column of the named table.
+
+6. REQUIRED VERSUS OPTIONAL CLAUSES
+  - BY THE WAY box, p. 58: in the SQL SELECT statement, the
+    SELECT clause and the FROM clause are the only required
+    clauses.
+  - You have a complete query by simply telling SQL which
+    columns should be read from which table.
+  - All of the other clauses, WHERE included, are optional.
+
+7. SPECIFYING COLUMN ORDER
+  - To get a subset of columns, name only those columns in the
+    SELECT clause.
+  - The order of the column names in the SELECT phrase
+    determines the order of the columns in the results table.
+  - Switch two column names in the SELECT phrase and they are
+    switched in the output table as well. The rows and their
+    values are unchanged, only the column positions move.
+  - Selecting a subset of columns does not collapse duplicate
+    rows. Department with Buyer still returns all 13 SKU_DATA
+    rows, most of them repeats.
+  - CH02-04 lists Buyer before Department, so results column
+    order is set by the SELECT phrase, not by the order the
+    columns sit in the table.
+
+8. SKU_DATA SAMPLE DATA (FIGURE 2-6)
+  - 13 rows, 4 columns: SKU, SKU_Description, Department,
+    Buyer. The p. 57 result set for the four-column SELECT
+    lists the whole table.
+  - Rows 1 to 6, Water Sports, buyer Pete Hansen:
+      100100 Std. Scuba Tank, Yellow
+      100200 Std. Scuba Tank, Magenta
+      100300 Std. Scuba Tank, Light Blue
+      100400 Std. Scuba Tank, Dark Blue
+      100500 Std. Scuba Tank, Light Green
+      100600 Std. Scuba Tank, Dark Green
+  - Rows 7 and 8, Water Sports, buyer Nancy Meyers:
+      101100 Dive Mask, Small Clear
+      101200 Dive Mask, Med Clear
+  - Rows 9 to 11, Camping, buyer Cindy Lo:
+      201000 Half-dome Tent
+      202000 Half-dome Tent Vestibule
+      203000 Half-dome Tent Vestibule - Wide
+  - Rows 12 and 13, Climbing, buyer Jerry Martin:
+      301000 Light Fly Climbing Harness
+      302000 Locking Carabiner, Oval
+
+9. LIKELY QUIZ POINTS
+  - SELECT = which columns, FROM = which tables, WHERE = which
+    rows.
+  - SELECT and FROM are the only required clauses. Everything
+    else, WHERE included, is optional.
+  - The result of every SQL statement is a single table, even
+    when the result is one number (one row, one column).
+  - The semicolon terminator is required by the SQL standard,
+    not by every product.
+  - SQL comments use /* and */, are ignored at execution, and
+    do not change output.
+  - The asterisk (*) wildcard displays all columns of a table.
+  - SELECT phrase order sets results column order.
+  - A column subset does not remove duplicate rows.
+  - Microsoft Access generates SQL and hands it to the ACE
+    DBMS engine.
+  - Products named: Microsoft Access, SQL Server, Oracle
+    Database, Oracle MySQL 8.0.
+  - Sample table is SKU_DATA (SKU, SKU_Description,
+    Department, Buyer), data in Figure 2-6, result sets on
+    pp. 57 to 59.

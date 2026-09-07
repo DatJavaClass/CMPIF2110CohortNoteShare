@@ -1,0 +1,109 @@
+1. WHAT SQL IS
+  - KEY TERM: SQL (Structured Query Language): a data
+    sublanguage for creating and processing database data and
+    metadata.
+  - Designed to let people interact with relational databases,
+    which store data in organized tables. Think of a table as a
+    spreadsheet with columns and rows.
+  - Not a full featured programming language, not Python or
+    Java. It is a sublanguage, used specifically for managing
+    and manipulating data inside databases.
+  - Remote control analogy: a remote changes channels and
+    adjusts volume, but you cannot build a TV with it. SQL
+    manipulates and retrieves data, it does not build the
+    system that holds it.
+  - SQL is ubiquitous in enterprise class database management
+    products.
+
+2. HISTORY AND STANDARDIZATION
+  - Developed by IBM in the 1970s, credited to Raymond Boyce
+    and Donald Chamberlin.
+  - 1992: SQL became a standard endorsed by ANSI, the American
+    National Standards Institute.
+  - Today it is a core part of every enterprise level
+    relational database system: MySQL, Postgres, Oracle,
+    Microsoft SQL Server, and others.
+
+3. WHY DATA IS SPLIT ACROSS TABLES
+  - A database stores data and relationships, not data alone.
+  - Data is segregated into separate tables when one thing can
+    have many of another. Phone numbers are the standard case:
+    a person can have a mobile phone, a home phone, and a work
+    line, so phone numbers are stored in their own table rather
+    than in the person's data.
+
+4. THE FOUR SQL STATEMENT TYPES
+  - SQL is made up of statement types, or languages, each with
+    its own purpose: DDL, DML, DCL, DQL.
+  - KEY TERM: DDL (data definition language): used for creating
+    schema. Tables, relationships, and other structures such as
+    indexes and stored procedures.
+  - KEY TERM: DML (data manipulation language): used for
+    inserting, modifying, and deleting data. When you want to
+    change data, you use a DML statement.
+  - KEY TERM: DCL (data control language): used to grant or
+    revoke database permissions. Example use: hiding a table
+    that contains a date of birth column.
+  - KEY TERM: DQL (data query language): used to query schema
+    objects and retrieve data. SELECT is a DQL statement.
+
+5. THE SELECT FROM WHERE FRAMEWORK
+  - The fundamental framework of a SQL query is the SELECT
+    statement. Use it when you want to retrieve data.
+  - Parts, in keyword order:
+      SELECT: the action verb, which tells the engine you are
+        retrieving data.
+      column list: comma delimited. Use star (*) to select all
+        columns.
+      FROM: the keyword that names the table object where the
+        data lives.
+      WHERE: begins the filtering, followed by the conditions.
+      semicolon: the statement terminator.
+  - Everything from one table:
+      SELECT * FROM inventory;
+  - KEY TERM: WHERE clause: filters the records in a query,
+    retrieving only those rows that meet the specified
+    conditions. Treat it as the search function of the query.
+  - A condition is typically a column name, then a comparison
+    operator, then the value:
+      SELECT product_name, unit_price
+      FROM inventory
+      WHERE unit_price > 25;
+
+6. COMPARISON OPERATORS FOR THE WHERE CLAUSE
+  - Equal, not equal.
+  - Less than, greater than.
+  - IN, NOT IN: used when searching for one or more values.
+  - BETWEEN, NOT BETWEEN.
+  - LIKE: matches a sequence of characters.
+  - IS NULL: true when the value is null. IS NOT NULL is the
+    opposite test.
+  - Symbols for the first four (added): = equal, <> or != not
+    equal, < less than, > greater than.
+  - Worked operator use continues in the demo notes, Demo
+    Filtering & Sorting.
+
+7. ORDER BY
+  - KEY TERM: ORDER BY: sorts the result set of a query by one
+    or more columns, in either ascending or descending order.
+  - Default order is always ascending.
+  - ASC is ascending and does not have to be written, because
+    it is the default. DESC is descending.
+  - Add the keyword, then the columns to sort by, then the
+    direction:
+      SELECT last_name, hire_date
+      FROM employees
+      ORDER BY hire_date DESC;
+
+8. KEY TAKEAWAYS
+  - SQL is a data sublanguage for data and metadata, not a
+    general purpose programming language.
+  - IBM, 1970s, Boyce and Chamberlin. ANSI standard in 1992.
+  - Four statement types: DDL creates schema, DML changes data,
+    DCL controls permissions, DQL retrieves data.
+  - SELECT is DQL.
+  - Query skeleton: SELECT columns FROM table WHERE conditions
+    ORDER BY columns, with a semicolon terminating the
+    statement.
+  - Star (*) selects all columns. ORDER BY defaults to
+    ascending.

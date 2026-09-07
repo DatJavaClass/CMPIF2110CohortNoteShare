@@ -1,0 +1,104 @@
+1. OPENING A QUERY TAB
+  - Step one after connecting to the server: click "create a
+    new SQL tab for executing queries". That opens the SQL
+    query pane where statements are typed.
+  - The GUI used in the demo is MySQL Workbench, the client
+    front end for the course DBMS. (added)
+  - Panes named in the demo: the schema list, the SQL query
+    pane, the results pane, and the results output area that
+    reports the row count.
+
+2. SELECTING THE ACTIVE DATABASE
+  - Two ways to connect to (select) a database:
+      Double-click the database in the schema list. The name
+        turns bold, which is the visual confirmation that it
+        is the active schema.
+      Run the USE command:
+        USE databasename;
+  - The database name in the demo follows the pattern
+    username + demo.
+  - Running USE also turns the schema name bold, so both
+    methods land in the same state.
+  - Two ways to run a statement:
+      Click the execute-the-script button, the lightning bolt
+        icon.
+      Press the hotkey Control + Enter, which is what the demo
+        uses.
+
+3. COMMENTS
+  - Single line comment: two hyphens followed by a space, then
+    the comment text.
+      -- this line is ignored by the server
+  - Multi line comment: opens with slash star.
+  - The block closes with star slash. (added)
+      /* everything between these markers
+         is ignored */
+  - The space after the two hyphens matters in MySQL. (added)
+
+4. SELECT STAR: ALL COLUMNS
+  - The asterisk (star) selects all columns, giving a complete
+    view of every record and every column in the table.
+      SELECT * FROM employee;
+  - Result: the results pane shows all columns and all rows.
+  - The output area reports how many rows came back. In the
+    demo the customer table returned 91 rows, meaning 91
+    records in that table.
+
+5. SELECTING SPECIFIC COLUMNS
+  - Replace the asterisk with a comma separated column list.
+      SELECT lastname, jobtitle FROM employee;
+  - Why do it: more focused analysis, and in some cases it is
+    faster than pulling every column.
+  - Column order in the output is whatever order you type the
+    columns in. Swapping the two names in the SELECT list
+    swaps the columns in the result.
+  - Always end a SQL command with a semicolon.
+
+6. CASE AND KEYWORDS
+  - Keywords are case insensitive. SELECT, select, and Select
+    all work.
+  - Keywords are typed in capitals in the demo; the case makes
+    no difference to the server.
+  - Uppercase keywords with lowercase table and column names
+    is the conventional style. (added)
+
+7. DUPLICATES AND DISTINCT
+  - Selecting a single column can return duplicate values.
+  - Demo case: selecting the order ID column from the order
+    detail table repeats each order ID, because order ID is
+    duplicated across the differing product ID, unit price,
+    and quantity values in that table.
+  - That makes it a line item table: order ID alone does not
+    identify a row. (added)
+  - KEY TERM: DISTINCT: keyword placed immediately after
+    SELECT that returns only the unique values of the
+    selected columns.
+      SELECT DISTINCT jobtitle FROM employee;
+  - DISTINCT removes duplicates from the view only. It does
+    not delete anything from the table.
+  - Use it to see how many unique values a column holds.
+
+8. STATEMENT SHAPE SO FAR
+  - The pattern built across the demo:
+      SELECT [DISTINCT] column_list | *
+      FROM table_name;
+  - SELECT names what you want, FROM names where it comes
+    from. DISTINCT is optional and sits between SELECT and the
+    column list.
+  - Filtering and sorting are not part of this demo. See
+    "Demo Filtering & Sorting_CliffNotes.txt".
+
+9. KEY TAKEAWAYS
+  - New SQL tab, then pick a database: double-click the schema
+    (it goes bold) or run USE databasename;.
+  - Execute with the lightning bolt button or Control + Enter.
+  - Comments: two hyphens plus a space for one line, slash
+    star and star slash for a block.
+  - SELECT * FROM table; returns all columns and all rows.
+  - Naming columns gives a focused result and can run faster;
+    output column order follows the order you typed.
+  - Keywords are case insensitive; the semicolon terminator is
+    not optional.
+  - DISTINCT returns unique values and suppresses duplicates
+    in the view without deleting data.
+  - Number from the demo: the customer table returned 91 rows.
