@@ -29,10 +29,15 @@ system to catch mistakes before it went in here. It works in a diamond shape:
    watchmen" step. It catches anything the first two missed and throws out any
    complaint they got wrong.
 
-The Cliff Jumper Note goes through that diamond twice. The first pass locks
+The Module 2 Cliff Jumper Note went through that diamond twice. The first pass locks
 the facts. The second pass adds the connective examples and checks that every
 addition is correct and that no locked fact moved. A final full-document gate
 runs both lenses over the finished piece before it ships.
+
+The Module 3 Cliff Jumper Note went through the diamond once, on top of
+the eight Cliff Notes it was built from, each of which had already been
+drafted, edited, and fact-checked against its source by three separate
+passes.
 
 Anything the checkers flagged was fixed, and the fix was checked again.
 
@@ -41,6 +46,7 @@ Anything the checkers flagged was fixed, and the fix was checked again.
 | Module | Confidence of Accuracy | Basis |
 |---|---|---|
 | 2 | High (~92%) | Two Diamonds plus a release gate, 16 checkers in all. Diamond 1 locked 137 facts from the eleven Cliff Notes, with every date, count, version, product name, and figure reference traced to the textbook text, the rendered page images, and the professor's files, and all 132 chapter key terms accounted for. Its auditors caught an example whose composite key was not unique and cut an aside the transcript could not support. Diamond 2 added one end-to-end walkthrough, two consolidation tables, and one two-step design example, each run against the locked facts, and its auditors caught a table gutter that made two values read as one. The release gate read the whole document three ways, traced 30 connective sentences, and found no factual error. Twelve clarity edits were applied and the 137 locked facts re-verified byte for byte afterward |
+| 3 | High (~90%) | One Diamond plus a fix verification, 4 checkers, on top of the 24 DocTrio passes that produced the eight Cliff Notes. The fidelity auditor traced every date, number, product name, figure and page reference, file name, path, and step sequence to the Cliff Notes and rendered textbook pages, and confirmed every one of the 17 tagged additions sits on material outside the notes. The execution auditor built the lesson's example table in SQLite and ran every query the lesson shows, confirming DISTINCT, LIKE, BETWEEN, ORDER BY, AND, OR, and IN behave as described, and recomputed every arithmetic and row count claim. Together they caught a figure described as showing four tables when it shows six, an example query that named four of five columns while claiming to name all of them, an overstated match between the lecture's operator list and the textbook's, and two file paths that would have rendered broken on GitHub. The meta auditor re-read the textbook pages itself, confirmed six findings, overturned ten, and declined three fixes that were technically right but would have contradicted the course material as taught |
 
 ## A note of caution
 
