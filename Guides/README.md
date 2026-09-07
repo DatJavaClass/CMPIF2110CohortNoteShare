@@ -14,6 +14,3 @@ The unofficial way onto Pitt's VPN using OpenConnect inside WSL2, with nothing f
 **2. [SQL Statements Field Guide](CMPIF2110_SQL_Statements_Field_Guide.pdf)**
 A four-page reference covering basic, intermediate, and advanced SQL statements, followed by the operators and functions that turn those statements into useful queries. It begins with the SQL introduced in Module 3 Part 1, then adds the common tools most likely to appear later in CMPIF2110 or everyday database work. Every entry includes a one-sentence description and an example using MySQL 8.0 syntax where database systems differ.
 
----
-
-*Browsing note: The VPN guide is plain Markdown you can read directly on GitHub. The SQL field guide is a PDF that opens in GitHub's document viewer.*
