@@ -7,7 +7,7 @@ Standalone walkthroughs and setup guides for the cohort, gathered here so they l
 ## Getting connected
 
 **1. [AltConnect: Pitt VPN Without the GlobalProtect Client](AltConnectInstructions.md)**
-The unofficial way onto Pitt's VPN: same VPN, same credentials, nothing from Palo Alto installed on Windows. It runs OpenConnect inside WSL2, so the tunnel lives entirely in Linux and Windows never meets the client. Five short steps: get WSL if you lack it, install one small package, run the connect command and approve the Duo push, work from a second WSL tab (with VS Code riding the tunnel through its WSL badge), and `Ctrl+C` to disconnect clean. Also covers the one trick Access users need, a small relay so Microsoft Access on the Windows side can still reach the course database server, plus fixes for the two things that go sideways (WSL's DNS relay, the hourly drop) and a one-line removal when you are done with it for good.
+The unofficial way onto Pitt's VPN using OpenConnect inside WSL2, with nothing from Palo Alto installed on Windows. It covers installation, the connection command, Duo authentication, VS Code through WSL, and clean disconnection. Access users also get a small relay that lets Windows reach the course database server, plus practical fixes for WSL DNS trouble, hourly session drops, and removing OpenConnect when finished.
 
 ## SQL reference
 
