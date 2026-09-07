@@ -20,6 +20,7 @@ The notes are organized by module part:
 Standalone walkthroughs and setup guides:
 
 - [`Guides/AltConnectInstructions.md`](Guides/AltConnectInstructions.md) (Pitt's VPN without the GlobalProtect client: OpenConnect inside WSL2, working from VS Code on the tunnel, a relay so Microsoft Access can reach the course server, and the fixes for when it goes sideways)
+- [`Guides/CMPIF2110_SQL_Statements_Field_Guide.pdf`](Guides/CMPIF2110_SQL_Statements_Field_Guide.pdf) (a four-page field guide to basic, intermediate, and advanced SQL statements, plus common operators and functions with examples)
 
 ## Contributors
 
