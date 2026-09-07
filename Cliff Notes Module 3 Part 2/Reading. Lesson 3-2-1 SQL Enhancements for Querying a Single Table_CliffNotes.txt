@@ -1,0 +1,223 @@
+1. SCOPE AND SETUP
+  - Adds row control features on top of the basic
+    SELECT/FROM single table query: DISTINCT, TOP, WHERE,
+    ORDER BY, and the WHERE clause options.
+  - The SQL results shown in the chapter were generated with
+    Microsoft SQL Server 2019. Query results from other DBMS
+    products will be similar but may vary a bit.
+  - Chapter examples are labeled with a comment in the form
+    /* *** SQL-Query-CH02-nn *** */. This lesson runs from
+    CH02-05 through CH02-19.
+  - Builds directly on the SELECT/FROM/WHERE framework note in
+    Module 3 Part 1.
+
+2. DISTINCT: ELIMINATING DUPLICATE ROWS
+  - Selecting a subset of columns can return duplicate rows.
+    In the chapter's example the first and second rows of the
+    result are identical.
+  - Duplicates appear because the columns that made the
+    underlying rows unique were left out of the SELECT list.
+    (added)
+  - KEY TERM: SQL DISTINCT keyword: removes duplicate rows
+    from the query result.
+  - Placement: immediately after SELECT, before the column
+    list.
+      SELECT DISTINCT Vendor, Category
+      FROM   PART_LIST;
+  - DISTINCT applies to the entire selected column list, not
+    to one column. Two rows count as duplicates only when
+    they match on every column named. (added)
+  - Duplicates are not removed by default because doing so is
+    time consuming: every row must be compared with every
+    other row. With 100,000 rows in a table that check takes a
+    long time. Removal is always available on demand through
+    DISTINCT.
+
+3. TOP: LIMITING HOW MANY ROWS ARE DISPLAYED
+  - KEY TERM: SQL TOP {NumberOfRows} function: displays only
+    the first n rows of the result. SQL Server only. Oracle
+    Database and MySQL use a LIMIT clause for the same
+    effect.
+      SELECT TOP 5 Vendor, Category
+      FROM   PART_LIST;
+  - KEY TERM: SQL TOP {Percentage} PERCENT function: displays
+    only the first given percentage of the result rows. SQL
+    Server only. Oracle Database uses a LIMIT clause for the
+    same effect.
+      SELECT TOP 75 PERCENT Vendor, Category
+      FROM   PART_LIST;
+  - TOP sits in the same slot as DISTINCT: after SELECT,
+    before the column list.
+  - TOP does not remove duplicates. Without DISTINCT the
+    trimmed result can still hold identical rows.
+  - TOP 5 displays the first five of the eight rows in the
+    chapter's result. TOP 75 PERCENT displays the first ten of
+    the 13 rows.
+  - DISTINCT and TOP only trim a result. The real power for
+    controlling which rows come out of a SELECT is the WHERE
+    clause.
+
+4. WHERE: SELECTING ROWS BY CONDITION
+  - Clause order in a single table query: SELECT, FROM,
+    WHERE, ORDER BY.
+      SELECT *
+      FROM   PART_LIST
+      WHERE  Category = 'Fasteners';
+  - KEY TERM: SQL comparison operator: the operator in a WHERE
+    condition that compares a column against a value. The
+    equal sign is one.
+  - SQL does not require that the column tested in WHERE also
+    appear in the SELECT column list. Filtering on Category
+    while selecting only Vendor is legal.
+  - Naming specific columns in SELECT and filtering with
+    WHERE restricts both dimensions at once: certain columns
+    and certain rows.
+
+5. QUOTING AND DATA TYPES IN WHERE CONDITIONS
+  - Text and date comparison values must be enclosed in
+    single quotation marks: '{text or date data}'.
+  - SQL wants plain, nondirectional single quotes, the kind
+    basic text editors produce. The fancy directional (curly)
+    quotes from many word processors give a syntax error,
+    which is the usual failure after pasting a query out of
+    one.
+  - Dates normally take single quotes just like a character
+    string:
+      WHERE DateOnWebSite = '01-JAN-2020';
+  - Microsoft Access 2019 requires dates to be enclosed in
+    the # symbol instead:
+      WHERE DateOnWebSite = #01/01/2020#;
+  - That same date query works as written in Oracle Database.
+    In MySQL the date constant must be written '2020-01-01'.
+  - Oracle Database and MySQL 8.0 have further date
+    idiosyncrasies, covered in Chapters 10B and 10C
+    respectively.
+  - Numeric comparison values need not be quoted, and no comma
+    is written inside the number. Write 200000, not 200,000.
+      WHERE UnitCost > 200000;
+
+6. SQL COMPARISON OPERATORS (FIGURE 2-23, P. 76)
+  - The figure lists operator and meaning:
+      =            Is equal to
+      <>           Is NOT Equal to
+      <            Is less than
+      >            Is greater than
+      <=           Is less than OR equal to
+      >=           Is greater than OR equal to
+      IN           Is equal to one of a set of values
+      NOT IN       Is NOT equal to one of a set of values
+      BETWEEN      Is within a range of numbers (includes the
+                     end points)
+      NOT BETWEEN  Is NOT within a range of numbers (includes
+                     the end points)
+      LIKE         Matches a sequence of characters
+      NOT LIKE     Does NOT match a sequence of characters
+      IS NULL      Is equal to NULL
+      IS NOT NULL  Is NOT equal to NULL
+  - BETWEEN and NOT BETWEEN include both end points. That
+    inclusiveness is the detail worth remembering.
+
+7. CODING CONVENTION: MULTILINE SQL
+  - Standard practice writes the SELECT, FROM, and WHERE
+    clauses on separate lines.
+  - This is a coding convention only. SQL parsers do not
+    require it, and all DBMS products will process the same
+    statement written on a single line.
+  - The multiline form is kept because it makes SQL easier to
+    read.
+
+8. ORDER BY: SORTING THE RESULT
+  - Without ORDER BY the row order an SQL statement produces
+    is arbitrary, determined by programs inside the DBMS.
+  - ORDER BY is added to the SELECT/FROM/WHERE framework and
+    comes last.
+      SELECT *
+      FROM   PART_ORDER
+      ORDER BY OrderNumber;
+  - Sort on two columns by naming both. The first column is
+    the outer sort; the second orders rows within each value
+    of the first:
+      ORDER BY OrderNumber, Price;
+  - Reversing the two column names reverses which sort is the
+    outer one and gives a different result:
+      ORDER BY Price, OrderNumber;
+  - Ascending is the default sorting order.
+  - KEY TERM: SQL DESC keyword: placed after a column name in
+    ORDER BY to sort that column in descending order.
+  - ASC is the ascending keyword and is optional, since
+    ascending is already the default. These two are
+    equivalent and produce the same results:
+      ORDER BY Price DESC, OrderNumber ASC;
+      ORDER BY Price DESC, OrderNumber;
+  - Direction is set per column. DESC on one column does not
+    change the direction of the others. (added)
+  - Microsoft Access displays dollar signs in the output of
+    currency data. The SQL Server output shown in the chapter
+    does not.
+
+9. SQL WHERE CLAUSE OPTIONS
+  - The chapter names five WHERE clause options that expand
+    SQL's power and utility: compound clauses, sets of
+    values, ranges, wildcards, and NULL values.
+  - This lesson covers the first of the five, compound
+    clauses built with the logical operators.
+
+10. COMPOUND WHERE CLAUSES AND LOGICAL OPERATORS
+  - KEY TERM: SQL logical operators: AND, OR, and NOT, used
+    to combine or negate the conditions in a WHERE clause.
+  - Figure 2-24, p. 81 gives operator and meaning:
+      AND  Both conditions are TRUE
+      OR   One or the other or both of the conditions are
+             TRUE
+      NOT  Negates the associated condition
+  - KEY TERM: SQL AND operator: requires that each row in the
+    result meets both of the conditions specified in the
+    WHERE clause.
+      SELECT *
+      FROM   PART_LIST
+      WHERE  Category = 'Fasteners'
+        AND  Vendor = 'Ridgeline Supply';
+  - KEY TERM: SQL OR operator: requires that each row in the
+    result meets one or the other or both of the conditions
+    specified in the WHERE clause.
+      SELECT *
+      FROM   PART_LIST
+      WHERE  Category = 'Fasteners'
+        OR   Category = 'Adhesives';
+  - Layout convention: the second and later conditions go on
+    their own lines with the logical operator leading the
+    line.
+  - An OR chain across several values of one column is the
+    long form of IN, from Figure 2-23. (added)
+
+11. LIKELY QUIZ POINTS
+  - DISTINCT follows SELECT and removes duplicate rows.
+    Duplicates are not removed by default because the row by
+    row comparison is expensive.
+  - TOP {NumberOfRows} and TOP {Percentage} PERCENT are SQL
+    Server only. LIMIT is the stated equivalent: Oracle
+    Database and MySQL for TOP {NumberOfRows}, Oracle Database
+    for TOP {Percentage} PERCENT.
+  - TOP without DISTINCT still returns duplicate rows.
+  - Text and date values in WHERE take single quotes; numeric
+    values take none and carry no commas.
+  - Directional quotes from a word processor break a query.
+    Nondirectional quotes are required.
+  - Access 2019 wraps dates in # symbols; MySQL wants the
+    date constant as '2020-01-01'.
+  - The WHERE column need not appear in the SELECT column
+    list.
+  - Figure 2-23 lists the comparison operators, Figure 2-24
+    the three logical operators.
+  - <> is NOT equal to; BETWEEN and NOT BETWEEN include the
+    end points; IS NULL and IS NOT NULL test for NULL.
+  - Row order without ORDER BY is arbitrary.
+  - ORDER BY defaults to ascending; DESC reverses one column;
+    ASC is optional.
+  - Column order inside ORDER BY decides the outer sort.
+  - AND requires both conditions; OR requires one, the other,
+    or both; NOT negates.
+  - The five WHERE clause options: compound clauses, sets of
+    values, ranges, wildcards, NULL values.
+  - Chapter results were produced with Microsoft SQL Server
+    2019.
