@@ -1,0 +1,370 @@
+1. WHERE THE READING PICKS UP: RTRIM
+  - The book calls the result of SQL-Query-CH02-45 ugly
+    because of the extra spaces in each row. More advanced
+    functions can eliminate them, but their syntax varies from
+    one DBMS product to another.
+  - KEY TERM: RTRIM: a string function that strips the
+    trailing blanks off the right hand side of a character
+    value.
+  - SQL-Query-CH02-46 applies RTRIM to Buyer and to Department
+    before concatenating them, and RTRIM also works in Access,
+    Oracle and MySQL. Its result table on page 95 lists all 13
+    SKU_DATA rows with Sponsor reading as one phrase, from
+    Pete Hansen in Water Sports to Jerry Martin in Climbing.
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables PART (PartNo, PartName, Category, Buyer, ten
+    rows, Buyer padded to a fixed width of 14 characters) and
+    FLYER_2026 (FlyerID, PartNo, PartName, Category,
+    FlyerPage, DateOnWebsite, eight rows, one FlyerPage NULL).
+    (added)
+  - The same RTRIM shape on the case, SQL Server form:
+      SELECT    PartNo, PartName,
+                RTRIM(Buyer) + ' in ' + RTRIM(Category)
+                  AS Sponsor
+      FROM      PART
+      ORDER BY  PartNo;
+    MySQL form of that one expression:
+      CONCAT(RTRIM(Buyer), ' in ', RTRIM(Category)) AS Sponsor
+  - Sponsor reads as one phrase per row, Mia Chen in Frames
+    through Dale Whitfield in Lights. Without RTRIM the
+    padding on Buyer rides along and opens a gap in every row.
+
+2. GROUPING ROWS IN SQL SELECT STATEMENTS
+  - KEY TERM: SQL GROUP BY clause: the clause that groups rows
+    together according to common values.
+  - Rows can be grouped together according to common values
+    using the SQL GROUP BY clause. The book calls this a
+    powerful feature, but says it can be difficult to
+    understand.
+
+3. THE BOSS'S QUESTION AND FIGURE 2-26
+  - You are on the Cape Codd sales analysis team and your boss
+    asks: "How many products from each department were there
+    in the printed Cape Codd 2020 catalog?"
+  - Figure 2-26 on page 96 shows the CATALOG_SKU_2020 table
+    with three department groups marked by the values of
+    Department: Water Sports (rows 1 to 5), Camping (rows 6 to
+    7), Climbing (rows 8 to 9), giving five, two and two rows.
+  - Only row 3 has a NULL CatalogPage. That row is SKU 100400,
+    so every other SKU appeared in the 2020 catalog and the
+    catalog counts are Water Sports four, Camping two,
+    Climbing two.
+
+4. THE SPREADSHEET IN FIGURE 2-27
+  - You could put this information into a spreadsheet for your
+    boss, as shown in Figure 2-27 on page 96. It shows the
+    data grouped by Department in alphabetical order, Camping,
+    Climbing and Water Sports, and under the heading
+    NumberOfCatalogItems the numbers the SQL has to reproduce:
+    2, 2 and 4. Treat it as the specification for the next two
+    queries. (added note)
+
+5. GROUP BY (SQL-QUERY-CH02-47) AND THE WRONG FIVE
+  - SQL-Query-CH02-47 selects Department and COUNT(SKU) AS
+    NumberOfCatalogItems from CATALOG_SKU_2020, GROUP BY
+    Department. Its result gives Camping 2, Climbing 2, Water
+    Sports 5. The grouping is correct, but the book points at
+    an error in NumberOfCatalogItems for Water Sports: SKU
+    100400 is in the count and did not appear in the catalog.
+  - The same shape on the case. The gravel frame row was
+    listed on the website but never printed, so its FlyerPage
+    is NULL:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      GROUP BY  Category;
+
+      Category  NumberOfFlyerItems
+      Frames    3
+      Lights    2
+      Wheels    3
+  - Frames comes back as 3, but only two of the three were
+    printed. The NULL sits in FlyerPage, a column the query
+    never mentions. (added explanation)
+
+6. WHERE BEFORE GROUP BY (SQL-QUERY-CH02-48)
+  - The fix is a WHERE clause that includes only the rows for
+    SKUs that have a CatalogPage number value.
+    SQL-Query-CH02-48 adds WHERE CatalogPage IS NOT NULL
+    between FROM and GROUP BY, and returns 2, 2 and 4,
+    matching Figure 2-27.
+  - The same fix on the case:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      WHERE     FlyerPage IS NOT NULL
+      GROUP BY  Category;
+
+      Category  NumberOfFlyerItems
+      Frames    2
+      Lights    2
+      Wheels    3
+  - Frames drops from 3 to 2 because WHERE removed one row
+    that belonged to it. The group got smaller, it did not
+    disappear. That is WHERE acting before the grouping.
+
+7. THE SECOND QUESTION AND HAVING (SQL-QUERY-CH02-49)
+  - The boss asks again: "How many products from each
+    department were there in the printed Cape Codd 2020
+    catalog where the department had three or more listed
+    products?" Only Water Sports qualifies, with four.
+  - KEY TERM: SQL HAVING clause: the clause that specifies
+    which groups will be used in the final result.
+  - Since 3 or more is mathematically equivalent to more than
+    2, SQL-Query-CH02-49 adds HAVING COUNT(SKU) > 2 after
+    GROUP BY Department and returns the single row Water
+    Sports 4. The book flags the detail: it uses COUNT(SKU) in
+    the HAVING clause, not the alias NumberOfCatalogItems.
+  - Aggregate functions can be used in HAVING because they are
+    working on the set of column values in each group. They
+    cannot be used in WHERE, because WHERE is applied to each
+    single row.
+  - Categories with three or more printed items on the case:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      WHERE     FlyerPage IS NOT NULL
+      GROUP BY  Category
+      HAVING    COUNT(PartNo) > 2;
+
+      Category  NumberOfFlyerItems
+      Wheels    3
+  - HAVING changes no number, it only picks which rows
+    survive: Frames and Lights each computed a count, then
+    failed the test. Repeat the aggregate instead of the
+    alias, which names an output column and means nothing
+    while the groups are still forming. (added explanation)
+
+8. WHERE VERSUS HAVING, AND THE ORDER THEY APPLY
+  - The book says it is easy to confuse the two clauses, and
+    gives two lines as the best way to understand them:
+    - The SQL WHERE clause specifies which rows will be used
+      to determine the groups.
+    - The SQL HAVING clause specifies which groups will be
+      used in the final result.
+  - There is a potential ambiguity when a statement has both:
+    results vary depending on whether the WHERE condition is
+    applied before or after the HAVING. To eliminate it, the
+    WHERE clause is always applied before the HAVING clause.
+  - The flyer queries show why. Filter rows first and Frames
+    is a group of 2 that fails a "> 2" test. Test the groups
+    first and Frames is a group of 3 that passes. (added
+    explanation)
+
+9. GROUPING BY TWO COLUMNS (SQL-QUERY-CH02-50)
+  - More than one column can be included in a GROUP BY
+    expression. The book's question: "How many SKUs is each
+    buyer in each department responsible for?"
+  - SQL-Query-CH02-50 groups SKU_DATA by Department, Buyer
+    with COUNT(SKU) AS Dept_Buyer_SKU_Count: by Department
+    first, then by Buyer, counting the rows for each
+    combination. Its result on page 98 gives Camping Cindy Lo
+    3, Climbing Jerry Martin 2, Water Sports Nancy Meyers 2,
+    Water Sports Pete Hansen 6. Water Sports appears twice
+    because the group is the combination, not the first
+    column.
+  - Parts per buyer within each category on the case:
+      SELECT    Category, Buyer,
+                COUNT(PartNo) AS Cat_Buyer_PartCount
+      FROM      PART
+      GROUP BY  Category, Buyer;
+
+      Category  Buyer           Cat_Buyer_PartCount
+      Frames    Mia Chen        3
+      Lights    Dale Whitfield  1
+      Lights    Priya Nair      2
+      Wheels    Omar Reyes      3
+      Wheels    Priya Nair      1
+  - Priya Nair appears twice because she buys in two
+    categories, so her counts are separate groups.
+
+10. EVERY PLAIN COLUMN MUST BE IN GROUP BY (SQL-QUERY-CH02-51)
+  - The rule as the book states it: when using the GROUP BY
+    clause, any and all column names in the SELECT clause that
+    are not used by or associated with an SQL built in
+    function must appear in the GROUP BY clause.
+  - SQL-Query-CH02-51 breaks it on purpose. It selects
+    Department, SKU and COUNT(SKU) AS Dept_SKU_Count from
+    SKU_DATA but groups by Department only, so SKU is not in
+    the GROUP BY clause and the query errors.
+  - The message on page 98 is Msg 8120, Level 16, State 1,
+    Line 367: column SKU_DATA.SKU is invalid in the select
+    list because it is not contained in either an aggregate
+    function or the GROUP BY clause. That is the SQL Server
+    2019 wording; other products give an equivalent message.
+  - Why it is invalid: there are many values of SKU for each
+    Department group and the DBMS has no place to put them in
+    the result. Try processing the statement by hand; it
+    cannot be done. MySQL 8.0, unfortunately, will process the
+    query and choose an arbitrary SKU value.
+  - The same broken shape on the case:
+      SELECT    Category, PartNo,
+                COUNT(PartNo) AS Cat_PartCount
+      FROM      PART
+      GROUP BY  Category;
+    SQL Server, Access and Oracle refuse it. MySQL 8.0 returns
+    something like Frames 1010 3, Lights 3010 3, Wheels 2010
+    4: Frames does hold three parts, but 1010 is one of them
+    picked arbitrarily.
+
+11. ORDER BY WITH GROUPS (SQL-QUERY-CH02-52)
+  - ORDER BY can also be used with queries that use GROUP BY.
+    SQL-Query-CH02-52 selects Department and COUNT(SKU) AS
+    Dept_SKU_Count from SKU_DATA, then WHERE SKU <> 302000,
+    GROUP BY Department, HAVING COUNT(SKU) > 1, ORDER BY
+    Dept_SKU_Count. Its result on page 98 is Camping 3 and
+    Water Sports 8.
+  - The book reads its own result. One Climbing row is removed
+    from the count because it did not meet the WHERE clause
+    condition, and the Climbing department itself is removed
+    because it did not meet the HAVING clause requirement.
+    Without the ORDER BY the rows would be in arbitrary order
+    of Department.
+  - The same four clauses on the case, removing the spoke
+    reflector:
+      SELECT    Category, COUNT(PartNo) AS Cat_PartCount
+      FROM      PART
+      WHERE     PartNo <> 3030
+      GROUP BY  Category
+      HAVING    COUNT(PartNo) > 2
+      ORDER BY  Cat_PartCount;
+
+      Category  Cat_PartCount
+      Frames    3
+      Wheels    4
+  - Without the WHERE and the HAVING the same grouping gives
+    Frames 3, Lights 3, Wheels 4. Lights loses a row, then its
+    whole group, the two step disappearance the book points at
+    in Climbing.
+  - In general, to be safe, always place the WHERE clause
+    before the GROUP BY clause. Some DBMS products do not
+    require that placement, but others do.
+
+12. DOES NOT WORK WITH MICROSOFT ACCESS (FIGURE 2-28)
+  - The "Does Not Work with Microsoft Access ANSI-89 SQL" box
+    on page 99 covers SQL-Query-CH02-52.
+  - KEY TERM: SQL AS keyword: the keyword that assigns a name
+    to a column in the result table. (added definition)
+  - KEY TERM: parameter query: a query that asks the user for
+    a value before it runs. (added definition)
+  - KEY TERM: QBE GUI: the Access query by example grid, where
+    a query is built instead of typed. (added definition)
+  - Access does not properly recognize the alias
+    Dept_SKU_Count in the ORDER BY clause and creates a
+    parameter query requesting an input value for the as yet
+    nonexistent Dept_SKU_Count. Whether or not you enter
+    parameter values, clicking OK runs the query, and the
+    results are basically correct but not sorted correctly.
+  - The solution is to use the Access QBE GUI to modify the
+    query structure. Figure 2-28 on page 99 shows the correct
+    structure for SQL-Query-CH02-52.
+  - The box gives two forms. SQL-Query-CH02-52-Access-A is
+    what Access generates from that grid, with qualified
+    column names, the WHERE condition in three layers of
+    parentheses, and ORDER BY COUNT(SKU).
+    SQL-Query-CH02-52-Access-B edits that down to unqualified
+    names, ending the same way.
+  - Sorting by COUNT(SKU) instead of the alias is what makes
+    Access sort, and it is the portable habit wherever the
+    alias is not accepted. (added note)
+
+13. KEY TAKEAWAYS
+  - GROUP BY collapses rows sharing a value into one output
+    row per group, and an aggregate reports on each group
+    rather than on the whole table.
+  - A row that does not belong still gets counted unless WHERE
+    removes it, and the result will not look wrong.
+  - WHERE picks rows and runs first, HAVING picks groups.
+    HAVING takes aggregate functions because it sees whole
+    groups. WHERE cannot, because it sees one row at a time.
+  - Grouping by two columns groups by the combination, so a
+    value in the first column can appear on several rows.
+  - Any SELECT column not inside an aggregate has to be in the
+    GROUP BY list. Most products error. MySQL 8.0 returns an
+    arbitrary value, which is worse.
+  - Grouped results come back in arbitrary order unless ORDER
+    BY says otherwise, and the alias may not be accepted
+    there.
+
+14. QUIZ-SAFE FACTS
+  - Rows can be grouped together according to common values
+    using the SQL GROUP BY clause. The book calls it powerful
+    but difficult to understand.
+  - SQL-Query-CH02-46 is an SQL Server 2019 statement using
+    RTRIM to strip the trailing blanks off the right hand side
+    of Buyer and Department. RTRIM also works in Microsoft
+    Access, Oracle Database and MySQL, and the result is much
+    more visually pleasing.
+  - The scenario question is "How many products from each
+    department were there in the printed Cape Codd 2020
+    catalog?"
+  - In Figure 2-26 the CATALOG_SKU_2020 rows fall into three
+    groups by Department: Water Sports rows 1 to 5, Camping
+    rows 6 to 7, Climbing rows 8 to 9, with five, two and two
+    rows. Only row 3 has a NULL CatalogPage, SKU 100400, so
+    all SKUs except 100400 appeared in the 2020 catalog: Water
+    Sports four catalog items, Camping two, Climbing two.
+  - Figure 2-27 is the spreadsheet report, grouped by
+    Department in alphabetical order: Camping, Climbing, Water
+    Sports.
+  - SQL-Query-CH02-47 is GROUP BY Department on
+    CATALOG_SKU_2020 with COUNT(SKU) AS NumberOfCatalogItems,
+    and returns Camping 2, Climbing 2, Water Sports 5. The 5
+    is an error in NumberOfCatalogItems for Water Sports,
+    because SKU 100400 is in the count but did not appear in
+    the catalog.
+  - SQL-Query-CH02-48 adds WHERE CatalogPage IS NOT NULL and
+    gives the correct results: Camping 2, Climbing 2, Water
+    Sports 4.
+  - The second question adds "where the department had three
+    or more listed products," and only Water Sports qualifies,
+    with four items. 3 or more is mathematically equivalent to
+    more than 2, so SQL-Query-CH02-49 uses HAVING COUNT(SKU) >
+    2, not the alias NumberOfCatalogItems, and returns the
+    single row Water Sports 4.
+  - SQL built in aggregate functions can be used in HAVING
+    because they work on the set of column values in each
+    group. They cannot be used in WHERE because WHERE is
+    applied to each single row.
+  - The SQL WHERE clause specifies which rows will be used to
+    determine the groups. The SQL HAVING clause specifies
+    which groups will be used in the final result.
+  - There is a potential ambiguity in statements with both
+    clauses, since results vary by which is applied first. To
+    eliminate it, WHERE is always applied before HAVING.
+  - SQL-Query-CH02-50 groups SKU_DATA by Department, Buyer
+    with COUNT(SKU) AS Dept_Buyer_SKU_Count, giving Camping
+    Cindy Lo 3, Climbing Jerry Martin 2, Water Sports Nancy
+    Meyers 2, Water Sports Pete Hansen 6.
+  - Any and all column names in the SELECT clause that are not
+    used by or associated with an SQL built in function must
+    appear in the GROUP BY clause.
+  - SQL-Query-CH02-51 selects Department, SKU and COUNT(SKU)
+    but groups by Department only, producing Msg 8120, Level
+    16, State 1, Line 367: column SKU_DATA.SKU is invalid in
+    the select list because it is not contained in either an
+    aggregate function or the GROUP BY clause. Other products
+    give an equivalent message.
+  - It is invalid because there are many values of SKU for
+    each Department group and the DBMS has no place to put
+    those multiple values in the result. MySQL 8.0 will
+    process it and choose an arbitrary SKU value.
+  - SQL-Query-CH02-52 is WHERE SKU <> 302000, GROUP BY
+    Department, HAVING COUNT(SKU) > 1, ORDER BY
+    Dept_SKU_Count on SKU_DATA, and returns Camping 3 and
+    Water Sports 8. One Climbing row is removed from the count
+    by the WHERE condition and the Climbing department itself
+    by the HAVING requirement. Without ORDER BY the rows would
+    be in arbitrary order of Department.
+  - In general, to be safe, always place the WHERE clause
+    before the GROUP BY clause. Some DBMS products do not
+    require that placement, but others do.
+  - Does Not Work with Microsoft Access ANSI-89 SQL: Access
+    does not properly recognize the alias Dept_SKU_Count in
+    the ORDER BY clause and creates a parameter query
+    requesting an input value for the as yet nonexistent
+    Dept_SKU_Count. Whether or not values are entered,
+    clicking OK runs the query, and the results are basically
+    correct but not sorted correctly.
+  - The solution is the Microsoft Access QBE GUI, Figure 2-28.
+    The two forms are SQL-Query-CH02-52-Access-A, with
+    qualified column names and (((SKU_DATA.SKU)<>302000)), and
+    SQL-Query-CH02-52-Access-B, the edited down version. Both
+    end with ORDER BY COUNT(SKU).

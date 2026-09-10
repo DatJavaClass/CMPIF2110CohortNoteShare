@@ -1,0 +1,439 @@
+1. WHERE THE READING PICKS UP: IS NOT NULL
+  - The section opens on the tail of the previous example.
+    SQL-Query-CH02-31 finds the SKUs in CATALOG_SKU_2020 that
+    were in the printed catalog, and its result table on page
+    88 lists eight rows:
+      SELECT  *
+      FROM    CATALOG_SKU_2020
+      WHERE   CatalogPage IS NOT NULL;
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables PART (10 rows, PartNo, PartName, Category and
+    Buyer, with Buyer padded to 14 characters), SALE (4 rows),
+    SALE_LINE (10 rows, SaleNo, PartNo, Qty, Price, LineTotal)
+    and FLYER_2026 (8 rows, one with a NULL FlyerPage).
+    (added)
+
+2. PERFORMING CALCULATIONS IN SQL QUERIES
+  - It is possible to perform certain types of calculations in
+    SQL query statements. One group involves the use of SQL
+    built in functions. Another involves simple arithmetic
+    operations on the columns in the SELECT statement.
+
+3. THE FIVE BUILT IN AGGREGATE FUNCTIONS
+  - KEY TERM: SQL built in aggregate function: a function that
+    computes a single value from a whole table column.
+    (added definition)
+  - There are five standard SQL built in aggregate functions
+    for performing arithmetic on table columns: SUM, AVG, MIN,
+    MAX, and COUNT, summarized in Figure 2-25 on page 88.
+  - Figure 2-25 gives the meanings: COUNT(*) counts the rows
+    in the table; COUNT({Name}) counts the rows where column
+    {Name} IS NOT NULL; SUM and AVG take the sum and the
+    average of all values, numeric columns only; MIN and MAX
+    take the minimum and the maximum value of all values.
+  - Some DBMS products extend these standard built in
+    functions with additional functions. The reading focuses
+    on only the five standard ones.
+  - COUNT, MIN and MAX work on any type of data, SUM and AVG
+    only on numeric data, and DISTINCT works with any
+    aggregate function, except in Microsoft Access, though
+    most commonly with COUNT.
+
+4. SUM, AND THE AS KEYWORD FOR A COLUMN NAME
+  - SQL-Query-CH02-32 sums OrderTotal over RETAIL_ORDER; the
+    result table under it holds 1235.00 in a single cell.
+    Because that sum is not a column in a table, the DBMS has
+    no column name to provide: SQL Server 2019 names it '(No
+    column name)', and other products take other, equivalent
+    actions. The book calls that result ugly.
+  - KEY TERM: SQL AS keyword: the keyword that assigns a name
+    to a column in the result table.
+  - SQL-Query-CH02-33 adds AS OrderSum for the same value. The
+    name is arbitrary; OrderTotal_Total or OrderTotalSum would
+    do as well.
+  - The same pair on the running case, where AS changes the
+    label, not the number:
+      SELECT  SUM(SaleTotal)
+      FROM    SALE;
+      result: 1835.00
+
+      SELECT  SUM(SaleTotal) AS SaleSum
+      FROM    SALE;
+      SaleSum: 1835.00
+
+5. AGGREGATES WITH A WHERE CLAUSE
+  - The utility of the built in functions increases when you
+    use them with an SQL WHERE clause. SQL-Query-CH02-34 sums
+    ExtendedPrice from ORDER_ITEM where OrderNumber=3000 as
+    Order3000Sum, and its result table holds 450.00.
+  - WHERE runs first, so the function sees only the surviving
+    rows, here one sale's lines instead of all ten:
+      SELECT  SUM(LineTotal) AS Sale5001Sum
+      FROM    SALE_LINE
+      WHERE   SaleNo = 5001;
+      Sale5001Sum: 860.00
+
+6. MIXING THE FUNCTIONS IN ONE STATEMENT
+  - The SQL built in functions can be mixed and matched in a
+    single statement. SQL-Query-CH02-35 puts SUM, AVG, MIN and
+    MAX of ExtendedPrice side by side, and the result table
+    under it gives 1180.00, 168.571428, 50.00 and 300.00.
+  - The same shape on the running case:
+      SELECT  SUM(LineTotal) AS LineSum,
+              AVG(LineTotal) AS LineAvg,
+              MIN(LineTotal) AS LineMin,
+              MAX(LineTotal) AS LineMax
+      FROM    SALE_LINE;
+      LineSum 1831.00  LineAvg 183.10  LineMin 16.00
+      LineMax 700.00
+  - LineSum comes in four dollars under the SUM over SALE:
+    one stored LineTotal disagrees with its own Qty and
+    Price, which is what section 12 goes looking for. (added)
+
+7. COUNT(*) COUNTS ROWS
+  - COUNT sounds similar to SUM but produces very different
+    results: COUNT counts the number of rows, whereas SUM adds
+    the values in a column. SQL-Query-CH02-36 runs COUNT(*) AS
+    NumberOfRows on ORDER_ITEM and returns 7.
+  - You need to provide an asterisk (*) after COUNT when you
+    want to count rows. It is the only built in function whose
+    parameter can be the asterisk or a column name, and with a
+    column name it counts the rows that contain valid data,
+    that is, data other than the NULL value.
+  - Row count on the running case:
+      SELECT  COUNT(*) AS NumberOfRows
+      FROM    SALE_LINE;
+      NumberOfRows: 10
+
+8. COUNT OF A COLUMN, AND THE SURPRISE
+  - The COUNT function can produce some surprising results.
+    SQL-Query-CH02-37 counts the departments in SKU_DATA with
+    COUNT(Department) and returns 13, the number of rows, not
+    the number of unique values of Department. Adding the SQL
+    DISTINCT keyword gives SQL-Query-CH02-38, whose result, 3,
+    the book calls correct.
+  - The 13 against the 3 is the lesson: COUNT of a column
+    counts rows with a value, not the distinct things those
+    values name. (added explanation)
+  - The same trap on the running case, where PART holds ten
+    parts across three categories:
+      SELECT  COUNT(Category) AS CategoryCount
+      FROM    PART;
+      CategoryCount: 10
+
+      SELECT  COUNT(DISTINCT Category) AS CategoryCount
+      FROM    PART;
+      CategoryCount: 3
+
+9. DOES NOT WORK WITH MICROSOFT ACCESS: COUNT(DISTINCT)
+  - The "Does Not Work with Microsoft Access ANSI-89 SQL" box
+    on page 91: Access does not support the DISTINCT keyword
+    as part of the COUNT expression, so COUNT(Department)
+    works and COUNT(DISTINCT Department) fails.
+  - The solution is an SQL subquery structure, discussed later
+    in the chapter, with the DISTINCT keyword in the subquery
+    itself, given as SQL-Query-CH02-38-Access. The book flags
+    what is unusual: this subquery is in the FROM clause
+    instead of the WHERE clause, building a temporary table
+    named DEPT of distinct Department values for the outer
+    query to count.
+  - The same workaround on the running case, read inside out:
+      SELECT  COUNT(*) AS CategoryCount
+      FROM    (SELECT DISTINCT Category
+               FROM   PART) AS CAT;
+      CategoryCount: 3
+
+10. COUNT OF A COLUMN SKIPS NULLS
+  - Counting the rows with page numbers in CATALOG_SKU_2020
+    should give eight rows instead of nine, because one SKU
+    did not appear in the catalog, and SQL-Query-CH02-39 gives
+    that expected result.
+  - FLYER_2026 has the same shape, eight parts listed and one
+    never printed:
+      SELECT  COUNT(FlyerPage) AS Flyer2026NumberOfParts
+      FROM    FLYER_2026;
+      Flyer2026NumberOfParts: 7
+  - COUNT(*) on the same table gives 8, so the gap is the
+    count of the NULLs. (added)
+
+11. TWO LIMITATIONS OF THE BUILT IN FUNCTIONS
+  - First, except for grouping, defined later in the chapter,
+    you cannot combine table column names with an SQL built in
+    function. SQL-Query-CH02-40 pairs Department with COUNT(*)
+    on SKU_DATA, and SQL Server 2019 gives the error on page
+    91: Msg 8120, Level 16, State 1, Line 278, Column
+    'SKU_DATA.Department' is invalid in the select list
+    because it is not contained in either an aggregate
+    function or the GROUP BY clause.
+  - Microsoft Access 2019 and Oracle Database give an
+    equivalent message. MySQL 8.0, unfortunately, will process
+    this query and give a meaningless result: an arbitrary
+    department name paired with the number of departments.
+  - The same statement on the running case:
+      SELECT  Category, COUNT(*)
+      FROM    PART;
+      (error in SQL Server, Access and Oracle; MySQL returns
+       one row such as Frames, 10)
+  - Second, you cannot use the aggregate functions in an SQL
+    WHERE clause. WHERE operates on rows, choosing which rows
+    will be displayed, whereas the aggregate functions operate
+    on columns, each calculating a single value based on all
+    the attribute values stored in a column.
+  - SQL-Query-CH02-41 is the statement you cannot use, SELECT
+    * FROM RETAIL_ORDER WHERE OrderTotal > AVG(OrderTotal),
+    and page 92 shows the error: Msg 147, Level 15, State 1,
+    Line 285, An aggregate may not appear in the WHERE clause
+    unless it is in a subquery contained in a HAVING clause or
+    a select list, and the column being aggregated is an outer
+    reference.
+  - Other products give an equivalent message. That result
+    can be computed with an SQL subquery later in the chapter,
+    or with a sequence of SQL views in Chapter 7.
+  - The same refusal on the running case, since WHERE judges
+    row by row and no column wide average exists yet:
+    (added explanation)
+      SELECT  *
+      FROM    SALE
+      WHERE   SaleTotal > AVG(SaleTotal);
+      (error)
+
+12. SQL EXPRESSIONS IN SQL SELECT STATEMENTS
+  - It is possible to do basic arithmetic in SQL statements.
+    The book computes extended price to verify the accuracy of
+    the data in ORDER_ITEM with the expression Quantity *
+    Price in SQL-Query-CH02-42, whose result table lists seven
+    rows with EP values 300.00, 130.00, 200.00, 100.00,
+    300.00, 100.00 and 50.00.
+  - KEY TERM: SQL expression: basically a formula or set of
+    values that determines the exact results of an SQL query,
+    anything following an actual or implied is equal to (=)
+    comparison operator, any other comparison operator, or
+    keywords such as LIKE and BETWEEN.
+  - So the SELECT clause in CH02-42 carries the implied EP =
+    Quantity * Price, and the book's other illustration, an IN
+    list in a WHERE clause, shows an expression need not be
+    arithmetic. (added explanation)
+  - BY THE WAY, page 93: the parentheses shown enclosing the
+    expression Quantity * Price are not required and do not
+    affect the calculation, but they help us see the
+    expression in the SQL query syntax.
+  - Arithmetic in the SELECT list on the running case:
+      SELECT    SaleNo, PartNo, (Qty * Price) AS LT
+      FROM      SALE_LINE
+      ORDER BY  SaleNo, PartNo;
+
+      SaleNo  PartNo  LT
+      5001    1020    700.00
+      5001    2030    32.00
+      5001    3020    128.00
+      5002    3010    90.00
+      5002    3030    50.00
+      5003    2010    95.00
+      5003    2020    120.00
+      5004    1030    540.00
+      5004    2030    16.00
+      5004    3020    64.00
+  - SQL-Query-CH02-43 puts the computed EP beside the stored
+    ExtendedPrice so the two can be compared visually to
+    ensure that the stored data are correct.
+  - Expressions can also be used in the WHERE clause, but they
+    may not include the built in aggregate functions, per
+    CH02-41. SQL-Query-CH02-44 automates the check with WHERE
+    (Quantity * Price) <> ExtendedPrice and returns the empty
+    set, which contains no values, so all the values are
+    correct.
+  - On the running case, the computed value beside the stored
+    one:
+      SELECT    SaleNo, PartNo, (Qty * Price) AS LT,
+                LineTotal
+      FROM      SALE_LINE
+      ORDER BY  SaleNo, PartNo;
+      (the same ten rows as above with LineTotal added; every
+       pair matches except the last, 5004 3020, LT 64.00
+       against LineTotal 60.00)
+  - Then the exception query, which here returns the bad row
+    rather than the empty set: the four dollar gap from
+    section 6, found without reading ten rows by eye.
+    (added explanation)
+      SELECT    SaleNo, PartNo
+      FROM      SALE_LINE
+      WHERE     (Qty * Price) <> LineTotal
+      ORDER BY  SaleNo, PartNo;
+
+      SaleNo  PartNo
+      5004    3020
+
+13. STRING EXPRESSIONS: CONCATENATION AND RTRIM
+  - Another use for SQL expressions in SQL statements is to
+    perform character string manipulation.
+  - KEY TERM: concatenation operator: the operator that
+    combines two character strings into one. It is the plus
+    sign (+) in SQL Server 2019.
+  - SQL-Query-CH02-45 combines the Buyer and Department
+    columns of SKU_DATA into a single column named Sponsor,
+    and its result table on page 94 shows the combined text
+    values across all thirteen rows.
+  - BY THE WAY, page 94: the concatenation operator, like many
+    SQL syntax elements, varies from one DBMS product to
+    another. The box gives the Oracle Database version, with a
+    double vertical bar (||), and the MySQL version, with
+    CONCAT() and the elements separated by commas within the
+    parentheses.
+  - The bike shop's Buyer column is padded to 14 characters
+    the way SKU_DATA.Buyer is, so the padding blanks ride into
+    the middle of the joined string. SQL Server form, with the
+    other two beside it:
+      SELECT    PartNo, PartName,
+                (Buyer + ' in ' + Category) AS Sponsor
+      FROM      PART
+      ORDER BY  PartNo;
+      (Oracle: (Buyer || ' in ' || Category) AS Sponsor)
+      (MySQL: CONCAT(Buyer, ' in ', Category) AS Sponsor)
+
+      PartNo  PartName              Sponsor
+      1010    Road Frame, 54 cm     Mia Chen       in Frames
+      1020    Road Frame, 56 cm     Mia Chen       in Frames
+      1030    Gravel Frame, 54 cm   Mia Chen       in Frames
+      2010    Front Wheel, 700c     Omar Reyes     in Wheels
+      2020    Rear Wheel, 700c      Omar Reyes     in Wheels
+      2030    Inner Tube, 700c      Priya Nair     in Wheels
+      2040    Wheel Skewer Set      Omar Reyes     in Wheels
+      3010    Headlight, USB        Priya Nair     in Lights
+      3020    Tail Light, USB       Priya Nair     in Lights
+      3030    Spoke Reflector       Dale Whitfield in Lights
+  - The result of SQL-Query-CH02-45 is ugly because of the
+    extra spaces in each row. They can be eliminated with more
+    advanced functions, but the syntax and use of those vary
+    from one DBMS to another, so the book sends the reader to
+    search on string functions in the documentation for the
+    specific DBMS product.
+  - Just to illustrate the possibilities, SQL-Query-CH02-46 is
+    an SQL Server 2019 statement using the RTRIM function,
+    which strips the trailing blanks off the right hand side
+    of Buyer and Department. The book calls its result much
+    more visually pleasing.
+  - KEY TERM: RTRIM: a string function that removes trailing
+    blanks from the right hand side of a character value.
+    (added definition)
+  - The same repair on the running case, stored values
+    untouched:
+      SELECT    PartNo, PartName,
+                RTRIM(Buyer) + ' in ' + RTRIM(Category)
+                  AS Sponsor
+      FROM      PART
+      ORDER BY  PartNo;
+      (MySQL: CONCAT(RTRIM(Buyer), ' in ', RTRIM(Category))
+       AS Sponsor)
+
+      PartNo  PartName              Sponsor
+      1010    Road Frame, 54 cm     Mia Chen in Frames
+      1020    Road Frame, 56 cm     Mia Chen in Frames
+      1030    Gravel Frame, 54 cm   Mia Chen in Frames
+      2010    Front Wheel, 700c     Omar Reyes in Wheels
+      2020    Rear Wheel, 700c      Omar Reyes in Wheels
+      2030    Inner Tube, 700c      Priya Nair in Wheels
+      2040    Wheel Skewer Set      Omar Reyes in Wheels
+      3010    Headlight, USB        Priya Nair in Lights
+      3020    Tail Light, USB       Priya Nair in Lights
+      3030    Spoke Reflector       Dale Whitfield in Lights
+  - The reading hands off from here to Grouping Rows in SQL
+    SELECT Statements.
+
+14. KEY TAKEAWAYS
+  - Calculations come in two flavors: aggregate functions
+    collapse a column to one value, expressions compute a new
+    value row by row.
+  - An aggregate with no WHERE reads the whole column; WHERE
+    narrows the input first, so the same function answers a
+    smaller question. AS only labels the answer; without it
+    SQL Server hands back '(No column name)'.
+  - COUNT(*) counts rows, COUNT(column) counts rows where that
+    column is not NULL, and COUNT(DISTINCT column) counts the
+    different values.
+  - Both limitations are about mixing scopes: a plain column
+    is per row and an aggregate is per column, so they cannot
+    share a SELECT list until GROUP BY reconciles them, and an
+    aggregate cannot sit in WHERE because WHERE decides before
+    any total exists. MySQL 8.0 is the one that will hurt you:
+    it runs the invalid SELECT instead of refusing it.
+  - An expression beside the column it should equal is a data
+    quality check; the same expression in WHERE with <>
+    returns only the exceptions.
+  - Concatenation syntax differs by product, and fixed width
+    columns carry their padding into the joined string until
+    RTRIM removes it.
+
+15. QUIZ-SAFE FACTS
+  - SQL-Query-CH02-31, SELECT * FROM CATALOG_SKU_2020 WHERE
+    CatalogPage IS NOT NULL, returns eight rows.
+  - The five standard SQL built in aggregate functions, SUM,
+    AVG, MIN, MAX and COUNT, are summarized in Figure 2-25.
+  - Some DBMS products extend the built in functions; the
+    reading focuses on only the five standard ones.
+  - COUNT, MIN and MAX work on any type of data; SUM and AVG
+    only on numeric data.
+  - DISTINCT works with any aggregate function, except in
+    Microsoft Access, though most commonly with COUNT.
+  - CH02-32, SUM(OrderTotal) from RETAIL_ORDER, returns
+    1235.00 under SQL Server 2019's '(No column name)'.
+  - The result of an SQL statement is always a table; the
+    CH02-32 result is one row and one column.
+  - CH02-33 adds AS OrderSum for the same value, and the name
+    is arbitrary.
+  - CH02-34, SUM(ExtendedPrice) AS Order3000Sum where
+    OrderNumber=3000, returns 450.00.
+  - CH02-35, SUM, AVG, MIN and MAX of ExtendedPrice, returns
+    1180.00, 168.571428, 50.00 and 300.00.
+  - CH02-36, COUNT(*) AS NumberOfRows from ORDER_ITEM,
+    returns 7.
+  - COUNT is the only built in function whose parameter can be
+    the asterisk or a column name.
+  - CH02-37, COUNT(Department) from SKU_DATA, returns 13, the
+    row count, not the unique departments shown in Figure 2-6.
+  - CH02-38, COUNT(DISTINCT Department), returns 3, which the
+    book calls correct.
+  - Access does not support DISTINCT inside COUNT in ANSI-89
+    SQL. CH02-38-Access is the fix: a FROM clause subquery
+    builds a temporary table named DEPT of distinct Department
+    values, counted with COUNT(*).
+  - The text's other subqueries sit in the WHERE clause.
+  - CH02-39, COUNT(CatalogPage) from CATALOG_SKU_2020, returns
+    8 of 9 rows because one SKU did not appear in the catalog.
+  - First limitation: except for grouping, table column names
+    cannot be combined with a built in function. CH02-40 gives
+    SQL Server 2019 Msg 8120, Access 2019 and Oracle give
+    equivalent messages, and MySQL 8.0 returns an arbitrary
+    department name with the number of departments.
+  - Second limitation: aggregates cannot be used in a WHERE
+    clause, which operates on rows while they operate on
+    columns. CH02-41 gives SQL Server 2019 Msg 147; that
+    result needs a subquery, or SQL views in Chapter 7.
+  - CH02-42, (Quantity * Price) AS EP ordered by OrderNumber
+    and SKU, returns seven rows.
+  - An SQL expression is basically a formula or set of values
+    that determines the exact results of an SQL query:
+    anything following an actual or implied is equal to (=)
+    operator, another comparison operator, or LIKE and
+    BETWEEN.
+  - CH02-42's SELECT clause carries the implied EP = Quantity
+    * Price.
+  - The IN list of 'Nancy Meyers', 'Cindy Lo' and 'Jerry
+    Martin' in a WHERE clause is an expression too.
+  - Expressions may be used in WHERE, but may not include the
+    built in aggregate functions.
+  - CH02-43 shows EP beside the stored ExtendedPrice and the
+    values are equal.
+  - CH02-44, WHERE (Quantity * Price) <> ExtendedPrice,
+    returns the empty set, so all the stored values are
+    correct.
+  - The concatenation operator in SQL Server 2019 is the plus
+    sign (+); Oracle Database uses a double vertical bar (||)
+    and MySQL uses CONCAT().
+  - CH02-45 builds a Sponsor column from Buyer and Department
+    in SKU_DATA, ordered by SKU, and its result is ugly
+    because of the extra spaces in each row.
+  - The book labels the two variants CH02-45-Oracle-Database
+    and CH02-45-MySQL.
+  - CH02-46 uses RTRIM, which also works in Access, Oracle and
+    MySQL; the book calls its result much more visually
+    pleasing.

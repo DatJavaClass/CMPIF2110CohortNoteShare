@@ -1,0 +1,194 @@
+1. DEMO SETUP
+  - The demo walks through the aggregations COUNT, SUM, AVG,
+    MIN and MAX, and the GROUP BY statement that has to travel
+    with them.
+  - It runs in MySQL Workbench, and the dataset is one the
+    professor created that is not in the book.
+    (added, from the module overview)
+  - Open a new tab, then look at the tables.
+  - Looking first is not a formality: aggregations read
+    columns, so knowing which columns repeat values decides
+    what is worth counting. (added explanation)
+  - The demo's own tables: customer, order detail and sales
+    order.
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables PART (10 parts, each with a Category and a
+    Buyer), SALE_LINE (one row per part on a sale, with SaleNo,
+    PartNo, Qty and Price) and DELIVERY (six deliveries by
+    three couriers, each with a Fee). (added)
+
+2. COUNT: AN AGGREGATION IS A FUNCTION
+  - KEY TERM: aggregation (aggregate function): a function that
+    reads a whole column of values and returns one value for
+    it, such as COUNT, SUM, AVG, MIN or MAX.
+  - KEY TERM: argument (parameter): the value handed to a
+    function inside its parentheses. For an aggregation the
+    argument is a column, or the asterisk. (added definition)
+  - The easiest way to ask how many rows a table has is COUNT
+    with the asterisk, which counts everything:
+      SELECT  COUNT(*)
+      FROM    PART;
+      result: 10
+  - The demo ran the same shape against the customer table and
+    got 91, the row count of that table.
+
+3. COUNT ON A COLUMN, AND DISTINCT INSIDE THE AGGREGATION
+  - Put a column name in the parentheses instead of the
+    asterisk and COUNT counts that column's values. The demo
+    counted the order ID column on order detail, a column he
+    already knew from an earlier demo held duplicated values.
+  - KEY TERM: DISTINCT: a keyword that drops duplicate values,
+    leaving each distinct value once.
+  - DISTINCT can go inside an aggregation, not just in the
+    SELECT list, and that is how you get a count of unique
+    values rather than a count of appearances:
+      SELECT  COUNT(SaleNo) FROM SALE_LINE;            -> 10
+      SELECT  COUNT(DISTINCT SaleNo) FROM SALE_LINE;   -> 4
+  - The two numbers answer different questions: how many sale
+    lines exist, and how many sales those lines belong to. Same
+    column, one keyword apart. (added explanation)
+
+4. SUM PER GROUP, AND WHY GROUP BY IS REQUIRED
+  - Counting rows needed no other column, but a sum is usually
+    wanted per something: per order, per sale, per customer.
+    Once the SELECT list holds that plain column beside the
+    aggregation, the statement needs a GROUP BY.
+  - KEY TERM: GROUP BY: the clause that collects rows sharing
+    the same value in the named column or columns, so the
+    aggregation returns one value per group instead of one
+    value for the whole table.
+  - KEY TERM: column alias: the name after AS that labels a
+    result column, so an aggregated column does not come back
+    under a machine generated heading. (added definition)
+  - Sum the price column per sale:
+      SELECT    SaleNo, SUM(Price) AS PriceSum
+      FROM      SALE_LINE
+      GROUP BY  SaleNo;
+
+      SaleNo  PriceSum
+      5001    772.00
+      5002    50.00
+      5003    215.00
+      5004    612.00
+  - The demo proved the requirement by taking the GROUP BY
+    away. He commented the clause out, reran, and an error came
+    back at the bottom of the tool.
+  - The rule he stated from that error: it will work without a
+    column, but if there is another column in the SELECT list
+    that is not part of an aggregation, you have to group by
+    that column.
+  - The reason is that the two halves of the SELECT list
+    disagree about how many rows to produce. SUM(Price) would
+    collapse the table to one value, while a plain SaleNo wants
+    one per row. GROUP BY settles it by naming which rows
+    collapse together. (added explanation)
+
+5. A SECOND COLUMN JOINS THE GROUP BY
+  - Add another plain column and it has to go into the GROUP BY
+    as well. The demo added product ID beside order ID and
+    grouped by both.
+      SELECT    SaleNo, PartNo, SUM(Price) AS PriceSum
+      FROM      SALE_LINE
+      GROUP BY  SaleNo, PartNo;
+
+      Ten rows, one per sale line, each PriceSum equal to that
+      line's own Price (5001 1020 700.00, 5001 2030 8.00,
+      5001 3020 64.00, 5002 3010 45.00, 5002 3030 5.00,
+      5003 2010 95.00, 5003 2020 120.00, 5004 1030 540.00,
+      5004 2030 8.00, 5004 3020 64.00).
+  - Grouping on more columns makes the groups smaller. Here the
+    pair of columns is unique on every row, so each group holds
+    a single row. The rule did not change; the grain of the
+    answer did. (added explanation)
+
+6. THE PROFESSOR'S HABIT: COLUMNS LEFT, AGGREGATIONS RIGHT
+  - His working method, stated as the easiest way to get the
+    GROUP BY right: aggregations to the right of the SELECT
+    list, plain columns to the left.
+  - Then writing the GROUP BY is copy and paste. Start at the
+    rightmost aggregation, take everything to its left, and
+    paste that list into the GROUP BY clause.
+  - He also noted results usually read better that way; you
+    typically do not want an aggregation sitting in between the
+    plain columns.
+
+7. AVG PER GROUP
+  - Averages take the same shape. The demo switched to the
+    sales order table, selected some rows first just to see the
+    data, then took the average freight per shipper ID.
+      SELECT    Courier, AVG(Fee) AS AvgFee
+      FROM      DELIVERY
+      GROUP BY  Courier;
+
+      Courier      AvgFee
+      CityCourier  7.00
+      PedalPost    12.00
+      VanLine      25.00
+  - AVG returns the mean per group and hides how many rows sit
+    behind it. MIN and MAX start to fix that.
+    (added explanation)
+
+8. MIN AND MAX IN THE SAME STATEMENT
+  - To get the minimum and maximum freight for each shipper,
+    the demo did not write new queries. He added the two
+    aggregations into the statement he already had.
+      SELECT    Courier, AVG(Fee) AS AvgFee, MIN(Fee) AS MinFee,
+                MAX(Fee) AS MaxFee
+      FROM      DELIVERY
+      GROUP BY  Courier;
+
+      Courier      AvgFee  MinFee  MaxFee
+      CityCourier  7.00    6.00    8.00
+      PedalPost    12.00   9.50    14.00
+      VanLine      25.00   25.00   25.00
+  - The grouping clause did not change when two more functions
+    were added, because GROUP BY answers to the plain columns,
+    not to the aggregations.
+  - Reading a row across gives the spread, not just the
+    center: a group holding one row reports the same number
+    three times. (added explanation)
+
+9. KEY TAKEAWAYS
+  - An aggregation is a function and its argument is a column,
+    or the asterisk for COUNT.
+  - COUNT(*) counts rows; COUNT of a column counts that
+    column's values; COUNT(DISTINCT column) counts unique
+    values.
+  - An aggregation alone in the SELECT list needs no GROUP BY.
+  - Any plain column beside an aggregation must appear in the
+    GROUP BY, a second plain column included, or the statement
+    does not run.
+  - Write the plain columns on the left and the aggregations on
+    the right, then copy the left hand list into GROUP BY.
+  - SUM, AVG, MIN and MAX all take the same shape, and several
+    of them can sit in one statement under a single GROUP BY.
+
+10. QUIZ-SAFE FACTS
+  - The aggregations covered in the demo are COUNT, SUM, AVG,
+    MIN and MAX, along with the GROUP BY statement.
+  - The module overview says the demo uses a dataset the
+    professor created that is not in the book.
+  - An aggregation is a function that expects arguments or
+    parameters, which in these cases are columns.
+  - COUNT(*) on the customer table returned 91, the number of
+    rows in that table.
+  - The demo counted the order ID column on the order detail
+    table because order ID had duplicated values.
+  - DISTINCT can be used inside an aggregation to pull unique
+    values.
+  - The SUM example summed unit price on the order detail
+    table, taken per order ID.
+  - When selecting other columns alongside aggregations, you
+    have to group by every one of those columns.
+  - Commenting out the GROUP BY produced an error in the tool.
+  - It works without a column, but another column not part of
+    an aggregation requires a GROUP BY on that column.
+  - Adding product ID beside order ID meant both columns went
+    into the GROUP BY.
+  - The professor's stated method: aggregations to the right,
+    columns to the left, then copy the columns on the left,
+    starting at the rightmost aggregation, into the GROUP BY.
+  - The average example used the sales order table: average
+    freight per shipper ID, grouped by shipper ID.
+  - MIN and MAX for each shipper were added into that same
+    statement rather than written separately.

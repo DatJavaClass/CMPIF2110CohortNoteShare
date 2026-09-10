@@ -1,0 +1,304 @@
+1. CONCATENATION I: THE PLUS SIGN FORM
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables PART (PartNo, PartName, Category, Buyer, 10
+    rows, Buyer padded with blanks to 14 characters) and
+    FLYER_2026 (FlyerID, PartNo, PartName, Category, FlyerPage,
+    DateOnWebsite, 8 rows, one FlyerPage NULL). (added)
+  - KEY TERM: concatenation: joining character values end to
+    end into one value in one result column. (added definition)
+  - The first slide selects SKU, SKU_Description and
+    (Buyer + ' in ' + Department) AS Sponsor from SKU_DATA,
+    ordered by SKU. The plus sign is SQL Server's
+    concatenation operator (added); the ' in ' literal, in
+    single quotes, sits between the two stored values.
+  - KEY TERM: alias: the name a computed result column is given
+    with AS, as Sponsor is here. (added definition)
+  - The slide reads the result as 13 rows and 5 columns (blank,
+    SKU, SKU_Description, Sponsor, blank), the buyer name and
+    the department in separate cells because the blanks padding
+    Buyer ride along. Buyers read out: Pete Hansen, Nancy
+    Meyers, Cindy Lo, Jerry Martin. Departments: Water Sports,
+    Camping, Climbing.
+  - Same shape on the bike shop, SQL Server form:
+      SELECT    PartNo, PartName,
+                (Buyer + ' in ' + Category) AS Sponsor
+      FROM      PART
+      ORDER BY  PartNo;
+
+      PartNo  PartName              Sponsor
+      1010    Road Frame, 54 cm     Mia Chen       in Frames
+      1020    Road Frame, 56 cm     Mia Chen       in Frames
+      1030    Gravel Frame, 54 cm   Mia Chen       in Frames
+      2010    Front Wheel, 700c     Omar Reyes     in Wheels
+      2020    Rear Wheel, 700c      Omar Reyes     in Wheels
+      2030    Inner Tube, 700c      Priya Nair     in Wheels
+      2040    Wheel Skewer Set      Omar Reyes     in Wheels
+      3010    Headlight, USB        Priya Nair     in Lights
+      3020    Tail Light, USB       Priya Nair     in Lights
+      3030    Spoke Reflector       Dale Whitfield in Lights
+
+2. CONCATENATION II: THE ORACLE AND MYSQL FORMS
+  - The second slide runs the same query twice more, once per
+    product. Oracle Database uses two vertical bars, (Buyer ||
+    ' in ' || Department) AS Sponsor, over SKU_DATA ordered by
+    SKU.
+  - MySQL uses a function instead of an operator,
+    CONCAT(Buyer, ' in ', Department) AS Sponsor, the values to
+    join as comma separated arguments.
+  - The three forms on the bike shop query, same result as
+    section 1:
+      SQL Server:  (Buyer + ' in ' + Category) AS Sponsor
+      Oracle:      (Buyer || ' in ' || Category) AS Sponsor
+      MySQL:       CONCAT(Buyer, ' in ', Category) AS Sponsor
+  - The same statement is a syntax error in a product that
+    spells concatenation differently. (added)
+
+3. CONCATENATION III: RTRIM CLEANS UP THE PADDING
+  - KEY TERM: RTRIM: a string function that removes the
+    trailing blanks from a character value, a right trim.
+    (added definition)
+  - The third slide wraps both stored columns in it:
+    RTRIM(Buyer) + ' in ' + RTRIM(Department) AS Sponsor, over
+    SKU_DATA, ordered by SKU.
+  - The result reads as 13 rows and 4 columns, one column
+    fewer than the untrimmed version (added), the whole
+    Sponsor value now in one cell, such as Pete Hansen in
+    Water Sports.
+  - On the bike shop, with the MySQL variant below it:
+      SELECT    PartNo, PartName,
+                RTRIM(Buyer) + ' in ' + RTRIM(Category)
+                  AS Sponsor
+      FROM      PART
+      ORDER BY  PartNo;
+
+      MySQL: CONCAT(RTRIM(Buyer), ' in ', RTRIM(Category))
+             AS Sponsor
+
+      PartNo  PartName              Sponsor
+      1010    Road Frame, 54 cm     Mia Chen in Frames
+      1020    Road Frame, 56 cm     Mia Chen in Frames
+      1030    Gravel Frame, 54 cm   Mia Chen in Frames
+      2010    Front Wheel, 700c     Omar Reyes in Wheels
+      2020    Rear Wheel, 700c      Omar Reyes in Wheels
+      2030    Inner Tube, 700c      Priya Nair in Wheels
+      2040    Wheel Skewer Set      Omar Reyes in Wheels
+      3010    Headlight, USB        Priya Nair in Lights
+      3020    Tail Light, USB       Priya Nair in Lights
+      3030    Spoke Reflector       Dale Whitfield in Lights
+  - RTRIM wraps each column, not the finished string. (added)
+
+4. THE DEPARTMENT GROUPS IN CATALOG_SKU_2020
+  - The grouping slides start from CATALOG_SKU_2020, read out
+    as 9 rows and 7 columns: blank, CatalogID, SKU,
+    SKU_Description, Department, CatalogPage and
+    DateOnWebsite. CatalogID runs from 20200001 upward, the
+    departments are Water Sports, Camping and Climbing, the
+    catalog pages 23, 26, 46, 77 and 79, and every
+    DateOnWebsite 2020-01-01.
+  - The rows already fall into department groups; the query
+    does not invent them, it counts inside them. (added
+    explanation)
+  - KEY TERM: GROUP BY: the SQL clause that collapses the rows
+    sharing a common value in the named column or columns into
+    one result row per distinct value. (added definition)
+
+5. FIGURE 2-27: GROUPING DATA INTO DEPARTMENT GROUPS
+  - KEY TERM: aggregate function: a built in function (COUNT,
+    SUM, AVG, MIN, MAX) that returns one value for a set of
+    rows. (added definition)
+  - The slide labeled Figure 2-27 selects Department and
+    COUNT(SKU) AS NumberOfCatalogItems from CATALOG_SKU_2020,
+    with WHERE CatalogPage IS NOT NULL, grouped by Department.
+    Its result table has 3 rows and 2 columns: Camping 2,
+    Climbing 2, Water Sports 4.
+  - WHERE throws out the rows with no catalog page before
+    grouping, and COUNT(SKU) counts what is left in each
+    group. (added explanation)
+  - On the bike shop with no WHERE clause, the unprinted part
+    is still counted:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      GROUP BY  Category;
+
+      Category  NumberOfFlyerItems
+      Frames    3
+      Lights    2
+      Wheels    3
+  - Add the WHERE clause and that row goes first, so Frames
+    drops by one:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      WHERE     FlyerPage IS NOT NULL
+      GROUP BY  Category;
+
+      Category  NumberOfFlyerItems
+      Frames    2
+      Lights    2
+      Wheels    3
+
+6. USING THE SQL HAVING CLAUSE
+  - KEY TERM: HAVING: the SQL clause that tests each group a
+    GROUP BY produced and keeps only the groups that pass.
+    (added definition)
+  - The HAVING slide is the same statement with one line added,
+    HAVING COUNT(SKU) > 2. The condition repeats the aggregate
+    expression, not the alias NumberOfCatalogItems, and three
+    or more is written as greater than 2.
+  - On the bike shop, categories with three or more printed
+    items:
+      SELECT    Category, COUNT(PartNo) AS NumberOfFlyerItems
+      FROM      FLYER_2026
+      WHERE     FlyerPage IS NOT NULL
+      GROUP BY  Category
+      HAVING    COUNT(PartNo) > 2;
+
+      Category  NumberOfFlyerItems
+      Wheels    3
+  - Frames and Lights each counted 2, so HAVING dropped both
+    groups whole, rows and all. (added explanation)
+
+7. WHERE VERSUS HAVING, AND WHERE THE CLAUSES GO
+  - The SQL WHERE clause specifies which rows will be used to
+    determine the groups.
+  - The SQL HAVING clause specifies which groups will be used
+    in the final result.
+  - In general, place WHERE before GROUP BY. Some DBMS products
+    do not require that placement, but to be safe, always put
+    WHERE before GROUP BY.
+  - There is an ambiguity in statements that include both a
+    WHERE and a HAVING clause. The results can vary, so to
+    eliminate the ambiguity SQL always applies WHERE before
+    HAVING.
+
+8. GROUPING ROWS BY MORE THAN ONE COLUMN
+  - The slide selects Department, Buyer and COUNT(SKU) AS
+    Dept_Buyer_SKU_Count from SKU_DATA, grouped by Department
+    and then Buyer. Its result has 4 rows: Camping, Cindy Lo,
+    3; Climbing, Jerry Martin, 2; Water Sports, Nancy Meyers,
+    2; Water Sports, Pete Hansen, 6.
+  - Water Sports appears twice because the group is now the
+    pair of values, not the department alone. (added
+    explanation)
+  - On the bike shop, category first and buyer within it:
+      SELECT    Category, Buyer,
+                COUNT(PartNo) AS Cat_Buyer_PartCount
+      FROM      PART
+      GROUP BY  Category, Buyer;
+
+      Category  Buyer           Cat_Buyer_PartCount
+      Frames    Mia Chen        3
+      Lights    Dale Whitfield  1
+      Lights    Priya Nair      2
+      Wheels    Omar Reyes      3
+      Wheels    Priya Nair      1
+  - Priya Nair takes two rows for the same reason: she buys in
+    two categories. (added)
+
+9. COLUMN NAMES THAT MUST APPEAR IN THE GROUP BY CLAUSE
+  - The rule as the slide states it: when using the GROUP BY
+    clause, any and all column names in the SELECT clause that
+    are not used by or associated with an SQL "built-in"
+    function must appear in the GROUP BY clause.
+  - The failing example is SQL-Query-CH02-51: Department, SKU
+    and COUNT(SKU) AS Dept_SKU_Count from SKU_DATA, grouped by
+    Department alone. SKU is not in the GROUP BY clause, and
+    therefore the query produces an error.
+  - One row comes back per group, and a group holds many SKU
+    values, so there is no single SKU to show. (added
+    explanation)
+  - The bike shop version fails the same way:
+      SELECT    Category, PartNo,
+                COUNT(PartNo) AS Cat_PartCount
+      FROM      PART
+      GROUP BY  Category;
+  - SQL Server, Access and Oracle refuse it, the SQL Server
+    message reading that the column is invalid in the select
+    list because it is not contained in either an aggregate
+    function or the GROUP BY clause. MySQL 8.0 runs it and
+    picks an arbitrary PartNo per group. (added)
+
+10. USING THE ORDER BY CLAUSE WITH GROUPINGS
+  - The last slide stacks every clause covered so far:
+    Department and COUNT(SKU) AS Dept_SKU_Count from SKU_DATA,
+    WHERE SKU <> 302000, GROUP BY Department, HAVING
+    COUNT(SKU) > 1, ORDER BY Dept_SKU_Count.
+  - Written order is SELECT, FROM, WHERE, GROUP BY, HAVING,
+    ORDER BY. ORDER BY comes last and sorts the groups that
+    survived, not the rows that fed them. (added explanation)
+  - The sort is on the alias, a plain result column by the time
+    ORDER BY runs.
+  - The bike shop version drops a part, groups, filters, then
+    sorts:
+      SELECT    Category, COUNT(PartNo) AS Cat_PartCount
+      FROM      PART
+      WHERE     PartNo <> 3030
+      GROUP BY  Category
+      HAVING    COUNT(PartNo) > 2
+      ORDER BY  Cat_PartCount;
+
+      Category  Cat_PartCount
+      Frames    3
+      Wheels    4
+  - With no WHERE and no HAVING the counts are Frames 3,
+    Lights 3, Wheels 4. WHERE drops one Lights row and HAVING
+    then drops that group; without the ORDER BY the survivors
+    come back in arbitrary order. (added)
+  - Access does not accept the alias in ORDER BY; the book's
+    fix is ORDER BY COUNT(SKU), here ORDER BY COUNT(PartNo),
+    same two rows. (added)
+
+11. KEY TAKEAWAYS
+  - One idea, three spellings: plus in SQL Server, two vertical
+    bars in Oracle, CONCAT in MySQL.
+  - A concatenated column is computed, not stored, so name it
+    with AS.
+  - Fixed width columns carry their trailing blanks into the
+    concatenated value; RTRIM on each column removes them.
+  - GROUP BY returns one row per distinct value, or per
+    distinct combination of the columns named.
+  - WHERE picks the rows that form the groups, HAVING picks the
+    groups that reach the result, and WHERE runs first.
+  - HAVING repeats the aggregate expression, not the alias.
+  - Any SELECT column not inside an aggregate function has to
+    appear in the GROUP BY clause.
+  - ORDER BY sorts the surviving groups and can sort on the
+    alias.
+
+12. QUIZ-SAFE FACTS
+  - SQL Server concatenates with the plus sign, Oracle Database
+    with two vertical bars, MySQL with CONCAT and comma
+    separated arguments.
+  - The concatenation query is (Buyer + ' in ' + Department) AS
+    Sponsor over SKU_DATA, ordered by SKU.
+  - Its result reads as 13 rows and 5 columns, buyer name and
+    department in separate cells because of the padding.
+  - The RTRIM version reads as 13 rows and 4 columns, the whole
+    Sponsor value in one cell: Pete Hansen in Water Sports.
+  - CATALOG_SKU_2020 as the slide reads it has 9 rows and 7
+    columns, the named ones CatalogID, SKU, SKU_Description,
+    Department, CatalogPage and DateOnWebsite.
+  - Figure 2-27 groups it with WHERE CatalogPage IS NOT NULL
+    and GROUP BY Department: Camping 2, Climbing 2, Water
+    Sports 4.
+  - The HAVING slide adds HAVING COUNT(SKU) > 2 to that
+    statement, using COUNT(SKU), not the alias
+    NumberOfCatalogItems.
+  - The SQL WHERE clause specifies which rows will be used to
+    determine the groups; the SQL HAVING clause specifies which
+    groups will be used in the final result.
+  - In general, place WHERE before GROUP BY; some DBMS products
+    do not require that placement.
+  - SQL always applies WHERE before HAVING, which eliminates
+    the ambiguity in statements holding both clauses.
+  - GROUP BY Department, Buyer with COUNT(SKU) AS
+    Dept_Buyer_SKU_Count gives 4 rows: Camping Cindy Lo 3,
+    Climbing Jerry Martin 2, Water Sports Nancy Meyers 2, Water
+    Sports Pete Hansen 6.
+  - Any and all column names in the SELECT clause that are not
+    used by or associated with an SQL "built-in" function must
+    appear in the GROUP BY clause.
+  - SQL-Query-CH02-51 groups by Department alone while SKU sits
+    in the SELECT clause, and therefore produces an error.
+  - The ORDER BY slide is Department and COUNT(SKU) AS
+    Dept_SKU_Count over SKU_DATA, WHERE SKU <> 302000, GROUP BY
+    Department, HAVING COUNT(SKU) > 1, ORDER BY Dept_SKU_Count.

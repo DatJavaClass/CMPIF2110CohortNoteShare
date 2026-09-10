@@ -1,0 +1,275 @@
+1. THE SUM FUNCTION, WITH AND WITHOUT AS
+  - KEY TERM: SQL built in aggregate function: a function that
+    reads down a whole column of a table and returns one value
+    for it, such as a total or an average. (added definition)
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables PART (10 parts: PartNo, PartName, Category,
+    Buyer), SALE (4 sales, each with a SaleTotal), SALE_LINE
+    (10 lines with Qty, Price and a stored LineTotal) and
+    FLYER_2026 (8 rows, FlyerPage NULL on the one part that
+    never printed). (added)
+  - The first slide shows the same SUM query in both forms,
+    SUM(OrderTotal) over RETAIL_ORDER without a column alias
+    (the book's SQL-Query-CH02-32) and with one, AS OrderSum
+    (SQL-Query-CH02-33).
+  - Same shape on the bike shop, summing the four sale totals:
+      SELECT  SUM(SaleTotal)
+      FROM    SALE;
+  - That returns a single cell holding 1835.00. With no alias
+    SQL Server has nothing to put in the heading and labels
+    the column "(No column name)". (added)
+  - KEY TERM: column alias: a name given to a result column
+    with the AS keyword, so the results table has a readable
+    heading. (added definition)
+  - The alias changes the heading and nothing else:
+      SELECT  SUM(SaleTotal) AS SaleSum
+      FROM    SALE;
+    The one cell under SaleSum still reads 1835.00.
+  - A WHERE clause still works, because it runs first and cuts
+    the rows the function then reads (added):
+      SELECT  SUM(LineTotal) AS Sale5001Sum
+      FROM    SALE_LINE
+      WHERE   SaleNo = 5001;
+    Sale5001Sum is 860.00, the three lines of that one sale
+    rather than all ten in the table.
+
+2. SUM, AVG, MIN AND MAX IN ONE STATEMENT
+  - The second slide, the book's SQL-Query-CH02-35, puts four
+    functions in one SELECT list, each over ExtendedPrice in
+    ORDER_ITEM, each with its own alias: OrderItemSum,
+    OrderItemAvg, OrderItemMin and OrderItemMax.
+  - The result table under that query has one row and five
+    columns as the slide reads it out, and the four values are
+    1180, 168.571428, 50 and 300.
+  - KEY TERM: SUM: adds the values in a numeric column.
+    (added definition)
+  - KEY TERM: AVG: returns the arithmetic mean of a numeric
+    column. (added definition)
+  - KEY TERM: MIN and MAX: return the smallest and the largest
+    value in a column. (added definition)
+  - SUM and AVG need a numeric column. MIN and MAX do not, so
+    they can be used on text and dates as well. (added)
+  - Same statement on the bike shop's sale lines:
+      SELECT  SUM(LineTotal) AS LineSum,
+              AVG(LineTotal) AS LineAvg,
+              MIN(LineTotal) AS LineMin,
+              MAX(LineTotal) AS LineMax
+      FROM    SALE_LINE;
+    LineSum 1831.00, LineAvg 183.10, LineMin 16.00,
+    LineMax 700.00.
+  - Worth noticing for section 7: LineSum is 1831.00 while the
+    four SaleTotal values add to 1835.00, because one stored
+    LineTotal is four dollars short of its own Qty times Price.
+
+3. COUNT OF ROWS
+  - The third slide runs COUNT with the asterisk over
+    ORDER_ITEM and aliases it NumberOfRows, the book's
+    SQL-Query-CH02-36.
+  - KEY TERM: COUNT(*): counts the rows in the result, not the
+    values in any one column. (added definition)
+  - COUNT(*) does not care whether any column in the row is
+    empty. It answers "how many rows", which is a different
+    question from "how many values":
+      SELECT  COUNT(*) AS NumberOfRows
+      FROM    SALE_LINE;
+    NumberOfRows is 10, the ten sale lines.
+  - Name a column instead of the asterisk and the count is of
+    rows where that column is not NULL (added). On the bike
+    shop's parts, every row has a category, so the answer is
+    the row count again and not the number of different
+    categories:
+      SELECT  COUNT(Category) AS CategoryCount
+      FROM    PART;
+    CategoryCount is 10.
+  - The difference shows itself only when a column has holes in
+    it. FLYER_2026 has eight rows, one with a NULL FlyerPage,
+    so counting that column returns seven while COUNT(*) on the
+    same table returns eight (added):
+      SELECT  COUNT(FlyerPage) AS Flyer2026NumberOfParts
+      FROM    FLYER_2026;
+    Flyer2026NumberOfParts is 7.
+
+4. COUNT WITH DISTINCT
+  - The fourth slide answers the "how many different values"
+    question by putting DISTINCT inside COUNT: COUNT(DISTINCT
+    Department) AS DeptCount over SKU_DATA, the book's
+    SQL-Query-CH02-38.
+  - KEY TERM: DISTINCT: collapses duplicate values so each
+    different value is considered once. (added definition)
+  - Inside COUNT, DISTINCT changes the question from how many
+    rows carry a value to how many different values exist. On
+    the bike shop's parts that is the count of categories:
+      SELECT  COUNT(DISTINCT Category) AS CategoryCount
+      FROM    PART;
+    CategoryCount is 3, the three categories behind the ten
+    parts, against the 10 that plain COUNT(Category) returned
+    in section 3.
+  - Access does not accept DISTINCT inside COUNT. The book's
+    workaround counts the rows of a distinct list built by a
+    subquery in the FROM clause, and gives the same 3 (added):
+      SELECT  COUNT(*) AS CategoryCount
+      FROM    (SELECT DISTINCT Category
+               FROM   PART) AS CAT;
+
+5. LIMITATION ONE: NO PLAIN COLUMN BESIDE AN AGGREGATE
+  - The slide states two limitations to the SQL built in
+    functions. The first: you cannot combine table column names
+    with an SQL built in function.
+  - The book's failing statement is SQL-Query-CH02-40, a plain
+    column and an aggregate side by side with nothing to tie
+    them together:
+      SELECT  Department, COUNT(*)
+      FROM    SKU_DATA;
+  - The slide reads out the error SQL Server returns for it:
+    Msg 8120, Level 16, State 1. Column SKU_DATA.Department is
+    invalid in the select list because it is not contained in
+    either an aggregate function or the GROUP BY clause.
+  - The reason is a mismatch of shape. COUNT(*) returns one
+    value for the whole table; Department has a value on every
+    row. The DBMS is being asked to print a column of
+    departments beside a single number and has no rule for
+    doing it. (added explanation)
+  - KEY TERM: GROUP BY clause: the clause that splits rows into
+    groups by their common values so an aggregate returns one
+    value per group instead of one for the table. (added
+    definition)
+  - The error message names both fixes: aggregate the column,
+    or put it in a GROUP BY. (added note)
+  - The same statement on the bike shop's parts is refused the
+    same way in SQL Server, Access and Oracle:
+      SELECT  Category, COUNT(*)
+      FROM    PART;
+  - MySQL 8.0 does not refuse it. It returns one arbitrary
+    category beside the count, which is worse than an error
+    because the number looks like an answer. (added note)
+
+6. LIMITATION TWO: NO AGGREGATE IN THE WHERE CLAUSE
+  - The second limitation as the slide states it: you cannot
+    use them in an SQL WHERE clause, because the WHERE clause
+    operates on rows, choosing which rows will be displayed,
+    whereas the aggregate functions operate on columns.
+  - The book's failing statement is SQL-Query-CH02-41, asking
+    for the orders above the average order total:
+      SELECT  *
+      FROM    RETAIL_ORDER
+      WHERE   OrderTotal > AVG(OrderTotal);
+  - The slide reads out the error: Msg 147, Level 15, State 1.
+    An aggregate may not appear in the WHERE clause unless it
+    is in a subquery contained in a HAVING clause or a select
+    list, and the column being aggregated is an outer
+    reference.
+  - The row by row reading is the point. WHERE is evaluated
+    once per row, and at that moment the average of the whole
+    column does not exist yet: it is known only after every row
+    has been read. (added explanation)
+  - The same question on the bike shop's sales is refused for
+    the same reason:
+      SELECT  *
+      FROM    SALE
+      WHERE   SaleTotal > AVG(SaleTotal);
+  - KEY TERM: HAVING clause: the clause that filters on an
+    aggregate after grouping, which is where a test like this
+    one belongs. (added definition)
+  - The book answers this question later with a subquery, and
+    again in its chapter on views. (added note)
+
+7. SQL EXPRESSIONS IN AN SQL SELECT STATEMENT
+  - KEY TERM: SQL expression: a formula or set of values placed
+    where a value is expected, such as Quantity * Price used in
+    place of a stored column. (added definition)
+  - The last slide leaves the built in functions and computes a
+    value from two columns inside the query, the book's
+    SQL-Query-CH02-44 on ORDER_ITEM:
+      SELECT    OrderNumber, SKU
+      FROM      ORDER_ITEM
+      WHERE     (Quantity * Price) <> ExtendedPrice
+      ORDER BY  OrderNumber, SKU;
+  - The slide states the result of that statement: the empty
+    set, which contains no values. No rows where (Quantity *
+    Price) is not equal to ExtendedPrice means all the values
+    are correct.
+  - KEY TERM: empty set: a results table with no rows in it,
+    which is an answer and not an error. (added definition)
+  - The expression can be read on its own first, computed in
+    the SELECT list rather than tested in WHERE:
+      SELECT    SaleNo, PartNo, (Qty * Price) AS LT
+      FROM      SALE_LINE
+      ORDER BY  SaleNo, PartNo;
+    Ten rows, LT running 700.00, 32.00, 128.00, 90.00, 50.00,
+    95.00, 120.00, 540.00, 16.00 and 64.00.
+  - Put the computed value beside the stored one and the
+    disagreement is visible:
+      SELECT    SaleNo, PartNo, (Qty * Price) AS LT, LineTotal
+      FROM      SALE_LINE
+      ORDER BY  SaleNo, PartNo;
+    The same ten rows with LineTotal added, and every pair
+    matches except the last: sale 5004, part 3020, LT 64.00
+    against a stored LineTotal of 60.00.
+  - Ten rows can be checked by eye. Ten thousand cannot, which
+    is what the WHERE version is for:
+      SELECT    SaleNo, PartNo
+      FROM      SALE_LINE
+      WHERE     (Qty * Price) <> LineTotal
+      ORDER BY  SaleNo, PartNo;
+    One row comes back, sale 5004 part 3020. Where the book's
+    data returned the empty set and passed, the shop's data
+    hands back the row to go fix.
+
+8. KEY TAKEAWAYS
+  - An aggregate function reads a column and returns one value,
+    and the result is still a table of one row and one column.
+  - AS renames a result column and changes nothing else.
+  - SUM, AVG, MIN and MAX can be combined in one SELECT list,
+    comma separated, each with its own alias.
+  - COUNT(*) counts rows. COUNT of a named column counts the
+    rows where that column is not NULL, so the two answers
+    differ only when the column has NULLs.
+  - COUNT(DISTINCT column) counts different values, not rows.
+  - A plain column may not sit beside an aggregate without a
+    GROUP BY. SQL Server calls that one Msg 8120.
+  - An aggregate may not appear in WHERE. WHERE decides rows,
+    aggregates read columns, and the column total does not
+    exist yet while WHERE is running. That one is Msg 147.
+  - An expression computes a value inside the query, either in
+    the SELECT list to display it or in the WHERE clause to
+    test it against what is stored.
+
+9. QUIZ-SAFE FACTS
+  - The SUM slide shows SELECT SUM(OrderTotal) FROM
+    RETAIL_ORDER with and without AS OrderSum.
+  - The four function slide is SELECT SUM(ExtendedPrice) AS
+    OrderItemSum, AVG(ExtendedPrice) AS OrderItemAvg,
+    MIN(ExtendedPrice) AS OrderItemMin, MAX(ExtendedPrice) AS
+    OrderItemMax FROM ORDER_ITEM.
+  - Its result table has one row and five columns, and the
+    values read out are 1180, 168.571428, 50 and 300.
+  - The COUNT slide is SELECT COUNT(*) AS NumberOfRows FROM
+    ORDER_ITEM.
+  - The COUNT and DISTINCT slide is SELECT COUNT(DISTINCT
+    Department) AS DeptCount FROM SKU_DATA.
+  - There are two limitations to the SQL built in functions.
+  - First limitation as stated: you cannot combine table column
+    names with an SQL built in function. The example is SELECT
+    Department, COUNT(*) FROM SKU_DATA.
+  - Its error is Msg 8120, Level 16, State 1: column
+    SKU_DATA.Department is invalid in the select list because
+    it is not contained in either an aggregate function or the
+    GROUP BY clause.
+  - Second limitation as stated: you cannot use them in an SQL
+    WHERE clause, because the WHERE clause operates on rows,
+    choosing which rows will be displayed, whereas the
+    aggregate functions operate on columns.
+  - Its example is SELECT * FROM RETAIL_ORDER WHERE OrderTotal
+    > AVG(OrderTotal), and its error is Msg 147, Level 15,
+    State 1: an aggregate may not appear in the WHERE clause
+    unless it is in a subquery contained in a HAVING clause or
+    a select list, and the column being aggregated is an outer
+    reference.
+  - The expression slide is SELECT OrderNumber, SKU FROM
+    ORDER_ITEM WHERE (Quantity * Price) <> ExtendedPrice ORDER
+    BY OrderNumber, SKU.
+  - The result of that statement is the empty set, which
+    contains no values.
+  - In terms of SQL-Query-CH02-44 that means there are no rows
+    where (Quantity * Price) is not equal to ExtendedPrice,
+    which means that all the values are correct.

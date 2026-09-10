@@ -1,0 +1,215 @@
+1. WHAT AGGREGATIONS ARE FOR
+  - KEY TERM: aggregation: a function that reads a whole column
+    of values and gives back one value for it, such as a count,
+    a sum, or an average. (added definition)
+  - The overview's framing: in SQL we often need aggregations to
+    create data enrichments. We want to tell a story with our
+    data.
+  - KEY TERM: data enrichment: a value not stored in any row but
+    derived from the rows and added to the result, so the result
+    says more than the stored columns do (added definition).
+  - His examples: the count of students in a class, the average
+    score for a particular student, and the min and max value
+    for a particular filter.
+  - No single row answers any of those. One row holds one
+    student and one score; class size and class average live in
+    the whole column. (added explanation)
+
+2. THE BLANKET AGGREGATION SYNTAX
+  - Running case for the worked queries here: the Hilltop Bike
+    Shop tables SALE_LINE (SaleNo, PartNo, Qty, Price,
+    LineTotal), DELIVERY (DeliveryNo, SaleNo, Courier, Fee) and
+    STAFF (StaffID, FirstName, LastName). Every query below is
+    MySQL. (added)
+  - The blanket syntax he shows, in his order:
+      SELECT    AGGREGATION(column)
+      FROM      table
+      WHERE     condition
+      GROUP BY  column;
+  - WHERE is optional and is where you filter before you run
+    your aggregation. Rows it throws out never reach the
+    aggregation at all. (added explanation)
+  - KEY TERM: GROUP BY: the clause that splits rows into groups
+    by the values of the columns you name, so the aggregation
+    runs once per group instead of once for the whole table.
+    (added definition)
+
+3. A COLUMN BESIDE AN AGGREGATION NEEDS GROUP BY
+  - Where the GROUP BY comes in is when you are selecting a
+    column along with an aggregation.
+  - His example was a student and the number of classes
+    attended, grouped by student. That gives a breakdown based
+    upon a student, and then the aggregation for each student.
+  - Remove that GROUP BY and the SQL syntax would not work. It
+    would not understand the student column and how to perform
+    that aggregation.
+  - The same shape here, one row per courier with that
+    courier's delivery count:
+      SELECT    Courier, COUNT(*) AS Deliveries
+      FROM      DELIVERY
+      GROUP BY  Courier;
+
+      Courier      Deliveries
+      CityCourier  2
+      PedalPost    3
+      VanLine      1
+  - The reason: COUNT(*) collapses many rows into one number,
+    but Courier holds a different value across the six delivery
+    rows. GROUP BY Courier makes three piles and counts inside
+    each. (added explanation)
+  - The same rule with a SUM: a price total per sale is fine as
+    long as the plain column SaleNo is in the GROUP BY.
+    Without it, this SQL syntax would not work:
+      SELECT    SaleNo, SUM(Price) AS PriceSum
+      FROM      SALE_LINE
+      GROUP BY  SaleNo;
+
+      SaleNo  PriceSum
+      5001    772.00
+      5002    50.00
+      5003    215.00
+      5004    612.00
+  - Every output row is a group, not a row of the table: sale
+    5001's three prices, 700.00, 8.00 and 64.00, make the
+    772.00. (added explanation)
+
+4. HIS HABIT: COLUMNS LEFT, AGGREGATIONS RIGHT
+  - The way he always likes to do it is keep the aggregations to
+    the right of the SELECT statement. They are always last.
+  - Then, when you make your GROUP BY, start from your
+    aggregation and copy just the columns into it. His words:
+    start with your columns, aggregations at the end, copy all
+    your columns into your GROUP BY, and you will never miss
+    it.
+  - It works because every plain column in the SELECT list must
+    be in the GROUP BY: one unbroken run on the left copies
+    straight down. (added explanation)
+  - Add a second plain column and it joins the GROUP BY too:
+      SELECT    SaleNo, PartNo, SUM(Price) AS PriceSum
+      FROM      SALE_LINE
+      GROUP BY  SaleNo, PartNo;
+
+      Ten rows, one per sale line, each PriceSum equal to that
+      line's own Price: 5001 1020 700.00, 5001 2030 8.00,
+      5001 3020 64.00, 5002 3010 45.00, 5002 3030 5.00,
+      5003 2010 95.00, 5003 2020 120.00, 5004 1030 540.00,
+      5004 2030 8.00, 5004 3020 64.00.
+  - Grouping on SaleNo and PartNo makes each group one sale
+    line, so every sum is a sum of one number. (added
+    explanation)
+
+5. THE AGGREGATE FUNCTIONS HE LISTS
+  - COUNT, the number of rows.
+  - COUNT with a column name, the number of rows in a table
+    where a column is whatever.
+  - SUM, the calculation of a sum of values.
+  - AVG, the averages.
+  - MIN and MAX.
+  - He shows more of these in the demo.
+
+6. HAVING: FILTERING ON AN AGGREGATION
+  - Aggregations cannot be used in a WHERE clause. It will cause
+    a syntax error.
+  - To filter on an aggregation you must use the HAVING clause,
+    and HAVING goes at the bottom, after your GROUP BY.
+  - KEY TERM: HAVING: the clause that filters the groups a
+    GROUP BY produced, by a condition on the aggregation.
+    (added definition)
+  - His example is students with an average score greater than
+    90, and he points at what is not there: no WHERE clause on
+    the average quiz score.
+  - The same test here, couriers whose average fee is above 10:
+      SELECT    Courier, AVG(Fee) AS AvgFee
+      FROM      DELIVERY
+      GROUP BY  Courier
+      HAVING    AVG(Fee) > 10;
+
+      Courier    AvgFee
+      PedalPost  12.00
+      VanLine    25.00
+  - CityCourier is missing because its whole group averaged
+    7.00, not because any one row failed. Groups are what
+    HAVING tests. (added explanation)
+  - His reassurance: you will pick this up pretty quickly as
+    you start running more and more aggregations.
+
+7. CONCATENATION, AND THE THREE PRODUCT FORMS
+  - KEY TERM: concatenation: combining multiple strings or
+    columns together.
+  - In MySQL you use the CONCAT function. He bases the overview
+    on MySQL because that is what the course is working with.
+  - Other languages use different things. SQL Server uses a plus
+    sign. Oracle he believes is two bars, and he says he does
+    not program much in Oracle anymore.
+  - All of the columns you are concatenating are comma
+    delimited, so you need a comma in between each one.
+  - His example concatenates a first name and a last name from a
+    users table. For his username, Sean Huff, it comes out as
+    Sean space Huff:
+      SELECT  CONCAT(FirstName, ' ', LastName) AS FullName
+      FROM    STAFF;
+
+      FullName
+      Mia Chen
+      Omar Reyes
+      Priya Nair
+      Dale Whitfield
+  - The space is its own argument, a string literal in the
+    comma delimited list like any column. (added explanation)
+  - Concatenation is not an aggregation: it runs row by row, one
+    value per row, and needs no GROUP BY. (added note)
+  - He closes by pointing at the demo for 4.1, which runs these
+    aggregations on a dataset he created that is not in the
+    book.
+
+8. KEY TAKEAWAYS
+  - An aggregation turns a column into one value, which is how a
+    query says what no stored row says.
+  - Clause order: SELECT with the aggregation, FROM, optional
+    WHERE, GROUP BY, then HAVING.
+  - WHERE filters rows before the aggregation runs, HAVING
+    filters groups after, and an aggregation in WHERE is a
+    syntax error.
+  - Any plain column beside an aggregation has to appear in the
+    GROUP BY. Columns first, aggregations last, copy the columns
+    down into the GROUP BY.
+  - String joining is product specific: CONCAT in MySQL, a plus
+    sign in SQL Server, two bars in Oracle.
+
+9. QUIZ-SAFE FACTS
+  - Aggregations create data enrichments and tell a story with
+    the data.
+  - The aggregations named are counts, averages, and min and max
+    for a particular filter.
+  - To run an aggregation function you must use the specific
+    aggregation function on a column.
+  - The blanket syntax is the aggregation, a left parenthesis,
+    the column name, a right parenthesis, the table in FROM, the
+    WHERE clause if there is one, then the GROUP BY.
+  - WHERE is where you filter before the aggregation runs.
+  - The GROUP BY comes in when you are selecting a column along
+    with an aggregation; without it the SQL does not work,
+    because it does not understand the column and how to
+    aggregate.
+  - The grouping example is a student and the number of classes
+    attended, grouped by student.
+  - His method: keep aggregations to the right of the SELECT
+    statement, always last, then copy the columns into the
+    GROUP BY.
+  - The functions listed are COUNT of rows, COUNT with a column
+    name, SUM, AVG, MIN and MAX.
+  - Aggregations cannot be used in a WHERE clause; it causes a
+    syntax error.
+  - To filter on an aggregation you must use HAVING, at the
+    bottom, after the GROUP BY.
+  - The HAVING example is students with an average score greater
+    than 90.
+  - MySQL concatenates with CONCAT, SQL Server with a plus
+    sign, and Oracle with two bars.
+  - The columns inside CONCAT are comma delimited.
+  - The concatenation example is a first name and a last name
+    from a users table, giving Sean space Huff.
+  - The overview is based on MySQL because that is what the
+    course works with.
+  - The demo for 4.1 uses a dataset the professor created that
+    is not in the book.
