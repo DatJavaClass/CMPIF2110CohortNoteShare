@@ -16,6 +16,7 @@ The notes are organized by module part:
 - `Cliff Notes Module 2 Part 3/` (how databases come to exist and where they came from: the three design paths, the two roles you are training for, and the history from file systems through the relational model to the Web, XML, and big data with NoSQL)
 - `Cliff Notes Module 3 Part 1/` (introduction to SQL: the four statement types, the Cape Codd extract with its six tables and keys, the SELECT/FROM/WHERE framework, submitting statements to Access, SQL Server, Oracle and MySQL, and the Workbench demos)
 - `Cliff Notes Module 3 Part 2/` (SQL enhancements for querying a single table: DISTINCT, TOP, the WHERE clause and its comparison operators, ORDER BY with multi column sorts, and compound conditions with AND, OR and NOT)
+- `Cliff Notes Module 4 Part 1/` (calculations in SQL queries: the five built in aggregate functions, COUNT and DISTINCT, the two things aggregates cannot do, expressions and string concatenation with RTRIM, GROUP BY, HAVING, and the professor's aggregation demo)
 
 ## Guides
 
